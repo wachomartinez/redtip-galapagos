@@ -1,0 +1,53 @@
+services:
+  - type: web
+    name: redtip-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: FROM_EMAIL
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_WHATSAPP_FROM
+        sync: false
+      - key: WHATSAPP_VERIFY_TOKEN
+        sync: false
+      - key: WHATSAPP_SITE_BASE_URL
+        sync: false
+      - key: WHATSAPP_BUSINESS_NAME
+        value: RedTip Galapagos
+      - key: WHATSAPP_RATE_LIMIT_WINDOW_MINUTES
+        value: 10
+      - key: WHATSAPP_RATE_LIMIT_MAX
+        value: 12
+      - key: TWILIO_SIGNATURE_VALIDATION
+        value: true
