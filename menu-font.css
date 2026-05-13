@@ -1,0 +1,10 @@
+/* Unifica la tipografia de todos los menus con el estilo de index.html */
+.main-nav,
+.main-nav *,
+.menu-desktop,
+.menu-desktop *,
+.menu-mobile,
+.menu-mobile *,
+.menu-mobile-btn {
+    font-family: 'Times New Roman', Times, serif !important;
+}

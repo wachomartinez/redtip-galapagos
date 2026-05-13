@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+    <meta name="theme-color" content="#25d366">
+    <title>Reservas de Tours en Galápagos | Pago y Confirmación Online</title>
+    <meta name="description" content="Reserva y paga tus tours en Galápagos de forma segura y rápida. Elige tu tour, selecciona fecha y confirma tu reserva online con RedTipShark Agency.">
+    <meta name="keywords" content="reservas galápagos, pago tours galápagos, reservar tour galápagos, agencia de viajes, tours, ecuador, online">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="RedTipShark Agency">
+    <meta http-equiv="content-language" content="es">
+    <link rel="canonical" href="https://www.redtipsharkagency.com/paginadecobros.html">
+    <meta property="og:title" content="Reservas de Tours en Galápagos | Pago y Confirmación Online">
+    <meta property="og:description" content="Reserva y paga tus tours en Galápagos de forma segura y rápida. Elige tu tour, selecciona fecha y confirma tu reserva online con RedTipShark Agency.">
+    <meta property="og:image" content="https://www.redtipsharkagency.com/logoredtip2.webp">
+    <meta property="og:url" content="https://www.redtipsharkagency.com/paginadecobros.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_EC">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Reservas de Tours en Galápagos | Pago y Confirmación Online">
+    <meta name="twitter:description" content="Reserva y paga tus tours en Galápagos de forma segura y rápida. Elige tu tour, selecciona fecha y confirma tu reserva online con RedTipShark Agency.">
+    <meta name="twitter:image" content="https://www.redtipsharkagency.com/logoredtip2.webp">
+    <link rel="icon" type="image/webp" href="logoredtip2.webp">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <link rel="stylesheet" href="pagina de cobros.css">
+    <style>
+        /* --- Responsive Menu Styles --- */
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .menu-mobile-btn {
+            display: none;
+            background: #fff;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #333;
+            z-index: 10001;
+            position: fixed;
+            left: 30px;
+            top: 30px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .menu-mobile-btn:hover {
+            background: #f0f0f0;
+        }
+        .menu-mobile {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+            }
+            .menu-mobile-btn {
+                display: block;
+            }
+            .menu-mobile {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background: #fff;
+                box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+                padding: 2rem 1.5rem;
+                transition: left 0.3s;
+                z-index: 10000;
+            }
+            .menu-mobile.active {
+                left: 0;
+            }
+            .menu-mobile .close-btn {
+                align-self: flex-end;
+                font-size: 2rem;
+                background: none;
+                border: none;
+                margin-bottom: 2rem;
+                cursor: pointer;
+            }
+            .menu-mobile a {
+                margin: 1rem 0;
+                font-size: 1.2rem;
+            }
+        }
+        .menu-mobile .submenu-mobile,
+        .menu-mobile .submenu-mobile-snorkel {
+            display: none;
+            flex-direction: column;
+            margin-left: 1rem;
+        }
+        .menu-mobile .submenu-mobile.show,
+        .menu-mobile .submenu-mobile-snorkel.show {
+            display: flex;
+        }
+        .menu-mobile .submenu-toggle,
+        .menu-mobile .submenu-toggle-snorkel {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            color: #333;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        h1, h2, h3 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+        }
+        .language-switcher {
+            position: static;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .language-switcher select {
+            padding: 0.4rem 0.6rem;
+            border-radius: 8px;
+            border: 1px solid #d6d6d6;
+            background: #fff;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 768px) {
+            .language-switcher {
+                position: fixed;
+                top: 16px;
+                right: 16px;
+                z-index: 10002;
+            }
+            .language-switcher select {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="menu-font.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="logoredtip2.webp" alt="Logo Galápagos RedTipShark Agency">
+            <div class="language-switcher">
+                <select id="language-selector" aria-label="Seleccionar idioma">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="it">Italiano</option>
+                    <option value="pt">Português</option>
+                    <option value="ru">Русский</option>
+                    <option value="zh">中文</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                </select>
+            </div>
+            <!-- Botón hamburguesa para menú móvil -->
+            <button class="menu-mobile-btn" aria-label="Abrir menú" data-i18n-attr="aria-label:openMenu">&#9776;</button>
+            <nav class="main-nav menu-desktop">
+                <a href="index.html" data-i18n="navHome">Inicio</a>
+                <a href="tours-caminata-galapagos.html" data-i18n="navHiking">Tours Caminata</a>
+                <a href="tours-snorkeling-galapagos.html" data-i18n="navSnorkeling">Tours Snorkeling</a>
+                <a href="paquetes turisticos.html" data-i18n="navPackages">Paquetes Turisticos</a>
+                <a href="paginadecobros.html" class="active" data-i18n="navBookings">Reservas</a>
+                <a href="contactos1.html" data-i18n="navContacts">Contactos</a>
+                <a href="blog-ruta-tortuga-las-grietas copy.html" data-i18n="navBlog">Blog</a>
+            </nav>
+            <!-- Menú móvil oculto por defecto -->
+            <nav class="menu-mobile" aria-label="Menú móvil">
+                <button class="close-btn" aria-label="Cerrar menú" data-i18n-attr="aria-label:closeMenu">&times;</button>
+                <a href="index.html" data-i18n="navHome">Inicio</a>
+                <div>
+                    <a href="tours-caminata-galapagos.html" style="display:inline-block;" data-i18n="navHiking">Tours Caminata</a>
+                    <button class="submenu-toggle" aria-label="Abrir submenú" data-i18n-attr="aria-label:openSubmenu">&#9662;</button>
+                    <div class="submenu-mobile" style="display:none;flex-direction:column;margin-left:1rem;">
+                        <a href="tour-bartolome copy.html" data-i18n="islandBartolome">Bartolomé</a>
+                        <a href="tour-seymour-norte copy.html" data-i18n="islandSeymour">Seymour</a>
+                        <a href="tour-plazas copy.html" data-i18n="islandPlazas">Islas Plazas</a>
+                    </div>
+                </div>
+                <div>
+                    <a href="tours-snorkeling-galapagos.html" style="display:inline-block;" data-i18n="navSnorkeling">Tours Snorkeling</a>
+                    <button class="submenu-toggle-snorkel" aria-label="Abrir submenú" data-i18n-attr="aria-label:openSubmenu">&#9662;</button>
+                    <div class="submenu-mobile-snorkel" style="display:none;flex-direction:column;margin-left:1rem;">
+                        <a href="tour-pinzon copy.html" data-i18n="islandPinzon">Pinzón</a>
+                        <a href="tour-santafe copy.html" data-i18n="islandSantaFe">Santa Fe</a>
+                    </div>
+                </div>
+                <a href="paquetes turisticos.html" data-i18n="navPackages">Paquetes Turisticos</a>
+                <a href="paginadecobros.html" data-i18n="navBookings">Reservas</a>
+                <a href="contactos1.html" data-i18n="navContacts">Contactos</a>
+                <a href="blog-ruta-tortuga-las-grietas copy.html" data-i18n="navBlog">Blog</a>
+            </nav>
+        </div>
+    </header>
+    <main class="reserva-container">
+        <h1 data-i18n="pageTitle">Reservas y Pago de Tours en Galápagos</h1>
+        <p data-i18n="pageIntro">
+            Reserva tu tour en Galápagos de forma fácil y segura. Selecciona el tour, la fecha y el número de personas, y confirma tu reserva online. Nuestro equipo te contactará para finalizar el proceso y asegurar tu experiencia.
+        </p>
+        
+        <div class="reserva-form">
+            <form id="formulario-reserva">
+                <div class="form-group">
+                    <label for="tour-seleccion" data-i18n="labelTour">Seleccione su tour:</label>
+                    <select id="tour-seleccion" required>
+                        <option value="" disabled selected data-i18n="tourPlaceholder">-- Elija un tour --</option>
+                        <option value="bartolome" data-i18n="optBartolome">Bartolomé - $300 USD</option>
+                        <option value="seymour" data-i18n="optSeymour">Seymour Norte - $300 USD</option>
+                        <option value="pinzon" data-i18n="optPinzon">Pinzón - $180 USD</option>
+                        <option value="plazas" data-i18n="optPlazas">Plazas Sur - $300 USD</option>
+                        <option value="paquete1" data-i18n="optPack1">Paquete Edicion Especial - $900 USD</option>
+                        <option value="paquete2" data-i18n="optPack2">Paquete explorando Galápagos - $690 USD</option>
+                        <option value="paquete3" data-i18n="optPack3">Paquete Completo Galápagos - $900 USD</option>
+                        <option value="paquete4" data-i18n="optPack4">Paquete Basico - $390 USD</option>
+                        <option value="paquete5" data-i18n="optPack5">Paquete Edicion Especial - $890 USD</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha-tour" data-i18n="labelDate">Fecha del tour:</label>
+                    <input type="text" id="fecha-tour" class="flatpickr-input" placeholder="Seleccione fecha" data-i18n-attr="placeholder:placeholderDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cantidad-personas" data-i18n="labelPeople">Número de personas:</label>
+                    <input type="number" id="cantidad-personas" min="1" max="20" value="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nombre-completo" data-i18n="labelName">Nombre completo:</label>
+                    <input type="text" id="nombre-completo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" data-i18n="labelEmail">Correo electrónico:</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono" data-i18n="labelPhone">Teléfono:</label>
+                    <input type="tel" id="telefono">
+                </div>
+
+                <div class="form-group">
+                    <label for="requerimientos" data-i18n="labelReq">Requerimientos especiales:</label>
+                    <textarea id="requerimientos" rows="3"></textarea>
+                </div>
+
+                <div class="resumen-reserva">
+                    <h3 data-i18n="summaryTitle">Resumen de Reserva</h3>
+                    <div id="detalles-reserva">
+                        <p data-i18n="summaryEmpty">Seleccione un tour y fecha para ver los detalles</p>
+                    </div>
+                    <div class="total-reserva">
+                        <p><span data-i18n="totalLabel">Total a pagar:</span> <span id="total-pagar">$0 USD</span></p>
+                    </div>
+                </div>
+
+                <!-- Botón de pago con PayPhone eliminado -->
+                <button type="submit" class="reservar-button" id="btn-confirmar-reserva" data-i18n="confirmBtn">Confirmar Reserva</button>
+            </form>
+        </div>
+
+        <div class="info-importante">
+            <h3 data-i18n="importantTitle">Información importante</h3>
+            <ul>
+                <li data-i18n="important1">Las reservas deben realizarse con al menos 48 horas de anticipación</li>
+                <li data-i18n="important2">Pago inicial del 50% para confirmar la reserva</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p data-i18n="footerRights">© 2023 Tours Galápagos. Todos los derechos reservados.</p>
+            <div class="redes-sociales">
+                <a href="#"><img src="facebook.webp" alt="Facebook"></a>
+                <a href="#"><img src="instagram.webp" alt="Instagram"></a>
+                <a href="#"><img src="whatsapp.webp" alt="WhatsApp"></a>
+            </div>
+        </div>
+        <div class="cuenta-bancaria" style="margin-top:30px; text-align:center;">
+            <h3 data-i18n="locationTitle">Ubicacion</h3>
+            <p><strong>Puerto Ayora</strong> Santa Cruz</p>
+            <p><strong>Galapagos</strong></p>
+            <p><strong data-i18n="whatsappWord">Whatsapp</strong> +593 959285913</p>
+            <p><strong data-i18n="emailWord">Correo:</strong> redtipgalapagos@hotmail.com</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <!-- NO INCLUYAS reservas.js para evitar conflictos de submit -->
+    <!-- <script src="reservas.js"></script> -->
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        // Inicializa EmailJS con tu Public Key actualizada
+        emailjs.init('qthOEkC6EAgyOpX9S');
+        document.addEventListener('DOMContentLoaded', function() {
+            const baseEn = {
+                metaTitle: 'Galápagos Tour Bookings | Online Payment and Confirmation',
+                metaDescription: 'Book and pay your Galápagos tours safely and quickly. Choose your tour, date and confirm online.',
+                metaKeywords: 'galápagos bookings, tour payment, travel agency, ecuador, online booking',
+                ogDescription: 'Book and pay your Galápagos tours safely and quickly.',
+                twitterDescription: 'Book and pay your Galápagos tours safely and quickly.',
+                contentLanguage: 'en',
+                openMenu: 'Open menu',
+                closeMenu: 'Close menu',
+                openSubmenu: 'Open submenu',
+                navHome: 'Home',
+                navHiking: 'Hiking Tours',
+                navSnorkeling: 'Snorkeling Tours',
+                navPackages: 'Tour Packages',
+                navBookings: 'Bookings',
+                navContacts: 'Contact',
+                navBlog: 'Blog',
+                islandBartolome: 'Bartolomé',
+                islandSeymour: 'Seymour',
+                islandPlazas: 'Plazas Islands',
+                islandPinzon: 'Pinzón',
+                islandSantaFe: 'Santa Fe',
+                pageTitle: 'Galápagos Tour Booking and Payment',
+                pageIntro: 'Book your Galápagos tour safely. Select tour, date and number of travelers, then confirm online.',
+                labelTour: 'Select your tour:',
+                tourPlaceholder: '-- Choose a tour --',
+                optBartolome: 'Bartolomé - $300 USD',
+                optSeymour: 'North Seymour - $300 USD',
+                optPinzon: 'Pinzón - $180 USD',
+                optPlazas: 'South Plazas - $300 USD',
+                optPack1: 'Special Edition Package - $900 USD',
+                optPack2: 'Exploring Galápagos Package - $690 USD',
+                optPack3: 'Complete Galápagos Package - $900 USD',
+                optPack4: 'Basic Package - $390 USD',
+                optPack5: 'Special Edition Package - $890 USD',
+                labelDate: 'Tour date:',
+                placeholderDate: 'Select date',
+                labelPeople: 'Number of travelers:',
+                labelName: 'Full name:',
+                labelEmail: 'Email:',
+                labelPhone: 'Phone:',
+                labelReq: 'Special requirements:',
+                summaryTitle: 'Booking Summary',
+                summaryEmpty: 'Select a tour and date to view details',
+                totalLabel: 'Total to pay:',
+                confirmBtn: 'Confirm Booking',
+                importantTitle: 'Important information',
+                important1: 'Bookings must be made at least 48 hours in advance',
+                important2: '50% initial payment to confirm the booking',
+                footerRights: '© 2023 Galápagos Tours. All rights reserved.',
+                locationTitle: 'Location',
+                whatsappWord: 'WhatsApp',
+                emailWord: 'Email:',
+                summaryTour: 'Tour:',
+                summaryDate: 'Date:',
+                summaryPeople: 'Travelers:',
+                alertSelectTour: 'Please select a tour.',
+                alertSuccess: 'Booking sent successfully. We will contact you soon.',
+                alertError: 'Error sending booking. Please try again.'
+            };
+
+            const translations = {
+                es: {
+                    metaTitle: 'Reservas de Tours en Galápagos | Pago y Confirmación Online',
+                    metaDescription: 'Reserva y paga tus tours en Galápagos de forma segura y rápida. Elige tu tour, selecciona fecha y confirma tu reserva online con RedTipShark Agency.',
+                    metaKeywords: 'reservas galápagos, pago tours galápagos, reservar tour galápagos, agencia de viajes, tours, ecuador, online',
+                    ogDescription: 'Reserva y paga tus tours en Galápagos de forma segura y rápida. Elige tu tour, selecciona fecha y confirma tu reserva online con RedTipShark Agency.',
+                    twitterDescription: 'Reserva y paga tus tours en Galápagos de forma segura y rápida. Elige tu tour, selecciona fecha y confirma tu reserva online con RedTipShark Agency.',
+                    contentLanguage: 'es',
+                    openMenu: 'Abrir menú',
+                    closeMenu: 'Cerrar menú',
+                    openSubmenu: 'Abrir submenú',
+                    navHome: 'Inicio',
+                    navHiking: 'Tours Caminata',
+                    navSnorkeling: 'Tours Snorkeling',
+                    navPackages: 'Paquetes Turisticos',
+                    navBookings: 'Reservas',
+                    navContacts: 'Contactos',
+                    navBlog: 'Blog',
+                    islandBartolome: 'Bartolomé',
+                    islandSeymour: 'Seymour',
+                    islandPlazas: 'Islas Plazas',
+                    islandPinzon: 'Pinzón',
+                    islandSantaFe: 'Santa Fe',
+                    pageTitle: 'Reservas y Pago de Tours en Galápagos',
+                    pageIntro: 'Reserva tu tour en Galápagos de forma fácil y segura. Selecciona el tour, la fecha y el número de personas, y confirma tu reserva online. Nuestro equipo te contactará para finalizar el proceso y asegurar tu experiencia.',
+                    labelTour: 'Seleccione su tour:',
+                    tourPlaceholder: '-- Elija un tour --',
+                    optBartolome: 'Bartolomé - $300 USD',
+                    optSeymour: 'Seymour Norte - $300 USD',
+                    optPinzon: 'Pinzón - $180 USD',
+                    optPlazas: 'Plazas Sur - $300 USD',
+                    optPack1: 'Paquete Edicion Especial - $900 USD',
+                    optPack2: 'Paquete explorando Galápagos - $690 USD',
+                    optPack3: 'Paquete Completo Galápagos - $900 USD',
+                    optPack4: 'Paquete Basico - $390 USD',
+                    optPack5: 'Paquete Edicion Especial - $890 USD',
+                    labelDate: 'Fecha del tour:',
+                    placeholderDate: 'Seleccione fecha',
+                    labelPeople: 'Número de personas:',
+                    labelName: 'Nombre completo:',
+                    labelEmail: 'Correo electrónico:',
+                    labelPhone: 'Teléfono:',
+                    labelReq: 'Requerimientos especiales:',
+                    summaryTitle: 'Resumen de Reserva',
+                    summaryEmpty: 'Seleccione un tour y fecha para ver los detalles',
+                    totalLabel: 'Total a pagar:',
+                    confirmBtn: 'Confirmar Reserva',
+                    importantTitle: 'Información importante',
+                    important1: 'Las reservas deben realizarse con al menos 48 horas de anticipación',
+                    important2: 'Pago inicial del 50% para confirmar la reserva',
+                    footerRights: '© 2023 Tours Galápagos. Todos los derechos reservados.',
+                    locationTitle: 'Ubicacion',
+                    whatsappWord: 'Whatsapp',
+                    emailWord: 'Correo:',
+                    summaryTour: 'Tour:',
+                    summaryDate: 'Fecha:',
+                    summaryPeople: 'Personas:',
+                    alertSelectTour: 'Por favor, seleccione un tour.',
+                    alertSuccess: 'Reserva enviada con éxito. Nos pondremos en contacto contigo pronto.',
+                    alertError: 'Error al enviar la reserva. Intente nuevamente.'
+                },
+                en: baseEn,
+                fr: { ...baseEn, contentLanguage: 'fr', navHome: 'Accueil', navBookings: 'Réservations', navContacts: 'Contacts', navPackages: 'Forfaits Touristiques', navHiking: 'Tours Randonnée', labelTour: 'Choisissez votre tour :', confirmBtn: 'Confirmer la réservation' },
+                de: { ...baseEn, contentLanguage: 'de', navHome: 'Startseite', navBookings: 'Reservierungen', navContacts: 'Kontakt', navPackages: 'Reisepakete', navHiking: 'Wandertouren', navSnorkeling: 'Schnorcheltouren', labelTour: 'Tour auswählen:', confirmBtn: 'Reservierung bestätigen' },
+                it: { ...baseEn, contentLanguage: 'it', navBookings: 'Prenotazioni', navContacts: 'Contatti', navPackages: 'Pacchetti Turistici', navHiking: 'Tour Trekking', labelTour: 'Seleziona il tuo tour:', confirmBtn: 'Conferma prenotazione' },
+                pt: { ...baseEn, contentLanguage: 'pt', navHome: 'Início', navBookings: 'Reservas', navContacts: 'Contatos', navPackages: 'Pacotes Turísticos', navHiking: 'Tours de Caminhada', labelTour: 'Selecione seu tour:', confirmBtn: 'Confirmar Reserva' },
+                ru: { ...baseEn, contentLanguage: 'ru', navHome: 'Главная', navBookings: 'Бронирование', navContacts: 'Контакты', navPackages: 'Турпакеты', navHiking: 'Пешие Туры', navSnorkeling: 'Снорклинг Туры', labelTour: 'Выберите тур:', confirmBtn: 'Подтвердить бронь' },
+                zh: { ...baseEn, contentLanguage: 'zh', navHome: '首页', navBookings: '预订', navContacts: '联系', navPackages: '旅游套餐', navHiking: '徒步行程', navSnorkeling: '浮潜行程', labelTour: '选择行程：', confirmBtn: '确认预订' },
+                ja: { ...baseEn, contentLanguage: 'ja', navHome: 'ホーム', navBookings: '予約', navContacts: 'お問い合わせ', navPackages: 'ツアーパッケージ', navHiking: 'ハイキングツアー', navSnorkeling: 'シュノーケリングツアー', labelTour: 'ツアーを選択:', confirmBtn: '予約を確定' },
+                ko: { ...baseEn, contentLanguage: 'ko', navHome: '홈', navBookings: '예약', navContacts: '연락처', navPackages: '투어 패키지', navHiking: '트레킹 투어', navSnorkeling: '스노클링 투어', labelTour: '투어 선택:', confirmBtn: '예약 확인' }
+            };
+
+            const localeByLang = { es: 'es_EC', en: 'en_US', fr: 'fr_FR', de: 'de_DE', it: 'it_IT', pt: 'pt_BR', ru: 'ru_RU', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR' };
+            let currentLang = 'es';
+
+            function setMeta(selector, content) {
+                const element = document.querySelector(selector);
+                if (element && content) element.setAttribute('content', content);
+            }
+
+            function translateStatic(t) {
+                document.querySelectorAll('[data-i18n]').forEach(function(element) {
+                    const key = element.getAttribute('data-i18n');
+                    if (t[key]) element.textContent = t[key];
+                });
+                document.querySelectorAll('[data-i18n-attr]').forEach(function(element) {
+                    const instructions = element.getAttribute('data-i18n-attr').split(';');
+                    instructions.forEach(function(rule) {
+                        const parts = rule.split(':');
+                        if (parts.length === 2) {
+                            const attributeName = parts[0].trim();
+                            const key = parts[1].trim();
+                            if (t[key]) element.setAttribute(attributeName, t[key]);
+                        }
+                    });
+                });
+            }
+
+            function applyLanguage(language) {
+                const activeLang = translations[language] ? language : 'es';
+                const t = translations[activeLang];
+                currentLang = activeLang;
+
+                document.documentElement.lang = activeLang;
+                document.title = t.metaTitle;
+                setMeta('meta[name="description"]', t.metaDescription);
+                setMeta('meta[name="keywords"]', t.metaKeywords);
+                setMeta('meta[property="og:title"]', t.metaTitle);
+                setMeta('meta[property="og:description"]', t.ogDescription);
+                setMeta('meta[property="og:locale"]', localeByLang[activeLang]);
+                setMeta('meta[name="twitter:title"]', t.metaTitle);
+                setMeta('meta[name="twitter:description"]', t.twitterDescription);
+                setMeta('meta[http-equiv="content-language"]', t.contentLanguage);
+
+                translateStatic(t);
+
+                const selector = document.getElementById('language-selector');
+                if (selector && selector.value !== activeLang) selector.value = activeLang;
+                localStorage.setItem('redtip_language', activeLang);
+            }
+
+            // Flatpickr
+            flatpickr("#fecha-tour", {
+                dateFormat: "d/m/Y",
+                minDate: "today",
+                locale: "es",
+                disable: [
+                    function(date) {
+                        // Deshabilitar domingos
+                        return (date.getDay() === 0);
+                    }
+                ]
+            });
+
+            // Actualizar resumen de reserva y total
+            const tourSelect = document.getElementById('tour-seleccion');
+            const fechaInput = document.getElementById('fecha-tour');
+            const cantidadInput = document.getElementById('cantidad-personas');
+            const detallesReserva = document.getElementById('detalles-reserva');
+            const totalPagar = document.getElementById('total-pagar');
+
+            function actualizarResumen() {
+                const tour = tourSelect.options[tourSelect.selectedIndex];
+                const fecha = fechaInput.value;
+                const cantidad = cantidadInput.value;
+                let precio = 0;
+                switch (tour.value) {
+                    case "bartolome":
+                    case "seymour":
+                    case "plazas":
+                        precio = 300;
+                        break;
+                    case "pinzon":
+                        precio = 180;
+                        break;
+                    case "paquete1":
+                    case "paquete3":
+                        precio = 900;
+                        break;
+                    case "paquete2":
+                        precio = 690;
+                        break;
+                    case "paquete4":
+                        precio = 390;
+                        break;
+                    case "paquete5":
+                        precio = 890;
+                        break;
+                }
+                let total = precio * (parseInt(cantidad) || 1);
+                const t = translations[currentLang] || translations.es;
+                if (tour.value && fecha) {
+                    detallesReserva.innerHTML = `
+                        <p><strong>${t.summaryTour}</strong> ${tour.text}</p>
+                        <p><strong>${t.summaryDate}</strong> ${fecha}</p>
+                        <p><strong>${t.summaryPeople}</strong> ${cantidad}</p>
+                    `;
+                    totalPagar.textContent = `$${total} USD`;
+                } else {
+                    detallesReserva.innerHTML = `<p>${t.summaryEmpty}</p>`;
+                    totalPagar.textContent = `$0 USD`;
+                }
+            }
+
+            tourSelect.addEventListener('change', actualizarResumen);
+            fechaInput.addEventListener('change', actualizarResumen);
+            cantidadInput.addEventListener('input', actualizarResumen);
+
+            // Envío del formulario
+            var form = document.getElementById('formulario-reserva');
+            var btn = document.getElementById('btn-confirmar-reserva');
+            if(form && btn) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    var tourSelect = document.getElementById('tour-seleccion');
+                    if (!tourSelect.value) {
+                        alert((translations[currentLang] || translations.es).alertSelectTour);
+                        tourSelect.focus();
+                        return;
+                    }
+
+                    var data = {
+                        tour: tourSelect.options[tourSelect.selectedIndex]?.text || '',
+                        fecha: document.getElementById('fecha-tour').value || '',
+                        cantidad: document.getElementById('cantidad-personas').value || '',
+                        nombre: document.getElementById('nombre-completo').value || '',
+                        email: document.getElementById('email').value || '',
+                        telefono: document.getElementById('telefono').value || '',
+                        requerimientos: document.getElementById('requerimientos').value || '',
+                        total: document.getElementById('total-pagar').textContent || ''
+                    };
+
+                    // Envía el correo usando EmailJS
+                    emailjs.send('service_awx1rm5', 'template_u45k6ue', {
+                        tour: data.tour,
+                        fecha: data.fecha,
+                        cantidad: data.cantidad,
+                        nombre: data.nombre,
+                        email: data.email,
+                        telefono: data.telefono,
+                        requerimientos: data.requerimientos,
+                        total: data.total
+                    })
+                    .then(function(response) {
+                        alert((translations[currentLang] || translations.es).alertSuccess);
+                        form.reset(); // Resetea solo después de enviar
+                        detallesReserva.innerHTML = `<p>${(translations[currentLang] || translations.es).summaryEmpty}</p>`;
+                        totalPagar.textContent = `$0 USD`;
+                        window.location.href = 'pago_tarjeta.html';
+                    }, function(error) {
+                        console.error('EmailJS error:', error);
+                        alert((translations[currentLang] || translations.es).alertError);
+                    });
+                });
+            }
+
+            // Menú móvil: abrir/cerrar
+            const openBtn = document.querySelector('.menu-mobile-btn');
+            const closeBtn = document.querySelector('.menu-mobile .close-btn');
+            const mobileMenu = document.querySelector('.menu-mobile');
+            if (openBtn && mobileMenu) {
+                openBtn.addEventListener('click', function() {
+                    mobileMenu.classList.add('active');
+                });
+            }
+            if (closeBtn && mobileMenu) {
+                closeBtn.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                });
+            }
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', function(e) {
+                    if(e.target === mobileMenu) mobileMenu.classList.remove('active');
+                });
+            }
+
+            // Submenú móvil toggle
+            const submenuToggle = document.querySelector('.menu-mobile .submenu-toggle');
+            const submenuMobile = document.querySelector('.menu-mobile .submenu-mobile');
+            if (submenuToggle && submenuMobile) {
+                submenuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submenuMobile.style.display = submenuMobile.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+
+            // Submenú móvil snorkeling toggle
+            const submenuToggleSnorkel = document.querySelector('.menu-mobile .submenu-toggle-snorkel');
+            const submenuMobileSnorkel = document.querySelector('.menu-mobile .submenu-mobile-snorkel');
+            if (submenuToggleSnorkel && submenuMobileSnorkel) {
+                submenuToggleSnorkel.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submenuMobileSnorkel.style.display = submenuMobileSnorkel.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+
+            const languageSelector = document.getElementById('language-selector');
+            if (languageSelector) {
+                languageSelector.addEventListener('change', function() {
+                    applyLanguage(languageSelector.value);
+                    actualizarResumen();
+                });
+            }
+
+            const savedLanguage = localStorage.getItem('redtip_language');
+            const browserLanguage = (navigator.language || 'es').slice(0, 2).toLowerCase();
+            const initialLanguage = savedLanguage || (translations[browserLanguage] ? browserLanguage : 'es');
+            applyLanguage(initialLanguage);
+        });
+    </script>
+</body>
+</html>
+
+
+

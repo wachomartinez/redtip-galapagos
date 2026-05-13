@@ -1,0 +1,446 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Crear Restaurante – RedTip Shark Agency</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="menu-font.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#f6f7fb;margin:0;padding:24px}
+.wrap{max-width:900px;margin:24px auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.06)}
+.header{display:flex;gap:16px;align-items:flex-start}
+.header-img-wrap{position:relative;width:140px;min-width:140px;flex-shrink:0}
+.header-img-wrap img{width:140px;height:100px;object-fit:cover;border-radius:8px;border:2px dashed #bbb;cursor:pointer;background:#f0f0f0;display:block}
+.header-img-wrap img:hover{border-color:#1f6aa0}
+.img-hint{font-size:0.75em;color:#999;text-align:center;margin-top:4px}
+#imgFileInput{display:none}
+.titulo-input{font-size:1.55rem;font-weight:700;color:#1f6aa0;border:none;border-bottom:2px solid #e0e0e0;outline:none;width:100%;background:transparent;font-family:inherit;padding:2px 0}
+.titulo-input:focus{border-bottom-color:#1f6aa0}
+.sub-input{color:#666;font-size:0.97em;border:none;border-bottom:1px solid #e8e8e8;outline:none;background:transparent;font-family:inherit;padding:3px 0;width:100%;margin-top:6px}
+.sub-input:focus{border-bottom-color:#1f6aa0}
+.horario-row{display:flex;gap:10px;margin-top:8px;align-items:center;flex-wrap:wrap}
+.horario-row label{color:#666;font-size:0.9em;white-space:nowrap}
+.horario-row input[type="time"]{border:none;border-bottom:1px solid #e8e8e8;outline:none;background:transparent;font-family:inherit;font-size:0.97em;color:#666;padding:2px 4px;width:90px}
+.horario-row input[type="time"]:focus{border-bottom-color:#1f6aa0}
+.categoria-row{margin-top:8px}
+.categoria-row select{border:none;border-bottom:1px solid #e8e8e8;outline:none;background:transparent;font-family:inherit;font-size:0.9em;color:#555;padding:3px 0;width:100%}
+.categoria-row select:focus{border-bottom-color:#1f6aa0}
+.categoria-row input{border:none;border-bottom:1px solid #e8e8e8;outline:none;background:transparent;font-family:inherit;font-size:0.9em;color:#555;padding:3px 0;width:100%;margin-top:8px}
+.categoria-row input:focus{border-bottom-color:#1f6aa0}
+.descripcion-area{margin-top:14px}
+.descripcion-area textarea{width:100%;border:1px solid #e8e8e8;border-radius:6px;padding:10px;font-family:inherit;font-size:0.97em;color:#333;resize:vertical;min-height:72px;outline:none;background:#fafafa}
+.descripcion-area textarea:focus{border-color:#1f6aa0;background:#fff}
+.menu-section{margin-top:18px}
+.menu-section > h3{color:#16a085;margin-bottom:12px;font-size:1.1rem}
+.categoria-bloque{margin-bottom:18px}
+.categoria-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.categoria-nombre-input{font-size:1.07rem;font-weight:700;color:#16a085;border:none;border-bottom:2px dashed #c8f0e8;outline:none;background:transparent;font-family:inherit;padding:2px 0;flex:1}
+.categoria-nombre-input:focus{border-bottom-color:#16a085}
+.btn-del-cat{background:none;border:none;color:#e74c3c;cursor:pointer;font-size:1.1rem;padding:2px 8px;border-radius:4px;line-height:1}
+.btn-del-cat:hover{background:#fdecea}
+.plato-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px dashed #eee}
+.plato-row input{border:none;border-bottom:1px solid #e0e0e0;outline:none;background:transparent;font-family:inherit;font-size:0.97em;color:#333;padding:2px 4px}
+.plato-row input:focus{border-bottom-color:#1f6aa0}
+.plato-nombre{flex:1.2;font-weight:600}
+.plato-desc{flex:1.5;color:#666;font-size:0.9em}
+.plato-precio{width:80px;text-align:right}
+.btn-del-plato{background:none;border:none;color:#e74c3c;cursor:pointer;font-size:1rem;padding:2px 6px;border-radius:4px;flex-shrink:0}
+.btn-del-plato:hover{background:#fdecea}
+.btn-add-plato{margin-top:8px;padding:6px 12px;background:#eaf6f2;color:#16a085;border:1px dashed #16a085;border-radius:6px;cursor:pointer;font-size:0.9em;font-family:inherit}
+.btn-add-plato:hover{background:#d0ede5}
+.btn-add-categoria{margin-top:4px;padding:7px 14px;background:#eaf3fb;color:#1f6aa0;border:1px dashed #1f6aa0;border-radius:6px;cursor:pointer;font-size:0.95em;font-family:inherit}
+.btn-add-categoria:hover{background:#d0e8f5}
+.actions{margin-top:28px}
+.btn-save{width:100%;padding:13px;background:#16a085;color:#fff;border:none;border-radius:8px;font-size:1.05em;font-weight:700;cursor:pointer;font-family:inherit;transition:background 0.2s}
+.btn-save:hover{background:#138d75}
+.btn-save:disabled{background:#aaa;cursor:not-allowed}
+.back{display:inline-block;padding:8px 14px;background:#2980b9;color:#fff;text-decoration:none;border-radius:6px;font-size:0.95em;margin-bottom:18px}
+.back:hover{background:#2471a3}
+#statusMsg{margin-top:16px;padding:12px 16px;border-radius:7px;display:none;font-size:0.97em}
+.msg-ok{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.msg-err{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+@media(max-width:540px){
+  .header{flex-direction:column}
+  .header-img-wrap{width:100%}
+  .header-img-wrap img{width:100%;height:160px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="restaurantes.html">← Volver a restaurantes</a>
+
+  <form id="crearForm" novalidate>
+
+    <!-- HEADER igual al detalle: imagen izq + datos der -->
+    <div class="header">
+      <div class="header-img-wrap">
+        <img id="imgPreview"
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='100'%3E%3Crect width='140' height='100' fill='%23ecf0f1'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%2395a5a6' font-size='12' font-family='Arial'%3ESubir foto%3C/text%3E%3C/svg%3E"
+          alt="Foto del restaurante" title="Haz clic para subir foto">
+        <div class="img-hint">Clic en la imagen para cambiarla</div>
+        <input type="file" id="imgFileInput" accept="image/*">
+        <input type="text" id="imagen_url" class="sub-input" placeholder="O pega URL de imagen" style="font-size:0.78em;margin-top:6px">
+      </div>
+      <div style="flex:1;min-width:0">
+        <input class="titulo-input" type="text" id="nombre" placeholder="Nombre del restaurante" maxlength="120" required>
+        <input class="sub-input" type="text" id="direccion" placeholder="Dirección · Ej: Calle Principal #123" maxlength="200">
+        <input class="sub-input" type="tel" id="telefono" placeholder="Tel: +593..." maxlength="30">
+        <div class="horario-row">
+          <label>Abre:</label>
+          <input type="time" id="apertura" value="08:00">
+          <label>Cierra:</label>
+          <input type="time" id="cierre" value="22:00">
+        </div>
+        <div class="categoria-row">
+          <select id="categoria">
+            <option value="">-- Categoría del restaurante --</option>
+            <option value="Pizzerías y Pastas" selected>Pizzerías y Pastas</option>
+            <option value="Comida rapida">Comida rápida</option>
+            <option value="Comida Internacional">Comida Internacional</option>
+            <option value="Cafeterías y Postres">Cafeterías y Postres</option>
+            <option value="Mariscos">Mariscos</option>
+            <option value="Vegetariano">Vegetariano / Vegano</option>
+            <option value="Parrillas">Parrillas</option>
+            <option value="Otro">Otro</option>
+          </select>
+          <input id="categoriaOtro" type="text" placeholder="Escribe la nueva categoría" maxlength="60" style="display:none">
+        </div>
+      </div>
+    </div>
+
+    <!-- DESCRIPCIÓN -->
+    <div class="descripcion-area">
+      <textarea id="descripcion" placeholder="Descripción del restaurante: especialidades, ambiente, a quién va dirigido..."></textarea>
+    </div>
+
+    <!-- MENÚ: categorías con platos -->
+    <div class="menu-section">
+      <h3>Menú</h3>
+      <div id="categoriasContainer"></div>
+      <button type="button" class="btn-add-categoria" id="btnAddCategoria">+ Agregar categoría</button>
+    </div>
+
+    <!-- GUARDAR -->
+    <div class="actions">
+      <button type="submit" class="btn-save" id="submitBtn">Guardar restaurante</button>
+    </div>
+  </form>
+
+  <div id="statusMsg"></div>
+</div>
+
+<script>
+(function(){
+  const API_BASE = (
+    window.REDTIP_API_BASE ||
+    localStorage.getItem('rt_api_base') ||
+    ((window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:3000'
+      : '')
+  ).replace(/\/$/, '');
+
+  const raw   = localStorage.getItem('rt_user');
+  const token = localStorage.getItem('rt_token');
+  if(!raw){
+    document.getElementById('crearForm').innerHTML =
+      '<p style="color:#721c24;font-size:1.05em;margin:16px 0">Debes <a href="restaurantes.html" style="color:#1f6aa0">iniciar sesión</a> para agregar un restaurante.</p>';
+    return;
+  }
+
+  // ── Imagen ──
+  let imgBase64 = '';
+  const imgPreview  = document.getElementById('imgPreview');
+  const imgFile     = document.getElementById('imgFileInput');
+  const imgUrlInput = document.getElementById('imagen_url');
+  const PLACEHOLDER = imgPreview.src;
+
+  function compressImage(file){
+    return new Promise(function(resolve, reject){
+      const reader = new FileReader();
+      reader.onload = function(evt){
+        const img = new Image();
+        img.onload = function(){
+          const maxWidth = 1200;
+          const maxHeight = 900;
+          let width = img.width;
+          let height = img.height;
+
+          if(width > maxWidth || height > maxHeight){
+            const ratio = Math.min(maxWidth / width, maxHeight / height);
+            width = Math.round(width * ratio);
+            height = Math.round(height * ratio);
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', 0.72));
+        };
+        img.onerror = reject;
+        img.src = evt.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  imgPreview.addEventListener('click', () => imgFile.click());
+  imgFile.addEventListener('change', async function(){
+    const f = this.files[0]; if(!f) return;
+    try{
+      imgBase64 = await compressImage(f);
+      imgPreview.src = imgBase64;
+      imgUrlInput.value = '';
+    }catch(e){
+      showMsg('No se pudo procesar la imagen.', false);
+    }
+  });
+  imgUrlInput.addEventListener('input', function(){
+    const v = this.value.trim();
+    imgPreview.src = v || PLACEHOLDER; imgBase64 = '';
+  });
+  imgPreview.addEventListener('error', () => { imgPreview.src = PLACEHOLDER; });
+
+  // ── Categorías y platos ──
+  const container = document.getElementById('categoriasContainer');
+  let catId = 0;
+
+  function esc(s){ return String(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+  function addCategoria(nombre, platos){
+    catId++;
+    const div = document.createElement('div');
+    div.className = 'categoria-bloque';
+    div.innerHTML =
+      '<div class="categoria-header">' +
+        '<input class="categoria-nombre-input" type="text" placeholder="Nombre de categoría (ej: Combos, Bebidas...)" value="'+esc(nombre||'')+'" maxlength="60">' +
+        '<button type="button" class="btn-del-cat" title="Eliminar categoría">✕</button>' +
+      '</div>' +
+      '<div class="platos-list"></div>' +
+      '<button type="button" class="btn-add-plato">+ Agregar plato</button>';
+    div.querySelector('.btn-del-cat').onclick = () => div.remove();
+    div.querySelector('.btn-add-plato').onclick = () => addPlato(div.querySelector('.platos-list'));
+    container.appendChild(div);
+    const list = div.querySelector('.platos-list');
+    (platos||[]).forEach(p => addPlato(list, p.nombre, p.desc, p.precio));
+  }
+
+  function addPlato(list, nombre, desc, precio){
+    const row = document.createElement('div');
+    row.className = 'plato-row';
+    row.innerHTML =
+      '<input class="plato-nombre" type="text" placeholder="Nombre del plato" value="'+esc(nombre)+'" maxlength="80">' +
+      '<input class="plato-desc"   type="text" placeholder="Descripción (opcional)" value="'+esc(desc)+'" maxlength="120">' +
+      '<input class="plato-precio" type="number" step="0.01" min="0" placeholder="Precio" value="'+esc(precio)+'" style="width:80px">' +
+      '<button type="button" class="btn-del-plato" title="Eliminar">✕</button>';
+    row.querySelector('.btn-del-plato').onclick = () => row.remove();
+    list.appendChild(row);
+  }
+
+  addCategoria('Combos', []);
+  addCategoria('Bebidas', [{nombre:'Refresco 500ml', desc:'', precio:'1.00'}]);
+  document.getElementById('btnAddCategoria').onclick = () => addCategoria('', []);
+
+  const categoriaSelect = document.getElementById('categoria');
+  const categoriaOtroInput = document.getElementById('categoriaOtro');
+
+  function syncCategoriaOtro(){
+    const isOtro = categoriaSelect.value === 'Otro';
+    categoriaOtroInput.style.display = isOtro ? 'block' : 'none';
+    categoriaOtroInput.disabled = !isOtro;
+    if(!isOtro) categoriaOtroInput.value = '';
+  }
+
+  categoriaSelect.addEventListener('change', syncCategoriaOtro);
+  syncCategoriaOtro();
+
+  function saveRecentRestaurant(restaurant){
+    try{
+      const key = 'rt_recent_restaurants';
+      const raw = localStorage.getItem(key);
+      const list = raw ? JSON.parse(raw) : [];
+      const safeList = Array.isArray(list) ? list : [];
+      const slug = String(restaurant.slug || '').trim().toLowerCase();
+      const nombre = String(restaurant.nombre || '').trim().toLowerCase();
+      // Eliminar duplicados por slug O por nombre (para evitar repetidos con slugs distintos)
+      const filtered = safeList.filter(function(item){
+        const itemSlug = String((item && item.slug) || '').trim().toLowerCase();
+        const itemNombre = String((item && item.nombre) || '').trim().toLowerCase();
+        if(slug && itemSlug === slug) return false;
+        if(nombre && itemNombre === nombre) return false;
+        return true;
+      });
+      filtered.unshift(restaurant);
+      localStorage.setItem(key, JSON.stringify(filtered.slice(0, 30)));
+
+      const userRaw = localStorage.getItem('rt_user');
+      if(userRaw){
+        try{
+          const userData = JSON.parse(userRaw);
+          const userKey = String((userData && (userData.id || userData.user)) || '').trim().toLowerCase();
+          if(userKey){
+            const userStorageKey = 'rt_user_restaurants_' + userKey;
+            const userListRaw = localStorage.getItem(userStorageKey);
+            const userList = userListRaw ? JSON.parse(userListRaw) : [];
+            const safeUserList = Array.isArray(userList) ? userList : [];
+            const userFiltered = safeUserList.filter(function(item){
+              const itemSlug = String((item && item.slug) || '').trim().toLowerCase();
+              const itemNombre = String((item && item.nombre) || '').trim().toLowerCase();
+              if(slug && itemSlug === slug) return false;
+              if(nombre && itemNombre === nombre) return false;
+              return true;
+            });
+            userFiltered.unshift(restaurant);
+            localStorage.setItem(userStorageKey, JSON.stringify(userFiltered.slice(0, 30)));
+          }
+        }catch(_userErr){}
+      }
+    }catch(_e){
+      // Si localStorage falla, continuamos sin bloquear el flujo de guardado.
+    }
+  }
+
+  function extractMenuItemNames(menuData){
+    const names = [];
+    (Array.isArray(menuData) ? menuData : []).forEach(function(cat){
+      (Array.isArray(cat && cat.items) ? cat.items : []).forEach(function(item){
+        const n = String((item && item.nombre) || '').trim();
+        if(n) names.push(n);
+      });
+    });
+    return names.slice(0, 12);
+  }
+
+  // ── Enviar ──
+  document.getElementById('crearForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value.trim();
+    if(!nombre){ showMsg('El nombre del restaurante es obligatorio.', false); return; }
+
+    const menuData = [];
+    container.querySelectorAll('.categoria-bloque').forEach(catDiv => {
+      const cn = catDiv.querySelector('.categoria-nombre-input').value.trim();
+      if(!cn) return;
+      const items = [];
+      catDiv.querySelectorAll('.plato-row').forEach(row => {
+        const pn = row.querySelector('.plato-nombre').value.trim();
+        if(!pn) return;
+        items.push({ nombre: pn, desc: row.querySelector('.plato-desc').value.trim(), precio: row.querySelector('.plato-precio').value || '0.00' });
+      });
+      menuData.push({ categoria: cn, items });
+    });
+
+    const imagenFinal = imgBase64 || imgUrlInput.value.trim();
+    const categoriaSeleccionada = categoriaSelect.value.trim();
+    if(!categoriaSeleccionada){
+      showMsg('Selecciona una categoría para el restaurante.', false);
+      return;
+    }
+    const categoriaFinal = categoriaSeleccionada === 'Otro'
+      ? categoriaOtroInput.value.trim()
+      : categoriaSeleccionada;
+    if(!categoriaFinal){
+      showMsg('Escribe el nombre de la nueva categoría.', false);
+      return;
+    }
+
+    const body = {
+      nombre,
+      categoria:   categoriaFinal,
+      descripcion: document.getElementById('descripcion').value.trim(),
+      direccion:   document.getElementById('direccion').value.trim(),
+      telefono:    document.getElementById('telefono').value.trim(),
+      apertura:    document.getElementById('apertura').value,
+      cierre:      document.getElementById('cierre').value,
+      imagen_url:  imagenFinal,
+      menu_json:   JSON.stringify(menuData)
+    };
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = 'Guardando...';
+
+    // Generar slug local a partir del nombre (igual que el backend)
+    const localSlug = nombre.toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || ('restaurante-' + Date.now());
+
+    const menuItems = extractMenuItemNames(menuData);
+
+    // ── Guardar en localStorage ANTES de intentar la API ──
+    // Esto permite que la página de detalle siempre encuentre el restaurante
+    // aunque el servidor esté caído o tarde en responder.
+    saveRecentRestaurant({
+      slug: localSlug,
+      nombre: body.nombre,
+      descripcion: body.descripcion,
+      apertura: body.apertura,
+      cierre: body.cierre,
+      imagen_url: body.imagen_url,
+      categoria: body.categoria,
+      direccion: body.direccion,
+      telefono: body.telefono,
+      menu_items: menuItems,
+      menu_json: body.menu_json,
+      ts: Date.now()
+    });
+
+    // ── Intentar guardar en la API (best-effort) ──
+    let finalSlug = localSlug;
+    try{
+      const headers = { 'Content-Type': 'application/json' };
+      if(token){ headers['Authorization'] = 'Bearer ' + token; }
+      const res  = await fetch(API_BASE + '/api/restaurants', { method:'POST', headers: headers, body:JSON.stringify(body) });
+      const rawText = await res.text();
+      let json = {};
+      try { json = rawText ? JSON.parse(rawText) : {}; } catch(e) {}
+      if(res.ok && json.ok){
+        const apiSlug = (json.restaurant && json.restaurant.slug) ? json.restaurant.slug : localSlug;
+        if(apiSlug !== localSlug){
+          // Actualizar el slug en localStorage con el que devolvió el servidor
+          saveRecentRestaurant({
+            slug: apiSlug,
+            nombre: body.nombre,
+            descripcion: body.descripcion,
+            apertura: body.apertura,
+            cierre: body.cierre,
+            imagen_url: body.imagen_url,
+            categoria: body.categoria,
+            direccion: body.direccion,
+            telefono: body.telefono,
+            menu_items: menuItems,
+            menu_json: body.menu_json,
+            ts: Date.now()
+          });
+          finalSlug = apiSlug;
+        }
+      }
+    }catch(_err){
+      // El servidor no está disponible; el restaurante ya quedó guardado en localStorage.
+    }
+
+    showMsg('¡Restaurante <strong>'+nombre+'</strong> creado! <a href="restaurante_detalle.html?r='+finalSlug+'" style="color:#155724;font-weight:bold">Ver página →</a>', true);
+    btn.disabled = false; btn.textContent = 'Guardar restaurante';
+    const categoryAnchor = 'created-category-' + String(body.categoria || 'otros-restaurantes')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9_-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    setTimeout(function(){
+      window.location.href = 'restaurantes.html#' + categoryAnchor;
+    }, 1200);
+  });
+
+  function showMsg(html, ok){
+    const el = document.getElementById('statusMsg');
+    el.innerHTML = html; el.className = ok ? 'msg-ok' : 'msg-err'; el.style.display = 'block';
+    el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+})();
+</script>
+</body>
+</html>

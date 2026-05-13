@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurantes en Galápagos</title>
+  <meta name="description" content="Guía de restaurantes en Galápagos: opciones recomendadas, ubicación y consejos para comer en Santa Cruz.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.redtipsharkagency.com/restaurantes.html">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('deliverygalapagos.webp') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .categoria {
+            margin-top: 32px;
+        }
+        .categoria h2 {
+            color: #16a085;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 6px;
+        }
+        .restaurante {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            border-bottom: 1px solid #eee;
+            padding: 16px 0;
+        }
+        /* Hacer la tarjeta clicable cuando contiene un enlace */
+        .restaurante a.restaurante-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            color: inherit;
+            text-decoration: none;
+            width: 100%;
+        }
+        .restaurante a.restaurante-link:hover .nombre {
+            text-decoration: underline;
+        }
+        .restaurante:last-child {
+            border-bottom: none;
+        }
+        .restaurante img {
+            width: 90px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+        .nombre {
+            font-size: 1.3em;
+            color: #2980b9;
+            margin-bottom: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ofrece {
+            color: #555;
+        }
+        .estado-badge-wrapper { display:inline-flex; align-items:center; gap:6px; margin-left:8px; margin-right:6px; }
+        .status-dot { width:10px; height:10px; border-radius:50%; display:inline-block; box-shadow: 0 0 0 3px rgba(0,0,0,0.03); }
+        .status-dot.open { background:#2ecc71; }
+        .status-dot.closed { background:#e74c3c; }
+        /* Ajuste pequeño: asegurar que el badge dentro de .sub queda alineado en móviles */
+        @media (max-width:480px){ .sub { flex-wrap:wrap } .estado-badge-wrapper { margin-left:6px; margin-top:4px; } }
+        /* Añadidos: botón regresar en lado derecho y botón flotante WhatsApp */
+        .regresar-btn {
+            position: fixed;
+            right: 18px;
+            top: 40px;
+            background: #2980b9;
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 10002;
+        }
+        .regresar-btn:hover {
+            background: #1f6aa0;
+        }
+
+        /* Botón flotante WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            width: 56px;
+            height: 56px;
+            bottom: 20px;
+            right: 18px;
+            background-color: #25d366;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.25);
+            z-index: 10001;
+            text-decoration: none;
+        }
+        .whatsapp-float:hover {
+            background-color: #20ba5a;
+        }
+        .whatsapp-float svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+        /* Soporta imagen en lugar de SVG */
+        .whatsapp-float img {
+            width: 28px;
+            height: 28px;
+            display: block;
+            border-radius: 50%;
+        }
+
+        /* Colores y badge para estados de horario: abierto = verde, cerrado = rojo */
+        .sub { display:inline-flex; align-items:center; gap:8px; color:#666; font-size:0.95em; }
+        .estado-badge { padding:3px 8px; border-radius:12px; font-size:0.78em; color:#fff; font-weight:700; display:inline-block; min-width:64px; text-align:center; }
+        .sub.open .estado-badge { background: #2ecc71; }
+        .sub.closed .estado-badge { background: #e74c3c; }
+        .sub.open .abre-time { color: #145a32; font-weight: 700; }
+        .sub.open { color: #145a32; }
+        .sub.closed .cierra-time { color: #7f1d1d; font-weight: 700; }
+        .sub.closed { color: #7f1d1d; }
+
+        /* Carrusel para listado de restaurantes (cafeterías / pizzerías) */
+        .listing-carousel{margin-top:14px}
+        .listing-carousel .carousel{position:relative;overflow:hidden;border-radius:8px;border:1px solid #eee;background:#fff}
+        .listing-carousel .carousel-track{display:flex;transition:transform .35s ease;gap:8px}
+        .listing-carousel .slide{min-width:33.3333%;box-sizing:border-box;padding:8px;display:flex;flex-direction:column;align-items:center}
+        .listing-carousel .slide img{width:100%;height:120px;object-fit:cover;border-radius:6px}
+        .listing-carousel .slide .nombre{font-weight:700;color:#1f6aa0;margin-top:8px;text-align:center}
+        .listing-carousel .carousel-controls{position:absolute;top:50%;left:0;right:0;display:flex;justify-content:space-between;padding:0 8px;transform:translateY(-50%);z-index:10}
+        .listing-carousel button{background:rgba(0,0,0,0.5);color:#fff;border:none;padding:6px 8px;border-radius:6px;cursor:pointer}
+        .listing-carousel .carousel-dots{display:flex;gap:6px;justify-content:center;margin-top:8px}
+        @media (max-width:768px){ .listing-carousel .slide{min-width:50%} }
+        @media (max-width:480px){ .listing-carousel .slide{min-width:100%} .listing-carousel .carousel-controls{display:none} }
+
+        /* Mini carrusel (usado bajo entradas específicas) - unificado al mismo porte */
+        .listing-carousel.mini-listing .slide img{height:120px}
+        .listing-carousel.mini-listing .slide .nombre{font-size:1em}
+        .listing-carousel.mini-listing .slide{padding:8px} 
+
+        /* --- Estilos menú hamburguesa y modal de login --- */
+        .topbar { position: fixed; top: 12px; left: 12px; right: 12px; display:flex; align-items:center; justify-content:space-between; gap:12px; z-index:10003; pointer-events:none; }
+        .topbar .brand { font-weight:700; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.4); pointer-events:auto; }
+        .hamburger-btn { width:44px; height:44px; background:rgba(0,0,0,0.55); color:#fff; border-radius:8px; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; pointer-events:auto; }
+        .hamburger-btn:focus { outline:2px solid #fff; }
+        .hamburger-menu { position: fixed; top:0; left:-320px; width:280px; height:100%; background:#fff; box-shadow: 2px 0 12px rgba(0,0,0,0.15); transition:left .28s ease; z-index:10004; padding:20px; display:flex; flex-direction:column; gap:10px; overflow:auto; }
+        .hamburger-menu.open { left:0; }
+        .hamburger-menu a{ color:#2c3e50; text-decoration:none; padding:10px 6px; border-radius:6px; display:block; font-weight:600;}
+        .hamburger-menu .menu-header{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:6px;}
+        .hamburger-menu .menu-actions{ margin-top:8px; display:flex; flex-direction:column; gap:8px; }
+        .hamburger-menu .menu-actions button,
+        .hamburger-menu .menu-actions a{ width:100%; box-sizing:border-box; text-align:center; }
+        .hamburger-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.35); display:none; z-index:10002; }
+        .hamburger-overlay.open{ display:block; }
+
+        .login-modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:10006; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity .18s ease; }
+        .login-modal.open{ opacity:1; pointer-events:auto; }
+        .login-modal .modal { background:#fff; padding:18px; border-radius:10px; width:320px; max-width:92%; box-shadow:0 8px 30px rgba(0,0,0,0.2); }
+        .login-modal .modal h3{ margin:0 0 12px 0;}
+        .login-modal .modal label{ display:block; font-size:0.9em; margin-top:8px;}
+        .login-modal .modal input{ width:100%; padding:8px 10px; border-radius:6px; border:1px solid #ddd; margin-top:6px; box-sizing:border-box;}
+        .login-modal .modal .actions{ margin-top:12px; display:flex; gap:8px; justify-content:flex-end;}
+        .login-modal .modal .btn-primary{ background:#2980b9; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;}
+        .login-modal .modal .btn-secondary{ background:#eee; color:#333; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;}
+
+        @media (max-width:480px){ .topbar { left:8px; right:8px } .hamburger-menu { width:86%; } }
+
+        /* Ajustes específicos para login visible en menú */
+        .menu-login input{ box-sizing:border-box; padding:8px; }
+        .menu-login .btn-primary{ background:#16a085; color:#fff; }
+        .menu-login .btn-secondary{ background:#eee; color:#333; }
+        .menu-profile{ display:none; margin:8px 0 6px; text-align:center; }
+        .profile-avatar-wrap{ position:relative; width:82px; height:82px; margin:0 auto; }
+        .profile-avatar{ width:82px; height:82px; border-radius:50%; object-fit:cover; border:3px solid #dfe6e9; background:#f4f6f8; display:block; }
+        .profile-avatar-btn{ position:absolute; right:-2px; bottom:-2px; width:30px; height:30px; border-radius:50%; border:none; background:#16a085; color:#fff; cursor:pointer; font-size:16px; line-height:1; box-shadow:0 2px 8px rgba(0,0,0,0.25); }
+        .profile-avatar-btn:hover{ background:#138d75; }
+        .profile-name{ margin-top:10px; font-weight:700; color:#2c3e50; font-size:0.98rem; word-break:break-word; }
+        .topbar-profile{ display:none; align-items:center; gap:8px; pointer-events:auto; background:rgba(0,0,0,0.45); padding:4px 8px; border-radius:999px; cursor:pointer; }
+        .topbar-profile img{ width:30px; height:30px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,0.85); background:#ecf0f1; }
+        .topbar-profile .name{ color:#fff; font-weight:700; font-size:0.92rem; max-width:120px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+        /* Pedidos / Carrito */
+        .order-btn{ display:inline-block; font-weight:700; }
+        .cart-float{ position:fixed; left:18px; bottom:20px; width:56px; height:56px; background:#e67e22; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(0,0,0,0.18); z-index:10005; cursor:pointer; }
+        .cart-float .count{ position:absolute; right:-6px; top:-6px; background:#c0392b; width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8em; font-weight:700; }
+        .cart-modal{ position:fixed; right:18px; bottom:20px; width:360px; max-width:95%; background:#fff; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.2); z-index:10006; display:none; padding:12px; }
+        .cart-modal.open{ display:block; }
+        .cart-modal .item{ display:flex; gap:8px; align-items:center; border-bottom:1px solid #eee; padding:8px 0; }
+        .cart-modal .item .desc{ flex:1; }
+        .cart-modal .total{ font-weight:800; text-align:right; margin-top:8px; }
+        .orders-modal{ position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); background:#fff; padding:14px; border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,0.3); z-index:10007; display:none; width:90%; max-width:600px; }
+        .orders-modal.open{ display:block; max-height:80vh; overflow:auto; }
+
+    </style>
+    <link rel="stylesheet" href="menu-font.css">
+</head>
+<body>
+    <header class="topbar" role="banner">
+        <button class="hamburger-btn" id="hamburgerToggle" aria-label="Abrir menú" aria-expanded="false">
+            <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect y="1" width="20" height="2" rx="1" fill="#fff"/><rect y="6" width="20" height="2" rx="1" fill="#fff"/><rect y="11" width="20" height="2" rx="1" fill="#fff"/></svg>
+        </button>
+        <div class="brand">Restaurantes</div>
+      <div id="topbarProfile" class="topbar-profile" title="Cambiar foto" aria-label="Cambiar foto de perfil" role="button" tabindex="0">
+        <img id="topbarAvatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' fill='%23ecf0f1'/%3E%3Ccircle cx='60' cy='44' r='22' fill='%2395a5a6'/%3E%3Cpath d='M20 110c6-22 22-33 40-33s34 11 40 33' fill='%2395a5a6'/%3E%3C/svg%3E" alt="Perfil">
+        <div id="topbarName" class="name"></div>
+      </div>
+        <button id="topbarLogoutBtn" style="display:none;padding:7px 12px;border-radius:6px;background:#e74c3c;color:#fff;border:none;cursor:pointer;font-weight:700;font-size:0.88rem;pointer-events:auto;box-shadow:0 2px 6px rgba(0,0,0,0.18);">Cerrar sesión</button>
+        <div id="loginStatus" style="color:#fff;font-weight:700;pointer-events:auto"></div>
+    </header>
+    <nav id="hamburgerMenu" class="hamburger-menu" aria-hidden="true">
+        <div class="menu-header"><strong>Menú</strong><button id="closeMenuBtn" aria-label="Cerrar menú" style="background:none;border:none;font-size:20px;cursor:pointer;">✕</button></div>
+        <!-- Login visible: usuario / contraseña arriba del menú -->
+        <div class="menu-login" style="display:block;">
+            <label for="menuUser" style="font-weight:700;margin-top:6px;display:block">Usuario</label>
+            <input id="menuUser" type="text" placeholder="Usuario" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
+            <label for="menuPass" style="font-weight:700;margin-top:8px;display:block">Contraseña</label>
+            <input id="menuPass" type="password" placeholder="Contraseña" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
+            <div style="display:flex;gap:8px;margin-top:8px">
+                <button id="menuLoginBtn" class="btn-primary" style="flex:1;padding:8px;border-radius:6px;background:#16a085;color:#fff;border:none;cursor:pointer">Ingresar</button>
+                <button id="menuClearBtn" class="btn-secondary" style="padding:8px;border-radius:6px;background:#eee;color:#333;border:none;cursor:pointer">Borrar</button>
+            </div>
+            <button id="forgotPasswordBtn" style="margin-top:8px;padding:8px;border-radius:6px;background:#f39c12;color:#fff;border:none;cursor:pointer;width:100%">Recuperar clave</button>
+            <div id="menuLoginMsg" style="color:#b00020;margin-top:8px;display:none"></div>
+
+            <!-- Formulario de registro dentro del menú (oculto inicialmente) -->
+            <hr style="margin-top:12px;border:none;border-top:1px solid #eee">
+            <button id="toggleRegister" style="margin-top:10px;padding:8px;border-radius:6px;background:#2980b9;color:#fff;border:none;cursor:pointer;width:100%">Crear cuenta</button>
+            <div id="menuRegister" style="display:none;margin-top:10px">
+                <label for="regName" style="font-weight:700;display:block;margin-top:6px">Nombre de usuario</label>
+                <input id="regName" type="text" placeholder="Usuario" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
+                <label for="regEmail" style="font-weight:700;display:block;margin-top:8px">Email</label>
+                <input id="regEmail" type="email" placeholder="correo@ejemplo.com" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
+                <label for="regPass" style="font-weight:700;display:block;margin-top:8px">Contraseña</label>
+                <input id="regPass" type="password" placeholder="Contraseña" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
+                <label for="regPhone" style="font-weight:700;display:block;margin-top:8px">Teléfono (opcional)</label>
+                <input id="regPhone" type="text" placeholder="099876543" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
+                <div style="display:flex;gap:8px;margin-top:8px">
+                    <button id="registerBtn" class="btn-primary" style="flex:1;padding:8px;border-radius:6px;background:#16a085;color:#fff;border:none;cursor:pointer">Registrar</button>
+                    <button id="cancelRegisterBtn" class="btn-secondary" style="padding:8px;border-radius:6px;background:#eee;color:#333;border:none;cursor:pointer">Cancelar</button>
+                </div>
+                <div id="registerMsg" style="color:#b00020;margin-top:8px;display:none"></div>
+            </div>
+        </div>
+          <div id="menuProfile" class="menu-profile">
+            <div class="profile-avatar-wrap">
+              <img id="profileAvatar" class="profile-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' fill='%23ecf0f1'/%3E%3Ccircle cx='60' cy='44' r='22' fill='%2395a5a6'/%3E%3Cpath d='M20 110c6-22 22-33 40-33s34 11 40 33' fill='%2395a5a6'/%3E%3C/svg%3E" alt="Foto de perfil">
+              <button id="changeAvatarBtn" class="profile-avatar-btn" type="button" aria-label="Agregar foto">+</button>
+              <input id="avatarInput" type="file" accept="image/*" style="display:none;">
+            </div>
+            <div id="profileName" class="profile-name"></div>
+          </div>
+        <button id="logoutBtn" style="display:none;padding:8px 10px;border-radius:6px;background:#e74c3c;color:#fff;border:none;cursor:pointer;margin-top:6px;">Cerrar sesión</button>
+        <a href="index.html">Inicio</a>
+        <a id="crearRestauranteLink" href="crear-restaurante.html" style="display:none;margin-top:4px;">Crear restaurante</a>
+        <div id="mis-restaurantes-menu" style="display:none;margin-top:6px;padding:6px 0;border-top:1px solid rgba(255,255,255,0.15)"></div>
+        <div class="menu-actions">
+          <button id="viewOrdersBtn" type="button" style="display:none;padding:8px 10px;border-radius:6px;background:#8e44ad;color:#fff;border:none;cursor:pointer">Mis pedidos</button>
+            <button id="openLoginBtn" class="btn-primary" style="display:none;padding:8px 10px;border-radius:6px;background:#16a085;color:#fff;border:none;cursor:pointer">Ingresar</button>
+        </div>
+    </nav>
+    <div id="hamburgerOverlay" class="hamburger-overlay" tabindex="-1" aria-hidden="true"></div>
+
+    <div class="container">
+        <h1>Restaurantes en Galápagos</h1>
+
+        <div class="categoria" id="created-category-comida-rapida">
+            <h2>Comida rapida</h2>
+            <div class="restaurante">
+                <a class="restaurante-link" href="restaurante_detalle.html?r=sirenita">
+                    <img src="sirenita.webp" alt="Antojitos la Sirenita">
+                    <div>
+                        <div class="nombre">Antojitos la Sirenita</div>
+                        <div class="ofrece">Comida rapida: pollo, bandejitas.</div>
+                        <div class="sub" style="color:#666;font-size:0.95em">Abre: 8:00 · Cierra: 22:00</div>
+                  <div style="margin-top:6px;">
+                    <span style="font-size:0.9em;color:#1f6aa0;text-decoration:underline;">Enlace: Ver Antojitos la Sirenita</span>
+                  </div>
+                        <button class="order-btn" data-id="sirenita" data-name="Antojitos la Sirenita" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
+                    </div>
+                </a>
+            </div>
+            <div id="sirenita-mini-carousel" class="listing-carousel mini-listing" aria-label="Mini carrusel Antojitos la Sirenita"></div>
+            <div class="restaurante">
+                <a class="restaurante-link" href="restaurante_detalle.html?r=corvichegaby">
+                    <img src="corvichegaby.webp" alt="Corviches Gaby">
+                    <div>
+                        <div class="nombre">Corviches Gaby</div>
+                        <div class="ofrece">Deliciosos corviches de pescado</div>
+                        <div class="sub" style="color:#666;font-size:0.95em">Abre: 10:00 · Cierra: 20:00</div>
+                        <button class="order-btn" data-id="corvichegaby" data-name="Corviches Gaby" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
+                    </div>
+                </a>
+            </div>
+            <div id="comida-rapida-carousel" class="listing-carousel" aria-label="Carrusel de comida rápida"></div>
+            <div id="created-restaurants-rapida"></div>
+        </div> 
+
+        <div class="categoria" id="created-category-comida-internacional">
+            <h2>Comida Internacional</h2>
+            <div class="restaurante">
+                <a class="restaurante-link" href="restaurante_detalle.html?r=uramakisushi">
+                    <img src="uramakisushi.webp" alt="Uramaki suhi">
+                    <div>
+                        <div class="nombre">Uramaki Sushi</div>
+                        <div class="ofrece">Sushi, sashimi y platos asiáticos con ingredientes locales.</div>
+                        <div class="sub" style="color:#666;font-size:0.95em">Abre: 12:00 · Cierra: 22:30</div>
+                        <button class="order-btn" data-id="uramakisushi" data-name="Uramaki Sushi" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
+                    </div>
+                </a>
+            </div>
+            <div id="uramakisushi-mini-carousel" class="listing-carousel mini-listing" aria-label="Mini carrusel Uramaki Sushi"></div>
+            <div class="restaurante">
+                <a class="restaurante-link" href="restaurante_detalle.html?r=comidachina">
+                    <img src="chaulafan island.webp" alt="Comida China">
+                    <div>
+                        <div class="nombre">Comida China</div>
+                        <div class="ofrece">CHAULAFAN Y TALLARIN ESPECIAL</div>
+                        <div class="sub" style="color:#666;font-size:0.95em">Abre: 11:00 · Cierra: 22:00</div>
+                        <button class="order-btn" data-id="comidachina" data-name="Comida China" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
+                    </div>
+                </a>
+            </div>
+            <div id="internacional-carousel" class="listing-carousel" aria-label="Carrusel de comida internacional"></div>
+            <div id="created-restaurants-internacional"></div>
+        </div> 
+
+        <div class="categoria" id="created-category-cafeterias-y-postres">
+            <h2>Cafeterías y Postres</h2>
+            <div class="restaurante">
+                <a class="restaurante-link" href="restaurante_detalle.html?r=postreria444">
+                    <img src="lapostreria444.webp" alt="La Postreria 444">
+                    <div>
+                        <div class="nombre">La Postreria 444</div>
+                        <div class="ofrece">Fresas con crema, donas.</div>
+                        <div class="sub" style="color:#666;font-size:0.95em">Abre: 09:00 · Cierra: 20:00</div>
+                        <button class="order-btn" data-id="postreria444" data-name="La Postreria 444" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
+                    </div>
+                </a>
+            </div>
+            <div id="postreria444-mini-carousel" class="listing-carousel mini-listing" aria-label="Mini carrusel La Postreria 444"></div>
+            <div id="created-restaurants-postres"></div>
+        </div>
+
+        <div class="categoria" id="created-category-pizzerias-y-pastas">
+            <h2>Pizzerías y Pastas</h2>
+            <div class="restaurante">
+                <a class="restaurante-link" href="restaurante_detalle.html?r=pizzaencantada">
+                    <img src="pizzaencantada.webp" alt="pizzaencantada">
+                    <div>
+                        <div class="nombre">Pizzería Encantada</div>
+                        <div class="ofrece">Pizzas al horno de leña, pastas y ensaladas frescas.</div>
+                        <div class="sub" style="color:#666;font-size:0.95em">Abre: 11:00 · Cierra: 23:00</div>
+                        <button class="order-btn" data-id="pizzaencantada" data-name="Pizzería Encantada" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
+                    </div>
+                </a>
+            </div>
+            <div id="pizzaencantada-mini-carousel" class="listing-carousel mini-listing" aria-label="Mini carrusel Pizzería Encantada"></div>
+              <div id="created-restaurants-under-pizza"></div>
+        </div>
+              <div id="dynamic-created-categories"></div>
+    </div>
+
+    <!-- Add these elements just before the closing </body> -->
+    <a href="index.html" class="regresar-btn" aria-label="Regresar">Regresar</a>
+
+    <a href="https://wa.me/593959285913" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <img src="whatsapp.webp" alt="WhatsApp">
+    </a>
+
+    <!-- Login modal -->
+    <div id="loginModal" class="login-modal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal">
+            <h3>Iniciar sesión</h3>
+            <label for="loginUser">Usuario</label>
+            <input id="loginUser" type="text" placeholder="Tu usuario">
+            <label for="loginPass">Contraseña</label>
+            <input id="loginPass" type="password" placeholder="Contraseña">
+            <div class="actions">
+                <button id="cancelLogin" class="btn-secondary">Cancelar</button>
+                <button id="submitLogin" class="btn-primary">Ingresar</button>
+            </div>
+            <div id="loginError" style="color:#b00020;margin-top:8px;display:none"></div>
+        </div>
+    </div>
+
+    <!-- Order modal -->
+    <div id="orderModal" class="login-modal" role="dialog" aria-modal="true" style="z-index:10006;display:none">
+      <div class="modal">
+        <h3>Nuevo pedido</h3>
+        <input id="orderRestaurant" type="hidden">
+        <div><strong id="orderRestaurantName"></strong></div>
+        <label style="display:block;margin-top:8px">Detalle</label>
+        <input id="orderDetail" type="text" placeholder="Ej: 1 pizza margarita" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;margin-top:6px;">
+        <label style="display:block;margin-top:8px">Cantidad</label>
+        <input id="orderQty" type="number" min="1" value="1" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;margin-top:6px;">
+        <label style="display:block;margin-top:8px">Precio unitario (USD)</label>
+        <input id="orderPrice" type="number" min="0" step="0.01" value="10.00" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;margin-top:6px;">
+        <div class="actions" style="margin-top:12px;">
+          <button id="addToCartBtn" class="btn-primary">Agregar al carrito</button>
+          <button id="cancelOrderBtn" class="btn-secondary">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart floating button -->
+    <div id="cartFloat" class="cart-float" title="Ver carrito" aria-label="Ver carrito" role="button">
+      🧾<div class="count" id="cartCount" style="display:none">0</div>
+    </div>
+
+    <!-- Cart modal -->
+    <div id="cartModal" class="cart-modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div style="display:flex;align-items:center;justify-content:space-between"><strong>Tu carrito</strong><button id="closeCartBtn" style="background:none;border:none;font-size:18px;cursor:pointer">✕</button></div>
+      <div id="cartItems" style="margin-top:8px"></div>
+      <div class="total" id="cartTotal">Total: $0.00</div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button id="checkoutBtn" class="btn-primary" style="flex:1">Pagar / Enviar pedido</button>
+        <button id="clearCartBtn" class="btn-secondary" style="width:110px">Vaciar</button>
+      </div>
+    </div>
+
+    <!-- Orders modal -->
+    <div id="ordersModal" class="orders-modal" aria-hidden="true">
+      <div style="display:flex;align-items:center;justify-content:space-between"><strong>Tus pedidos</strong><button id="closeOrdersBtn" style="background:none;border:none;font-size:18px;cursor:pointer">✕</button></div>
+      <div id="ordersList" style="margin-top:8px"></div>
+    </div>
+
+<script>
+(function(){
+  const API_BASE = (
+    window.REDTIP_API_BASE ||
+    localStorage.getItem('rt_api_base') ||
+    ((window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:3000'
+      : '')
+  ).replace(/\/$/, '');
+
+  function buildListingCarousel(containerId, slides){
+    const container = document.getElementById(containerId);
+    if(!container) return;
+    container.innerHTML = '';
+    const carousel = document.createElement('div'); carousel.className = 'carousel'; carousel.setAttribute('tabindex','0');
+    const track = document.createElement('div'); track.className = 'carousel-track';
+    slides.forEach(s=>{
+      const slide = document.createElement('div'); slide.className = 'slide';
+      slide.innerHTML = `<img src="${s.imagen}" alt="${s.nombre}"><div class="nombre">${s.nombre}</div>`;
+      track.appendChild(slide);
+    });
+    carousel.appendChild(track);
+
+    const controls = document.createElement('div'); controls.className = 'carousel-controls';
+    controls.innerHTML = '<button type="button" data-action="prev" aria-label="Anterior">‹</button><button type="button" data-action="next" aria-label="Siguiente">›</button>';
+    carousel.appendChild(controls);
+
+    const dots = document.createElement('div'); dots.className = 'carousel-dots';
+
+    container.appendChild(carousel); container.appendChild(dots);
+
+    let current = 0; let slidesPerView = 3; let maxIndex = Math.max(0, slides.length - slidesPerView);
+
+    function setSlidesPerView(){
+      const w = container.clientWidth;
+      slidesPerView = (w < 480) ? 1 : (w < 768) ? 2 : 3;
+      track.querySelectorAll('.slide').forEach(sl => sl.style.minWidth = (100/slidesPerView) + '%');
+      maxIndex = Math.max(0, slides.length - slidesPerView);
+      if(current>maxIndex) current = maxIndex;
+      update();
+    }
+
+    function update(){
+      track.style.transform = `translateX(-${(100/slidesPerView)*current}%)`;
+      dots.innerHTML = slides.map((_,i)=>`<button data-dot="${i}" class="${i===current?'active':''}" aria-label="Ir al slide ${i+1}"></button>`).join('');
+    }
+
+    controls.querySelectorAll('button[data-action]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{ if(btn.dataset.action==='prev') current = Math.max(0,current-1); else current = Math.min(maxIndex,current+1); update(); });
+    });
+
+    dots.addEventListener('click', e=>{ const dot = e.target.closest('button[data-dot]'); if(dot){ current = parseInt(dot.dataset.dot,10); if(current>maxIndex) current = maxIndex; update(); } });
+
+    let auto = setInterval(()=>{ current = current < maxIndex ? current+1 : 0; update(); }, 3000);
+    carousel.addEventListener('mouseenter', ()=> clearInterval(auto));
+    carousel.addEventListener('mouseleave', ()=> auto = setInterval(()=>{ current = current < maxIndex ? current+1 : 0; update(); }, 3000));
+
+    window.addEventListener('resize', setSlidesPerView);
+    setSlidesPerView();
+  }
+
+  // Inicializar carruseles con slides de ejemplo (ajusta imágenes/nombres según necesites)
+
+  buildListingCarousel('comida-rapida-carousel', [
+    {nombre:'Antojitos la Sirenita', imagen:'sirenita.webp'},
+    {nombre:'Corviches Gaby', imagen:'corvichegaby.webp'}
+  ]);
+
+  buildListingCarousel('internacional-carousel', [
+    {nombre:'Uramaki Sushi', imagen:'uramakisushi.webp'},
+    {nombre:'Comida China', imagen:'chaulafan island.webp'}
+  ]);
+
+  buildListingCarousel('sirenita-mini-carousel', [
+    {nombre:'Bandeja especial', imagen:'sirenita.webp'},
+    {nombre:'Pollo frito', imagen:'sirenita.webp'},
+    {nombre:'Empanada', imagen:'sirenita.webp'}
+  ]);
+
+  buildListingCarousel('uramakisushi-mini-carousel', [
+    {nombre:'Sashimi', imagen:'uramakisushi.webp'},
+    {nombre:'Maki', imagen:'uramakisushi.webp'},
+    {nombre:'Tempura', imagen:'uramakisushi.webp'}
+  ]);
+
+  buildListingCarousel('postreria444-mini-carousel', [
+    {nombre:'Fresas con crema', imagen:'lapostreria444.webp'},
+    {nombre:'Donas', imagen:'lapostreria444.webp'},
+    {nombre:'Cappuccino', imagen:'lapostreria444.webp'}
+  ]);
+
+  buildListingCarousel('pizzaencantada-mini-carousel', [
+    {nombre:'Pizza Margarita', imagen:'pizzaencantada.webp'},
+    {nombre:'Pizza Hawaiana', imagen:'pizzaencantada.webp'},
+    {nombre:'Pasta Carbonara', imagen:'pizzaencantada.webp'}
+  ]);
+
+  function esc(s){
+    return String(s || '').replace(/[&<>'"]/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','\'':'&#39;','"':'&quot;'}[c];
+    });
+  }
+
+  function normalizeCategory(value){
+    return String(value || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim();
+  }
+
+  function prettyCategoryTitle(value){
+    const raw = String(value || '').trim();
+    if(!raw) return 'Otros restaurantes';
+    return raw;
+  }
+
+  function getCategoryHost(categoria){
+    const normalized = normalizeCategory(categoria);
+    if(normalized === 'comida rapida') return document.getElementById('created-restaurants-rapida');
+    if(normalized === 'comida internacional') return document.getElementById('created-restaurants-internacional');
+    if(normalized === 'cafeterias y postres') return document.getElementById('created-restaurants-postres');
+    if(normalized === 'pizzerias y pastas') return document.getElementById('created-restaurants-under-pizza');
+    return null;
+  }
+
+  function shouldHideRestaurant(r){
+    const slug = String((r && r.slug) || '').trim().toLowerCase();
+    const nombre = String((r && r.nombre) || '').trim().toLowerCase();
+    const noisyNames = new Set(['jijujyj', 'si f', 'wachis']);
+    const noisySlugs = new Set(['jijujyj', 'si-f', 'wachis']);
+    const isDeleted = isRestaurantDeleted(slug);
+    return isDeleted ||
+      slug === 'estela' || slug.startsWith('estela-') || nombre === 'estela' ||
+      noisyNames.has(nombre) || noisySlugs.has(slug);
+  }
+
+  function getDeletedRestaurantSlugs(){
+    try{
+      const raw = localStorage.getItem('rt_deleted_restaurants');
+      const list = raw ? JSON.parse(raw) : [];
+      return Array.isArray(list)
+        ? list.map(function(s){ return String(s || '').trim().toLowerCase(); }).filter(Boolean)
+        : [];
+    }catch(_e){
+      return [];
+    }
+  }
+
+  function resetRestaurantLocalStateOnce(){
+    try{
+      if(localStorage.getItem('rt_restaurants_state_reset_done') === '1') return;
+      localStorage.removeItem('rt_deleted_restaurants');
+      // No borrar los restaurantes recientes: ahí se guardan los que el usuario acaba de crear.
+      localStorage.setItem('rt_restaurants_state_reset_done', '1');
+    }catch(_e){}
+  }
+
+  function setDeletedRestaurantSlugs(slugs){
+    const unique = Array.from(new Set((Array.isArray(slugs) ? slugs : [])
+      .map(function(s){ return String(s || '').trim().toLowerCase(); })
+      .filter(Boolean)));
+    localStorage.setItem('rt_deleted_restaurants', JSON.stringify(unique));
+  }
+
+  function isRestaurantDeleted(slug){
+    const key = String(slug || '').trim().toLowerCase();
+    if(!key) return false;
+    return getDeletedRestaurantSlugs().indexOf(key) !== -1;
+  }
+
+  function markRestaurantDeleted(slug){
+    const key = String(slug || '').trim().toLowerCase();
+    if(!key) return;
+    const deleted = getDeletedRestaurantSlugs();
+    if(deleted.indexOf(key) !== -1) return;
+    deleted.push(key);
+    setDeletedRestaurantSlugs(deleted);
+  }
+
+  function getRecentCreatedRestaurants(){
+    try{
+      const raw = localStorage.getItem('rt_recent_restaurants');
+      const list = raw ? JSON.parse(raw) : [];
+      const safeList = Array.isArray(list) ? list : [];
+      const filtered = safeList.filter(function(item){ return !shouldHideRestaurant(item); });
+      if(filtered.length !== safeList.length){
+        localStorage.setItem('rt_recent_restaurants', JSON.stringify(filtered));
+      }
+      return filtered;
+    }catch(_e){
+      return [];
+    }
+  }
+
+  function toCarouselKey(value){
+    return String(value || 'restaurante')
+      .toLowerCase()
+      .replace(/[^a-z0-9_-]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'restaurante';
+  }
+
+  function getCategoryAnchorKey(categoria){
+    const normalized = normalizeCategory(categoria) || 'otros-restaurantes';
+    return toCarouselKey(normalized);
+  }
+
+  function ensureDynamicCategoryHost(categoria){
+    const wrapper = document.getElementById('dynamic-created-categories');
+    if(!wrapper) return null;
+
+    const key = getCategoryAnchorKey(categoria);
+    const hostId = 'created-restaurants-dynamic-' + key;
+    const existingHost = document.getElementById(hostId);
+    if(existingHost) return existingHost;
+
+    const section = document.createElement('div');
+    section.className = 'categoria';
+    section.id = 'created-category-' + key;
+
+    const title = document.createElement('h2');
+    title.textContent = prettyCategoryTitle(categoria);
+
+    const host = document.createElement('div');
+    host.id = hostId;
+
+    section.appendChild(title);
+    section.appendChild(host);
+    wrapper.appendChild(section);
+    return host;
+  }
+
+  function getRestaurantSlides(r){
+    const image = String((r && r.imagen_url) || 'pizzaencantada.webp');
+    const names = [];
+
+    const localItems = Array.isArray(r && r.menu_items) ? r.menu_items : [];
+    localItems.forEach(function(item){
+      const n = String(item || '').trim();
+      if(n) names.push(n);
+    });
+
+    if(names.length === 0){
+      const rawMenu = r && r.menu_json;
+      try{
+        const parsed = (typeof rawMenu === 'string') ? JSON.parse(rawMenu) : rawMenu;
+        (Array.isArray(parsed) ? parsed : []).forEach(function(cat){
+          (Array.isArray(cat && cat.items) ? cat.items : []).forEach(function(item){
+            const n = String((item && item.nombre) || '').trim();
+            if(n) names.push(n);
+          });
+        });
+      }catch(_e){
+        // Si no se puede parsear, usamos fallback abajo.
+      }
+    }
+
+    const unique = [];
+    const seen = new Set();
+    names.forEach(function(n){
+      const key = n.toLowerCase();
+      if(seen.has(key)) return;
+      seen.add(key);
+      unique.push(n);
+    });
+
+    const baseName = String((r && r.nombre) || 'Restaurante').trim();
+    const finalNames = unique.length > 0 ? unique.slice(0, 8) : [baseName, 'Especial de la casa', 'Recomendado'];
+    const fallbackNames = [baseName, 'Especial de la casa', 'Recomendado'];
+
+    // Garantiza al menos 3 tarjetas en el mini carrusel.
+    while(finalNames.length < 3){
+      const nextName = fallbackNames[finalNames.length] || ('Plato ' + (finalNames.length + 1));
+      if(finalNames.indexOf(nextName) === -1){
+        finalNames.push(nextName);
+      }else{
+        finalNames.push('Plato ' + (finalNames.length + 1));
+      }
+    }
+
+    return finalNames.map(function(n){ return { nombre: n, imagen: image }; });
+  }
+
+  function buildCreatedRestaurantCard(r, miniCarouselId){
+    const slug = esc(r.slug || 'restaurante');
+    const nombre = esc(r.nombre || 'Restaurante');
+    const descripcion = esc(r.descripcion || 'Nuevo restaurante agregado por usuarios.');
+    const apertura = esc(r.apertura || '08:00');
+    const cierre = esc(r.cierre || '22:00');
+    const imagen = esc(r.imagen_url || 'pizzaencantada.webp');
+    return `
+      <div class="restaurante" style="margin-top:14px;">
+        <a class="restaurante-link" href="restaurante_detalle.html?r=${slug}">
+          <img src="${imagen}" alt="${nombre}">
+          <div>
+            <div class="nombre">${nombre}</div>
+            <div class="ofrece">${descripcion}</div>
+            <div class="sub" style="color:#666;font-size:0.95em">Abre: ${apertura} · Cierra: ${cierre}</div>
+            <button class="order-btn" data-id="${slug}" data-name="${nombre}" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
+          </div>
+        </a>
+      </div>
+      <div id="${miniCarouselId}" class="listing-carousel mini-listing" aria-label="Mini carrusel ${nombre}"></div>
+    `;
+  }
+
+  async function renderCreatedRestaurantsByCategory(){
+    const allHosts = [
+      document.getElementById('created-restaurants-rapida'),
+      document.getElementById('created-restaurants-internacional'),
+      document.getElementById('created-restaurants-postres'),
+      document.getElementById('created-restaurants-under-pizza')
+    ].filter(Boolean);
+    allHosts.forEach(function(h){ h.innerHTML = ''; });
+    const dynamicWrapper = document.getElementById('dynamic-created-categories');
+    if(dynamicWrapper) dynamicWrapper.innerHTML = '';
+    const recent = getRecentCreatedRestaurants();
+    const apiCreated = [];
+    try{
+      const res = await fetch(API_BASE + '/api/restaurants');
+      if(res.ok){
+        const data = await res.json();
+        const created = Array.isArray(data.restaurants) ? data.restaurants : [];
+        created.forEach(function(r){ apiCreated.push(r); });
+      }
+    }catch(e){
+      // Si la API falla, mostramos los creados en localStorage.
+    }
+
+    const merged = [];
+    const seenSlugs = new Set();
+
+    apiCreated.forEach(function(r){
+      if(shouldHideRestaurant(r)) return;
+      const key = String((r && r.slug) || '').trim().toLowerCase();
+      if(key && seenSlugs.has(key)) return;
+      if(key) seenSlugs.add(key);
+      merged.push(r);
+    });
+
+    recent.forEach(function(r){
+      if(shouldHideRestaurant(r)) return;
+      const key = String((r && r.slug) || '').trim().toLowerCase();
+      if(key && seenSlugs.has(key)) return;
+      if(key) seenSlugs.add(key);
+      merged.push(r);
+    });
+
+    merged.forEach(function(r){
+        let host = getCategoryHost(r && r.categoria);
+        if(!host){
+          host = ensureDynamicCategoryHost(r && r.categoria);
+        }
+        if(!host) return;
+        const slugOrName = (r && (r.slug || r.nombre)) || ('restaurante-' + Date.now());
+        const miniCarouselId = 'created-mini-carousel-' + toCarouselKey(slugOrName);
+        host.insertAdjacentHTML('beforeend', buildCreatedRestaurantCard(r, miniCarouselId));
+        buildListingCarousel(miniCarouselId, getRestaurantSlides(r));
+    });
+
+    applyHorarioColors();
+
+    const hash = String(window.location.hash || '');
+    if(hash.startsWith('#created-category-')){
+      const section = document.getElementById(hash.slice(1));
+      if(section){
+        section.scrollIntoView({ behavior:'smooth', block:'start' });
+      }
+    }
+  }
+
+  // Limpia estado legado solo una vez para evitar ocultamientos antiguos.
+  resetRestaurantLocalStateOnce();
+  renderCreatedRestaurantsByCategory();
+
+  // Horario: muestra badge "Abierto"/"Cerrado", formatea HH:MM y colorea tiempos
+  function parseHHMM(t){
+    const parts = (''+t).trim().split(':').map(p=>parseInt(p,10));
+    return {h: isNaN(parts[0])?0:parts[0], m: isNaN(parts[1])?0:parts[1]||0};
+  }
+  function formatHHMM(t){
+    const p = parseHHMM(t);
+    return String(p.h).padStart(2,'0') + ':' + String(p.m).padStart(2,'0');
+  }
+  function isCurrentlyOpen(openStr, closeStr){
+    const now = new Date();
+    const open = parseHHMM(openStr);
+    const close = parseHHMM(closeStr);
+    const openDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), open.h, open.m);
+    let closeDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), close.h, close.m);
+    // Si la hora de cierre es igual o anterior a la de apertura, asumimos que cierra al día siguiente
+    if(closeDate <= openDate){
+      closeDate.setDate(closeDate.getDate()+1);
+    }
+    // También hay que comprobar el caso en que estamos después de medianoche y el periodo comenzó el día anterior
+    if(now < openDate){
+      const prevOpenDate = new Date(openDate); prevOpenDate.setDate(openDate.getDate()-1);
+      const prevCloseDate = new Date(closeDate); prevCloseDate.setDate(closeDate.getDate()-1);
+      if(now >= prevOpenDate && now <= prevCloseDate) return true;
+    }
+    return now >= openDate && now <= closeDate;
+  }
+
+  function applyHorarioColors(){
+    document.querySelectorAll('.sub').forEach(el=>{
+      const txt = el.textContent.trim();
+      const m = txt.match(/Abre:\s*([0-9]{1,2}(?::[0-9]{2})?)\s*·\s*Cierra:\s*([0-9]{1,2}(?::[0-9]{2})?)/i);
+      if(!m) return;
+      const open = m[1];
+      const close = m[2];
+      const openF = formatHHMM(open);
+      const closeF = formatHHMM(close);
+      const openNow = isCurrentlyOpen(open, close);
+      // Actualizar la línea de horario (solo horas) e insertar el badge junto a 'Abre'
+      const badgeHtml = `<span class="estado-badge-wrapper ${openNow ? 'open' : 'closed'}"><span class="status-dot ${openNow ? 'open' : 'closed'}" aria-hidden="true"></span><span class="estado-badge" role="status" aria-live="polite">${openNow ? 'Abierto' : 'Cerrado'}</span></span>`;
+      el.classList.remove('open','closed');
+      el.classList.add(openNow ? 'open' : 'closed');
+      el.innerHTML = `<span class="hora-text">Abre: <span class="abre-time">${openF}</span>${badgeHtml} &middot; Cierra: <span class="cierra-time">${closeF}</span></span>`;
+
+    });
+  }
+  // Ejecutar al inicio y cada 60s para mantener el estado actualizado
+  applyHorarioColors();
+  setInterval(applyHorarioColors, 60*1000);
+})();
+</script>
+
+<script>
+// --- Control de menú hamburguesa y login (almacena usuario en localStorage) ---
+(function(){
+  const toggleBtn = document.getElementById('hamburgerToggle');
+  const menu = document.getElementById('hamburgerMenu');
+  const overlay = document.getElementById('hamburgerOverlay');
+  const closeBtn = document.getElementById('closeMenuBtn');
+  const openLoginBtn = document.getElementById('openLoginBtn');
+  const loginModal = document.getElementById('loginModal');
+  const submitLogin = document.getElementById('submitLogin');
+  const cancelLogin = document.getElementById('cancelLogin');
+  const loginStatus = document.getElementById('loginStatus');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const topbarLogoutBtn = document.getElementById('topbarLogoutBtn');
+  const loginUser = document.getElementById('loginUser');
+  const loginPass = document.getElementById('loginPass');
+  const loginError = document.getElementById('loginError');
+  const menuProfile = document.getElementById('menuProfile');
+  const profileAvatar = document.getElementById('profileAvatar');
+  const profileName = document.getElementById('profileName');
+  const changeAvatarBtn = document.getElementById('changeAvatarBtn');
+  const avatarInput = document.getElementById('avatarInput');
+  const topbarProfile = document.getElementById('topbarProfile');
+  const topbarAvatar = document.getElementById('topbarAvatar');
+  const topbarName = document.getElementById('topbarName');
+  const viewOrdersBtn = document.getElementById('viewOrdersBtn');
+  const API_BASE = (
+    window.REDTIP_API_BASE ||
+    localStorage.getItem('rt_api_base') ||
+    ((window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:3000'
+      : '')
+  ).replace(/\/$/, '');
+
+  function openMenu(){ menu.classList.add('open'); overlay.classList.add('open'); toggleBtn.setAttribute('aria-expanded','true'); menu.setAttribute('aria-hidden','false'); }
+  function closeMenu(){ menu.classList.remove('open'); overlay.classList.remove('open'); toggleBtn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); }
+
+  toggleBtn && toggleBtn.addEventListener('click', ()=>{ if(menu.classList.contains('open')) closeMenu(); else openMenu(); });
+  closeBtn && closeBtn.addEventListener('click', closeMenu);
+  overlay && overlay.addEventListener('click', closeMenu);
+
+  function openLogin(){ loginModal.classList.add('open'); loginModal.setAttribute('aria-hidden','false'); loginUser && loginUser.focus(); }
+  function closeLogin(){ loginModal.classList.remove('open'); loginModal.setAttribute('aria-hidden','true'); loginError.style.display='none'; loginError.textContent=''; }
+
+  openLoginBtn && openLoginBtn.addEventListener('click', ()=>{ openLogin(); });
+  cancelLogin && cancelLogin.addEventListener('click', ()=>{ closeLogin(); });
+
+  // Login modal: autentica contra backend y guarda token válido.
+  submitLogin && submitLogin.addEventListener('click', async ()=>{
+    const u = (loginUser.value || '').trim();
+    const p = (loginPass.value || '').trim();
+    if(!u || !p){ loginError.style.display='block'; loginError.textContent='Ingresa usuario y contraseña'; return; }
+    try{
+      const res = await fetch(API_BASE + '/api/login', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ email:u, password:p })
+      });
+      const data = await res.json();
+      if(!res.ok){
+        loginError.style.display='block';
+        loginError.textContent = data.error || 'Error en login';
+        return;
+      }
+      localStorage.setItem('rt_token', data.token);
+      localStorage.setItem('rt_user', JSON.stringify({ user: data.user.username, id:data.user.id }));
+      loginError.style.display='none';
+      loginError.textContent='';
+      updateAuthUI();
+      closeLogin();
+      closeMenu();
+    }catch(_err){
+      localLoginFallback(u);
+      loginError.style.display='none';
+      loginError.textContent='';
+      closeLogin();
+      closeMenu();
+    }
+  });
+
+  // Login desde menú (campos ya visibles)
+  const menuLoginBtn = document.getElementById('menuLoginBtn');
+  const menuUserEl = document.getElementById('menuUser');
+  const menuPassEl = document.getElementById('menuPass');
+  const menuLoginMsg = document.getElementById('menuLoginMsg');
+  const menuClearBtn = document.getElementById('menuClearBtn');
+  const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+
+  function localLoginFallback(rawUser){
+    const userInput = String(rawUser || '').trim();
+    if(!userInput) return;
+    localStorage.removeItem('rt_token');
+    localStorage.setItem('rt_user', JSON.stringify({ user: userInput, id: userInput.toLowerCase() }));
+    updateAuthUI();
+  }
+
+  menuLoginBtn && menuLoginBtn.addEventListener('click', async ()=>{
+    const u = (menuUserEl.value||'').trim();
+    const p = (menuPassEl.value||'').trim();
+    if(!u || !p){ menuLoginMsg.style.display='block'; menuLoginMsg.textContent='Ingresa usuario y contraseña'; return; }
+
+    // Llamar al endpoint /api/login
+    try{
+      const res = await fetch(API_BASE + '/api/login', {
+        method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email:u, password:p })
+      });
+      const data = await res.json();
+      if(!res.ok){ menuLoginMsg.style.display='block'; menuLoginMsg.textContent = data.error || 'Error en login'; return; }
+      // Guardar token y user localmente
+      localStorage.setItem('rt_token', data.token);
+      localStorage.setItem('rt_user', JSON.stringify({ user: data.user.username, id: data.user.id, email: data.user.email || '' }));
+      menuLoginMsg.style.display='none';
+      updateAuthUI();
+      closeMenu();
+    }catch(err){
+      localLoginFallback(u);
+      menuLoginMsg.style.display='none';
+      menuLoginMsg.textContent='';
+      closeMenu();
+    }
+
+  });
+
+  menuClearBtn && menuClearBtn.addEventListener('click', ()=>{ if(menuUserEl) menuUserEl.value=''; if(menuPassEl) menuPassEl.value=''; if(menuLoginMsg){ menuLoginMsg.style.display='none'; menuLoginMsg.textContent=''; } });
+
+  forgotPasswordBtn && forgotPasswordBtn.addEventListener('click', async ()=>{
+    const email = prompt('Ingresa tu correo para recuperar clave:');
+    if(!email) return;
+    try{
+      const res = await fetch(API_BASE + '/api/forgot-password', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ email: String(email).trim() })
+      });
+      const data = await res.json();
+      menuLoginMsg.style.display='block';
+      menuLoginMsg.style.color = '#1e7e34';
+      menuLoginMsg.textContent = data.message || 'Si el email existe, enviamos un enlace de recuperación.';
+    }catch(err){
+      menuLoginMsg.style.display='block';
+      menuLoginMsg.style.color = '#b00020';
+      menuLoginMsg.textContent='No se pudo contactar el servidor. Verifica que el backend esté activo.';
+    }
+  });
+
+  // Manejo de registro desde el menú
+  const toggleRegisterBtn = document.getElementById('toggleRegister');
+  const menuRegisterWrap = document.getElementById('menuRegister');
+  const registerBtn = document.getElementById('registerBtn');
+  const cancelRegisterBtn = document.getElementById('cancelRegisterBtn');
+  const regName = document.getElementById('regName');
+  const regEmail = document.getElementById('regEmail');
+  const regPass = document.getElementById('regPass');
+  const regPhone = document.getElementById('regPhone');
+  const registerMsg = document.getElementById('registerMsg');
+
+  function getCurrentUser(){
+    try {
+      return JSON.parse(localStorage.getItem('rt_user') || 'null');
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function avatarStorageKey(username){
+    return 'rt_avatar_' + (username || 'guest');
+  }
+
+  function userStorageKey(userData){
+    const key = String((userData && (userData.id || userData.user)) || '').trim().toLowerCase();
+    return key ? 'rt_user_restaurants_' + key : '';
+  }
+
+  function getUserRestaurantsFromLocalStorage(){
+    try{
+      const userData = getCurrentUser();
+      const key = userStorageKey(userData);
+      if(!key) return [];
+      const raw = localStorage.getItem(key);
+      const list = raw ? JSON.parse(raw) : [];
+      const safeList = Array.isArray(list) ? list : [];
+      const filtered = safeList.filter(function(item){ return !shouldHideRestaurant(item); });
+      if(filtered.length !== safeList.length){
+        localStorage.setItem(key, JSON.stringify(filtered));
+      }
+      return filtered;
+    }catch(_e){
+      return [];
+    }
+  }
+
+  // Restaurantes predefinidos para usuarios específicos
+  var PREDEFINED_USER_RESTAURANTS = {
+    'chitowa@hotmail.com': [
+      { slug: 'sirenita',     nombre: 'Antojitos la Sirenita' },
+      { slug: 'corvichegaby', nombre: 'Corviches Gaby'        }
+    ]
+  };
+
+  function seedPredefinedRestaurants(userData){
+    try{
+      if(!userData) return;
+      // Buscar seeds comparando tanto id como user (email) contra las claves predefinidas
+      var idKey   = String(userData.id   || '').trim().toLowerCase();
+      var userKey = String(userData.user || '').trim().toLowerCase();
+      var emailKey = String(userData.email || '').trim().toLowerCase();
+      var seeds = null;
+      Object.keys(PREDEFINED_USER_RESTAURANTS).forEach(function(k){
+        var kl = k.toLowerCase();
+        if(kl === idKey || kl === userKey || kl === emailKey) seeds = PREDEFINED_USER_RESTAURANTS[k];
+      });
+      if(!seeds || !seeds.length) return;
+      // Misma clave que usa userStorageKey
+      // Usar exactamente la misma lógica que userStorageKey para que coincida
+      var storageId = String((userData.id || userData.user) || '').trim().toLowerCase();
+      if(!storageId) return;
+      var key = 'rt_user_restaurants_' + storageId;
+      var existing = [];
+      try{ var r = localStorage.getItem(key); if(r) existing = JSON.parse(r); }catch(_){}
+      if(!Array.isArray(existing)) existing = [];
+      var changed = false;
+      seeds.forEach(function(s){
+        if(!existing.some(function(e){ return e.slug === s.slug; })){
+          existing.push(s);
+          changed = true;
+        }
+      });
+      if(changed) localStorage.setItem(key, JSON.stringify(existing));
+    }catch(_e){}
+  }
+
+  function renderProfile(){
+    const userData = getCurrentUser();
+    const username = userData && userData.user ? userData.user : '';
+    if(!username){
+      if(menuProfile) menuProfile.style.display = 'none';
+      if(profileName) profileName.textContent = '';
+      if(topbarProfile) topbarProfile.style.display = 'none';
+      if(topbarName) topbarName.textContent = '';
+      return;
+    }
+
+    if(menuProfile) menuProfile.style.display = 'block';
+    if(profileName) profileName.textContent = username;
+    if(topbarProfile) topbarProfile.style.display = 'flex';
+    if(topbarName) topbarName.textContent = username;
+
+    const savedAvatar = localStorage.getItem(avatarStorageKey(username));
+    if(profileAvatar && savedAvatar){
+      profileAvatar.src = savedAvatar;
+    }
+    if(topbarAvatar && savedAvatar){
+      topbarAvatar.src = savedAvatar;
+    }
+  }
+
+  toggleRegisterBtn && toggleRegisterBtn.addEventListener('click', ()=>{ if(menuRegisterWrap.style.display==='none'){ menuRegisterWrap.style.display='block'; toggleRegisterBtn.textContent = 'Ocultar'; } else { menuRegisterWrap.style.display='none'; toggleRegisterBtn.textContent = 'Crear cuenta'; } });
+  cancelRegisterBtn && cancelRegisterBtn.addEventListener('click', ()=>{ menuRegisterWrap.style.display='none'; toggleRegisterBtn.textContent = 'Crear cuenta'; if(regName) regName.value=''; if(regEmail) regEmail.value=''; if(regPass) regPass.value=''; if(regPhone) regPhone.value=''; if(registerMsg){ registerMsg.style.display='none'; registerMsg.textContent=''; } });
+
+  registerBtn && registerBtn.addEventListener('click', async ()=>{
+    const u = (regName.value||'').trim();
+    const e = (regEmail.value||'').trim();
+    const p = (regPass.value||'').trim();
+    const ph = (regPhone.value||'').trim();
+    if(!u || !e || !p){ registerMsg.style.display='block'; registerMsg.textContent='Completa los campos obligatorios'; return; }
+    try{
+      const res = await fetch(API_BASE + '/api/register', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ username:u, email:e, password:p, phone:ph }) });
+      const data = await res.json();
+      if(!res.ok){ registerMsg.style.display='block'; registerMsg.textContent = data.error || 'Error al registrar'; return; }
+      // Registro ok
+      registerMsg.style.color = 'green'; registerMsg.style.display='block'; registerMsg.textContent = 'Registro exitoso. Ya puedes iniciar sesión.';
+      localStorage.setItem('rt_user', JSON.stringify({ user: u, id: data && data.user ? data.user.id : null }));
+      updateAuthUI();
+      // Limpiar formulario
+      if(regName) regName.value=''; if(regEmail) regEmail.value=''; if(regPass) regPass.value=''; if(regPhone) regPhone.value='';
+    }catch(err){ registerMsg.style.display='block'; registerMsg.textContent='No se pudo contactar el servidor. Verifica que el backend esté activo.'; }
+  });
+
+  function logout(){ localStorage.removeItem('rt_user'); localStorage.removeItem('rt_token'); updateAuthUI(); }
+  logoutBtn && logoutBtn.addEventListener('click', ()=>{ logout(); });
+  topbarLogoutBtn && topbarLogoutBtn.addEventListener('click', ()=>{ logout(); });
+
+  changeAvatarBtn && changeAvatarBtn.addEventListener('click', ()=>{ avatarInput && avatarInput.click(); });
+  topbarProfile && topbarProfile.addEventListener('click', ()=>{ avatarInput && avatarInput.click(); });
+  topbarProfile && topbarProfile.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      avatarInput && avatarInput.click();
+    }
+  });
+
+  avatarInput && avatarInput.addEventListener('change', ()=>{
+    const userData = getCurrentUser();
+    const username = userData && userData.user ? userData.user : '';
+    const file = avatarInput.files && avatarInput.files[0];
+    if(!username || !file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(evt){
+      const imgData = evt.target && evt.target.result ? String(evt.target.result) : '';
+      if(!imgData) return;
+      localStorage.setItem(avatarStorageKey(username), imgData);
+      if(profileAvatar) profileAvatar.src = imgData;
+      if(topbarAvatar) topbarAvatar.src = imgData;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  function deduplicateRecentRestaurants(){
+    try{
+      const raw = localStorage.getItem('rt_recent_restaurants');
+      const list = raw ? JSON.parse(raw) : [];
+      const safeList = Array.isArray(list) ? list : [];
+      const seenSlugs = new Set();
+      const seenNames = new Set();
+      const deduped = safeList.filter(function(item){
+        const slug = String((item && item.slug) || '').trim().toLowerCase();
+        const nombre = String((item && item.nombre) || '').trim().toLowerCase();
+        if(shouldHideRestaurant(item)) return false;
+        if(slug && seenSlugs.has(slug)) return false;
+        if(nombre && seenNames.has(nombre)) return false;
+        if(slug) seenSlugs.add(slug);
+        if(nombre) seenNames.add(nombre);
+        return true;
+      });
+      if(deduped.length !== safeList.length){
+        localStorage.setItem('rt_recent_restaurants', JSON.stringify(deduped));
+      }
+      return deduped;
+    }catch(_e){ return []; }
+  }
+
+  let latestMisRestaurantes = [];
+
+  function getRestaurantsFromPageDom(){
+    try{
+      const items = [];
+      const seen = new Set();
+      document.querySelectorAll('.restaurante-link[href*="restaurante_detalle.html?r="]').forEach(function(link){
+        const href = String(link.getAttribute('href') || '');
+        const match = href.match(/[?&]r=([^&#]+)/i);
+        const slug = match ? decodeURIComponent(match[1]).trim() : '';
+        const nombreEl = link.querySelector('.nombre');
+        const nombre = String((nombreEl && nombreEl.textContent) || '').trim();
+        const key = (slug || nombre).toLowerCase();
+        if(!key || seen.has(key)) return;
+        seen.add(key);
+        items.push({ slug: slug || key.replace(/[^a-z0-9]+/g, '-'), nombre: nombre || 'Restaurante' });
+      });
+      return items;
+    }catch(_e){
+      return [];
+    }
+  }
+
+  function getPredefinedRestaurantsForUser(userData){
+    try{
+      if(!userData) return [];
+      var idKey = String(userData.id || '').trim().toLowerCase();
+      var userKey = String(userData.user || '').trim().toLowerCase();
+      var emailKey = String(userData.email || '').trim().toLowerCase();
+      var out = [];
+      Object.keys(PREDEFINED_USER_RESTAURANTS).forEach(function(k){
+        var kl = String(k || '').trim().toLowerCase();
+        if(kl === idKey || kl === userKey || kl === emailKey){
+          var list = PREDEFINED_USER_RESTAURANTS[k];
+          if(Array.isArray(list)) out = out.concat(list);
+        }
+      });
+      return out;
+    }catch(_e){
+      return [];
+    }
+  }
+
+  async function renderMisRestaurantesMenu(){
+    const container = document.getElementById('mis-restaurantes-menu');
+    if(!container) return;
+    try{
+      const userData = getCurrentUser();
+      const predefinedForUser = getPredefinedRestaurantsForUser(userData);
+      const recent = deduplicateRecentRestaurants();
+      const userRecent = getUserRestaurantsFromLocalStorage();
+      const token = localStorage.getItem('rt_token');
+      let apiCreated = [];
+      let apiOwned = [];
+      try{
+        const resAll = await fetch(API_BASE + '/api/restaurants');
+        if(resAll.ok){
+          const dataAll = await resAll.json();
+          apiCreated = Array.isArray(dataAll.restaurants) ? dataAll.restaurants : [];
+        }
+      }catch(_e){}
+      if(token){
+        try{
+          const res = await fetch(API_BASE + '/api/my-restaurants', { headers:{ 'Authorization':'Bearer ' + token } });
+          if(res.ok){
+            const data = await res.json();
+            apiOwned = Array.isArray(data.restaurants) ? data.restaurants : [];
+          }
+        }catch(_e){}
+      }
+      // Merge: todos los creados en API primero, luego owned/local como fallback sin duplicados.
+      const merged = [];
+      const seenSlugs = new Set();
+      // Los predefinidos del usuario se muestran siempre en su menú.
+      predefinedForUser.forEach(function(r){
+        const key = String((r && r.slug) || '').trim().toLowerCase();
+        if(key && seenSlugs.has(key)) return;
+        if(key) seenSlugs.add(key);
+        merged.push(r);
+      });
+      apiCreated.forEach(function(r){
+        if(shouldHideRestaurant(r)) return;
+        const key = String((r && r.slug) || '').trim().toLowerCase();
+        if(key && seenSlugs.has(key)) return;
+        if(key) seenSlugs.add(key);
+        merged.push(r);
+      });
+      apiOwned.forEach(function(r){
+        if(shouldHideRestaurant(r)) return;
+        const key = String((r && r.slug) || '').trim().toLowerCase();
+        if(key && seenSlugs.has(key)) return;
+        if(key) seenSlugs.add(key);
+        merged.push(r);
+      });
+      recent.forEach(function(r){
+        if(shouldHideRestaurant(r)) return;
+        const key = String((r && r.slug) || '').trim().toLowerCase();
+        if(key && seenSlugs.has(key)) return;
+        if(key) seenSlugs.add(key);
+        merged.push(r);
+      });
+      userRecent.forEach(function(r){
+        if(shouldHideRestaurant(r)) return;
+        const key = String((r && r.slug) || '').trim().toLowerCase();
+        if(key && seenSlugs.has(key)) return;
+        if(key) seenSlugs.add(key);
+        merged.push(r);
+      });
+      // Agregar también los restaurantes visibles en esta página para no omitir ninguno.
+      const pageItems = getRestaurantsFromPageDom();
+      pageItems.forEach(function(r){
+        const key = String((r && r.slug) || '').trim().toLowerCase();
+        if(key && seenSlugs.has(key)) return;
+        if(key) seenSlugs.add(key);
+        merged.push(r);
+      });
+      // Fallback duro: si por estado local quedó vacío, asegurar mínimo predefinidos del usuario.
+      if(merged.length === 0 && predefinedForUser.length){
+        predefinedForUser.forEach(function(r){
+          const key = String((r && r.slug) || '').trim().toLowerCase();
+          if(key && seenSlugs.has(key)) return;
+          if(key) seenSlugs.add(key);
+          merged.push(r);
+        });
+      }
+      latestMisRestaurantes = merged.slice();
+      if(merged.length === 0){ container.style.display='none'; return; }
+      container.style.display='block';
+      container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' + merged.map(function(r){
+        const nombre = String((r && r.nombre) || 'Restaurante');
+        const slug = String((r && r.slug) || '');
+        return '<div style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
+          '<a href="restaurante_detalle.html?r=' + encodeURIComponent(slug) + '" style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration:none;color:inherit;font-size:0.95em">' + nombre + '</a>' +
+          '<span style="background:#16a085;color:#fff;font-size:0.72em;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap">Activo</span>' +
+        '</div>';
+      }).join('');
+    }catch(_e){
+      container.style.display='none';
+    }
+  }
+
+  async function deleteRestaurantFromApi(slug){
+    const safeSlug = String(slug || '').trim();
+    const token = localStorage.getItem('rt_token');
+    if(!safeSlug || !token) return false;
+    try{
+      const res = await fetch(API_BASE + '/api/restaurants/' + encodeURIComponent(safeSlug), {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      return res.ok;
+    }catch(_e){
+      return false;
+    }
+  }
+
+  function removeRestaurantFromRecentList(target){
+    const slug = String((target && target.slug) || '').trim().toLowerCase();
+    const nombre = String((target && target.nombre) || '').trim().toLowerCase();
+    try{
+      const raw = localStorage.getItem('rt_recent_restaurants');
+      const list = raw ? JSON.parse(raw) : [];
+      const safeList = Array.isArray(list) ? list : [];
+      const filtered = safeList.filter(function(item){
+        const itemSlug = String((item && item.slug) || '').trim().toLowerCase();
+        const itemNombre = String((item && item.nombre) || '').trim().toLowerCase();
+        if(slug && itemSlug === slug) return false;
+        if(nombre && itemNombre === nombre) return false;
+        return true;
+      });
+      localStorage.setItem('rt_recent_restaurants', JSON.stringify(filtered));
+    }catch(_e){}
+  }
+
+  async function deleteRecentRestaurant(idx){
+    try{
+      const list = (Array.isArray(latestMisRestaurantes) && latestMisRestaurantes.length)
+        ? latestMisRestaurantes
+        : deduplicateRecentRestaurants();
+      const target = list[Number(idx)];
+      if(!target) return;
+
+      const nombre = String((target && target.nombre) || 'este restaurante');
+      if(!window.confirm('¿Eliminar "' + nombre + '"?')) return;
+
+      const slug = String((target && target.slug) || '').trim();
+      // Quitar del menú inmediatamente: remover de la lista en memoria
+      latestMisRestaurantes = latestMisRestaurantes.filter(function(r){
+        return String((r && r.slug) || '').trim().toLowerCase() !== slug.toLowerCase();
+      });
+      removeRestaurantFromRecentList(target);
+      // Borrar en API y refrescar
+      await deleteRestaurantFromApi(slug);
+      await renderMisRestaurantesMenu();
+      await renderCreatedRestaurantsByCategory();
+    }catch(_e){}
+  }
+
+  const misRestaurantesMenu = document.getElementById('mis-restaurantes-menu');
+  misRestaurantesMenu && misRestaurantesMenu.addEventListener('click', function(e){
+    const btn = e.target && e.target.closest ? e.target.closest('.delete-my-restaurant-btn') : null;
+    if(!btn) return;
+    const idx = Number(btn.getAttribute('data-idx'));
+    if(Number.isNaN(idx)) return;
+    deleteRecentRestaurant(idx);
+  });
+
+  function updateAuthUI(){
+    const raw = localStorage.getItem('rt_user');
+    const token = localStorage.getItem('rt_token');
+    const menuLoginWrap = document.querySelector('.menu-login');
+    const crearLink = document.getElementById('crearRestauranteLink');
+    const isLoggedIn = !!raw;
+    if(isLoggedIn){
+      const data = JSON.parse(raw);
+      loginStatus.textContent = '';
+      if(menuLoginWrap) menuLoginWrap.style.display='none';
+      if(viewOrdersBtn) viewOrdersBtn.style.display='block';
+      openLoginBtn && (openLoginBtn.style.display='none');
+      logoutBtn && (logoutBtn.style.display='inline-block');
+      topbarLogoutBtn && (topbarLogoutBtn.style.display='inline-block');
+      if(crearLink) crearLink.style.display='block';
+      seedPredefinedRestaurants(data);
+      renderMisRestaurantesMenu();
+    } else {
+      loginStatus.textContent = '';
+      if(menuLoginWrap) menuLoginWrap.style.display='block';
+      if(viewOrdersBtn) viewOrdersBtn.style.display='none';
+      openLoginBtn && (openLoginBtn.style.display='none');
+      logoutBtn && (logoutBtn.style.display='none');
+      topbarLogoutBtn && (topbarLogoutBtn.style.display='none');
+      if(crearLink) crearLink.style.display='none';
+      const container = document.getElementById('mis-restaurantes-menu');
+      if(container) container.style.display='none';
+    }
+    renderProfile();
+  }
+
+  // Cierre con Esc
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ if(loginModal.classList.contains('open')) closeLogin(); else if(menu.classList.contains('open')) closeMenu(); } });
+
+  // Inicializar
+  updateAuthUI();
+})();
+</script>
+
+<script>
+(function(){
+  const API_BASE = (window.location.protocol === 'file:') ? 'http://localhost:3000' : '';
+  const orderModal = document.getElementById('orderModal');
+  const orderRestaurantName = document.getElementById('orderRestaurantName');
+  const orderRestaurant = document.getElementById('orderRestaurant');
+  const orderDetail = document.getElementById('orderDetail');
+  const orderQty = document.getElementById('orderQty');
+  const orderPrice = document.getElementById('orderPrice');
+  const addToCartBtn = document.getElementById('addToCartBtn');
+  const cancelOrderBtn = document.getElementById('cancelOrderBtn');
+
+  const cartFloat = document.getElementById('cartFloat');
+  const cartCount = document.getElementById('cartCount');
+  const cartModal = document.getElementById('cartModal');
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartTotalEl = document.getElementById('cartTotal');
+  const closeCartBtn = document.getElementById('closeCartBtn');
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  const clearCartBtn = document.getElementById('clearCartBtn');
+
+  const viewOrdersBtn = document.getElementById('viewOrdersBtn');
+
+  const ordersModal = document.getElementById('ordersModal');
+  const ordersList = document.getElementById('ordersList');
+  const closeOrdersBtn = document.getElementById('closeOrdersBtn');
+
+  function openOrderModal(id,name){ orderRestaurant.value = id; orderRestaurantName.textContent = name; orderDetail.value=''; orderQty.value=1; orderPrice.value=10.00; orderModal.style.display='flex'; orderModal.classList.add('open'); }
+  function closeOrderModal(){ orderModal.style.display='none'; orderModal.classList.remove('open'); }
+
+  // Cart (simple array stored in localStorage)
+  function getCart(){ try{ return JSON.parse(localStorage.getItem('rt_cart')||'[]'); }catch(e){ return []; } }
+  function saveCart(c){ localStorage.setItem('rt_cart', JSON.stringify(c)); renderCart(); }
+  function addToCart(item){ const c=getCart(); c.push(item); saveCart(c); }
+  function clearCart(){ localStorage.removeItem('rt_cart'); renderCart(); }
+
+  function renderCart(){ const c=getCart(); if(c.length===0){ cartCount.style.display='none'; cartCount.textContent='0'; cartItemsEl.innerHTML='<div style="color:#666">Carrito vacío</div>'; cartTotalEl.textContent='Total: $0.00'; } else { cartCount.style.display='flex'; cartCount.textContent = String(c.length); cartItemsEl.innerHTML=''; let total=0; c.forEach((it,idx)=>{ const div = document.createElement('div'); div.className='item'; div.innerHTML = `<div class="desc"><strong>${it.restaurantName}</strong><div style="font-size:0.95em;color:#666">${it.detail} · x${it.qty} · $${Number(it.price).toFixed(2)}</div></div><div style="text-align:right"><button data-idx="${idx}" class="removeItemBtn" style="background:none;border:none;color:#c0392b;cursor:pointer">Eliminar</button></div>`; cartItemsEl.appendChild(div); total += (Number(it.price)||0)*Number(it.qty||1); }); cartTotalEl.textContent = 'Total: $' + total.toFixed(2); }
+  }
+
+  document.addEventListener('click', e=>{
+    const btn = e.target.closest('.order-btn');
+    if(btn){ openOrderModal(btn.dataset.id, btn.dataset.name); }
+    if(e.target.id==='cartFloat' || e.target.closest('#cartFloat')){ cartModal.classList.toggle('open'); }
+    if(e.target.classList.contains('removeItemBtn')){ const idx = Number(e.target.dataset.idx); const c=getCart(); c.splice(idx,1); saveCart(c); }
+  });
+
+  addToCartBtn && addToCartBtn.addEventListener('click', ()=>{ const id = orderRestaurant.value; const name = orderRestaurantName.textContent; const detail = orderDetail.value.trim()||'Pedido'; const qty = Number(orderQty.value)||1; const price = Number(orderPrice.value)||0; addToCart({ restaurantId:id, restaurantName:name, detail, qty, price }); closeOrderModal(); cartModal.classList.add('open'); });
+  cancelOrderBtn && cancelOrderBtn.addEventListener('click', ()=>{ closeOrderModal(); });
+  closeCartBtn && closeCartBtn.addEventListener('click', ()=>{ cartModal.classList.remove('open'); });
+  clearCartBtn && clearCartBtn.addEventListener('click', ()=>{ if(confirm('Vaciar carrito?')) clearCart(); });
+
+  checkoutBtn && checkoutBtn.addEventListener('click', async ()=>{
+    const token = localStorage.getItem('rt_token');
+    if(!token){ alert('Debes iniciar sesión para realizar el pedido.'); openLogin(); return; }
+    const c = getCart(); if(c.length===0){ alert('El carrito está vacío'); return; }
+    const total = c.reduce((s,it)=> s + (Number(it.price)||0)*Number(it.qty||1), 0);
+    try{
+      const res = await fetch(API_BASE + '/api/orders', { method:'POST', headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer '+token }, body: JSON.stringify({ items:c, total, address: '' }) });
+      const data = await res.json();
+      if(!res.ok){ alert(data.error||'Error al enviar pedido'); return; }
+      alert('Pedido enviado correctamente. ID: ' + data.order.id);
+      clearCart(); cartModal.classList.remove('open');
+    }catch(err){ alert('Error: no se pudo contactar el servidor'); }
+  });
+
+  function openOrdersModal(){ ordersList.innerHTML='Cargando...'; ordersModal.classList.add('open'); const token = localStorage.getItem('rt_token'); if(!token){ ordersList.innerHTML='<div style="color:#b00020">Debes iniciar sesión para ver tus pedidos</div>'; return; } fetch(API_BASE + '/api/orders', { headers:{ 'Authorization':'Bearer '+token } }).then(r=>r.json()).then(data=>{
+    if(data.orders){ ordersList.innerHTML=''; data.orders.forEach(o=>{ const d = document.createElement('div'); d.style.borderBottom='1px solid #eee'; d.style.padding='8px 0'; d.innerHTML = `<div><strong>Pedido #${o.id}</strong> · ${o.status} · ${o.created_at}</div><div style="color:#666">Total: $${Number(o.total).toFixed(2)}</div>`; ordersList.appendChild(d); }); } else { ordersList.innerHTML = '<div>No hay pedidos</div>'; } }).catch(()=>{ ordersList.innerHTML = '<div>Error al cargar</div>'; }); }
+
+  viewOrdersBtn && viewOrdersBtn.addEventListener('click', ()=>{ openOrdersModal(); closeMenu(); });
+  closeOrdersBtn && closeOrdersBtn.addEventListener('click', ()=>{ ordersModal.classList.remove('open'); });
+
+  // Inicializar render cart
+  renderCart();
+})();
+</script>
+</body>
+</html>
+
+
+
+

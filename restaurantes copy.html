@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurantes en Galápagos</title>
+        <meta http-equiv="refresh" content="0; url=restaurantes.html">
+        <script>
+            window.location.replace('restaurantes.html');
+        </script>
+    <meta name="description" content="Listado de restaurantes en Galápagos. Página duplicada para pruebas.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://www.redtipsharkagency.com/restaurantes.html">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('deliverygalapagos.webp') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .categoria {
+            margin-top: 32px;
+        }
+        .categoria h2 {
+            color: #16a085;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 6px;
+        }
+        .restaurante {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            border-bottom: 1px solid #eee;
+            padding: 16px 0;
+        }
+        /* Hacer la tarjeta clicable cuando contiene un enlace */
+        .restaurante a.restaurante-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            color: inherit;
+            text-decoration: none;
+            width: 100%;
+        }
+        .restaurante a.restaurante-link:hover .nombre {
+            text-decoration: underline;
+        }
+        .restaurante:last-child {
+            border-bottom: none;
+        }
+        .restaurante img {
+            width: 90px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+        .nombre {
+            font-size: 1.3em;
+            color: #2980b9;
+            margin-bottom: 6px;
+        }
+        .ofrece {
+            color: #555;
+        }
+        /* Añadidos: botón regresar en lado derecho y botón flotante WhatsApp */
+        .regresar-btn {
+            position: fixed;
+            right: 18px;
+            top: 40px;
+            background: #2980b9;
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 10002;
+        }
+        .regresar-btn:hover {
+            background: #1f6aa0;
+        }
+
+        /* Botón flotante WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            width: 56px;
+            height: 56px;
+            bottom: 20px;
+            right: 18px;
+            background-color: #25d366;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.25);
+            z-index: 10001;
+            text-decoration: none;
+        }
+        .whatsapp-float:hover {
+            background-color: #20ba5a;
+        }
+        .whatsapp-float svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+        /* Soporta imagen en lugar de SVG */
+        .whatsapp-float img {
+            width: 28px;
+            height: 28px;
+            display: block;
+            border-radius: 50%;
+        }
+    </style>
+    <link rel="stylesheet" href="menu-font.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Restaurantes en Galápagos</h1>
+
+        <div class="categoria">
+            <h2>Comida rapida</h2>
+            <div class="restaurante">
+                <a class="restaurante-link" href="restaurante_detalle.html?r=sirenita">
+                    <img src="sirenita.webp" alt="Antojitos la Sirenita">
+                    <div>
+                        <div class="nombre">Antojitos la Sirenita</div>
+                        <div class="ofrece">Comida rapida: pollo, bandejitas.</div>
+                    </div>
+                </a>
+            </div>
+            <div class="restaurante">
+                <a class="restaurante-link" href="restaurante_detalle.html?r=corvichegaby">
+                    <img src="corvichegaby.webp" alt="Corviches Gaby">
+                    <div>
+                        <div class="nombre">Corviches Gaby</div>
+                        <div class="ofrece">Deliciosos corviches de pescado</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="Postres">
+            <h2>Comida Internacional</h2>
+            <div class="restaurante">
+                <a class="restaurante-link" href="restaurante_detalle.html?r=uramakisushi">
+                    <img src="uramakisushi.webp" alt="Uramaki suhi">
+                    <div>
+                        <div class="nombre">Uramaki Sushi</div>
+                        <div class="ofrece">Sushi, sashimi y platos asiáticos con ingredientes locales.</div>
+                    </div>
+                </a>
+            </div>
+            <div class="restaurante">
+                <img src="chaulafan island.webp" alt="Comida China">
+                <div>
+                    <div class="nombre">Comida China</div>
+                    <div class="ofrece">CHAULAFAN Y TALLARIN ESPECIAL</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="categoria">
+            <h2>Cafeterías y Postres</h2>
+            <div class="restaurante">
+                <img src="lapostreria444.webp" alt="La Postreria 444">
+                <div>
+                    <div class="nombre">La Postreria 444</div>
+                    <div class="ofrece">Fresas con crema, donas.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="categoria">
+            <h2>Pizzerías y Pastas</h2>
+            <div class="restaurante">
+                <img src="pizzaencantada.webp" alt="pizzaencantada">
+                <div>
+                    <div class="nombre">Pizzería Encantada</div>
+                    <div class="ofrece">Pizzas al horno de leña, pastas y ensaladas frescas.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add these elements just before the closing </body> -->
+    <a href="index.html" class="regresar-btn" aria-label="Regresar">Regresar</a>
+
+    <a href="https://wa.me/593959285913" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <img src="whatsapp.webp" alt="WhatsApp">
+    </a>
+</body>
+</html>
+
+
+
+

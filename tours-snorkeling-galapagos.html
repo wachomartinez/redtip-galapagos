@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+    <meta name="theme-color" content="#25d366">
+    <title>Tours Snorkeling en Galápagos / Pinzon y Santa Fe con Expertos</title>
+    <meta name="description" content="Los MEJORES tours de Snorkeling en Galápagos! Nadar con lobos Marinos, tortugas y tiburones. Guias certificados, equipos de calidad. Reserva online seguro.">
+    <meta name="keywords" content="snorkeling galápagos, tour pinzon, santa fe, excursiones acuáticas galápagos, nadar con lobos marinos, agencia, reservas, ecuador">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="RedTipShark Agency">
+    <meta http-equiv="content-language" content="es">
+    <link rel="canonical" href="https://www.redtipsharkagency.com/tours-snorkeling-galapagos.html">
+    <meta property="og:title" content="Tours Snorkeling en Galápagos | Pinzón y Santa Fe con Expertos">
+    <meta property="og:description" content="Reserva los mejores tours de snorkeling en Galápagos y nada con lobos marinos, tortugas y tiburones. Guías certificados y equipos de calidad.">
+    <meta property="og:image" content="https://www.redtipsharkagency.com/logoredtip2.webp">
+    <meta property="og:url" content="https://www.redtipsharkagency.com/tours-snorkeling-galapagos.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_EC">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tours Snorkeling en Galápagos | Pinzón y Santa Fe con Expertos">
+    <meta name="twitter:description" content="Reserva los mejores tours de snorkeling en Galápagos y nada con lobos marinos, tortugas y tiburones. Guías certificados y equipos de calidad.">
+    <meta name="twitter:image" content="https://www.redtipsharkagency.com/logoredtip2.webp">
+    <link rel="icon" type="image/webp" href="logoredtip2.webp">
+    <link rel="stylesheet" href="stylecaminata4nuevo1.css">
+    <style>
+        .modal-img-bg {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-img-bg.active {
+            display: flex;
+        }
+        .modal-img-bg img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 0 30px #000;
+        }
+        .modal-img-bg:after {
+            content: "✖";
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 10001;
+        }
+        @media (max-width: 600px) {
+            .modal-img-bg:after {
+                top: 10px;
+                right: 20px;
+                font-size: 2rem;
+            }
+        }
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 38px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .whatsapp-float:hover {
+            background-color: #20ba5a;
+        }
+        .whatsapp-float svg {
+            width: 32px;
+            height: 32px;
+        }
+        @media (max-width: 600px) {
+            .whatsapp-float {
+                width: 48px;
+                height: 48px;
+                font-size: 28px;
+                bottom: 18px;
+                right: 18px;
+            }
+            .whatsapp-float svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+        /* --- Responsive Menu Styles --- */
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .menu-mobile-btn {
+            display: none;
+            background: #fff;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #333;
+            z-index: 10001;
+            position: fixed;
+            left: 30px;
+            top: 30px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .menu-mobile-btn:hover {
+            background: #f0f0f0;
+        }
+        .menu-mobile {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+            }
+            .menu-mobile-btn {
+                display: block;
+            }
+            .menu-mobile {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background: #fff;
+                box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+                padding: 2rem 1.5rem;
+                transition: left 0.3s;
+                z-index: 10000;
+            }
+            .menu-mobile.active {
+                left: 0;
+            }
+            .menu-mobile .close-btn {
+                align-self: flex-end;
+                font-size: 2rem;
+                background: none;
+                border: none;
+                margin-bottom: 2rem;
+                cursor: pointer;
+            }
+            .menu-mobile a {
+                margin: 1rem 0;
+                font-size: 1.2rem;
+            }
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        h1, h2, h3 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+        }
+        .submenu {
+            position: absolute;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            border-radius: 8px;
+            min-width: 200px;
+            display: none;
+            flex-direction: column;
+            padding: 0.5rem 0;
+            z-index: 1000;
+        }
+        .main-nav .has-submenu {
+            position: relative;
+        }
+        .main-nav .has-submenu:hover .submenu,
+        .main-nav .has-submenu:focus-within .submenu {
+            display: flex;
+        }
+        .submenu a {
+            padding: 0.5rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: 1rem;
+        }
+        .submenu a:hover {
+            background: #f2f2f2;
+        }
+        .menu-mobile .submenu-mobile,
+        .menu-mobile .submenu-mobile-snorkel {
+            display: none;
+            flex-direction: column;
+            margin-left: 1rem;
+        }
+        .menu-mobile .submenu-mobile.show,
+        .menu-mobile .submenu-mobile-snorkel.show {
+            display: flex;
+        }
+        .menu-mobile .submenu-toggle,
+        .menu-mobile .submenu-toggle-snorkel {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            color: #333;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+        /* Overlay title styles (añadido) */
+        .image-overlay-container {
+            position: relative;
+            display: block;
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .image-overlay-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            line-height: 1;
+            z-index: 2;
+            text-transform: capitalize;
+        }
+
+        @media (max-width: 600px) {
+            .overlay-text {
+                top: 8px;
+                font-size: 1rem;
+                padding: 5px 10px;
+            }
+        }
+        .language-switcher {
+            position: static;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .language-switcher select {
+            padding: 0.4rem 0.6rem;
+            border-radius: 8px;
+            border: 1px solid #d6d6d6;
+            background: #fff;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 768px) {
+            .language-switcher {
+                position: fixed;
+                top: 16px;
+                right: 16px;
+                z-index: 10002;
+            }
+            .language-switcher select {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="menu-font.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="logoredtip2.webp" alt="Logo Galápagos RedTipShark Agency" loading="eager" fetchpriority="high" decoding="async">
+            <div class="language-switcher">
+                <select id="language-selector" aria-label="Seleccionar idioma">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="it">Italiano</option>
+                    <option value="pt">Português</option>
+                    <option value="ru">Русский</option>
+                    <option value="zh">中文</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                </select>
+            </div>
+            <!-- Botón para cambiar a inglés -->
+            <!-- <button onclick="window.location.href='toursnorkelingcopia5nuevo_en.html'" style="float:right;margin:10px 0 0 20px;">En</button> -->
+            <!-- Botón para cambiar a chino -->
+            <!-- <button onclick="window.location.href='toursnorkelingcopia5nuevo_zh.html'" style="float:right;margin:10px 0 0 10px;">中文</button> -->
+            <!-- Botón hamburguesa para menú móvil -->
+            <button class="menu-mobile-btn" aria-label="Abrir menú" data-i18n-attr="aria-label:openMenu">&#9776;</button>
+            <nav class="main-nav menu-desktop">
+                <a href="index.html" data-i18n="navHome">Inicio</a>
+                <div class="has-submenu">
+                    <a href="tours-caminata-galapagos.html" data-i18n="navHiking">Tours Caminata</a>
+                    <div class="submenu">
+                        <a href="tour-bartolome.html" data-i18n="tourBartolome">Tour Bartolomé</a>
+                        <a href="tour-seymour-norte.html" data-i18n="tourSeymour">Tour Seymour</a>
+                        <a href="tour-plazas.html" data-i18n="tourPlazas">Tour Plazas</a>
+                    </div>
+                </div>
+                <div class="has-submenu">
+                    <a href="tours-snorkeling-galapagos.html" class="active" data-i18n="navSnorkeling">Tours Snorkeling</a>
+                    <div class="submenu">
+                        <a href="tour-pinzon.html" data-i18n="tourPinzon">Tour Pinzón</a>
+                        <a href="tour-santafe.html" data-i18n="tourSantaFe">Tour Santa Fe</a>
+                    </div>
+                </div>
+                <a href="paquetes turisticos.html" data-i18n="navPackages">Paquetes Turisticos</a>
+                <a href="paginadecobros.html" data-i18n="navBookings">Reservas</a>
+                <a href="contactos1.html" data-i18n="navContacts">Contactos</a>
+                <div class="has-submenu">
+                    <a href="blog-ruta-tortuga-las-grietas copy.html" data-i18n="navBlog">Blog</a>
+                    <div class="submenu">
+                        <a href="blog-ruta-tortuga-las-grietas copy.html" data-i18n="blogTortuga">Blog Ruta Tortuga</a>
+                        <a href="bodas.html" data-i18n="weddings">Bodas</a>
+                        <a href="restaurantes.html" data-i18n="restaurants">Restaurantes</a>
+                    </div>
+                </div>
+            </nav>
+            <!-- Menú móvil oculto por defecto -->
+            <nav class="menu-mobile" aria-label="Menú móvil">
+                <button class="close-btn" aria-label="Cerrar menú" data-i18n-attr="aria-label:closeMenu">&times;</button>
+                <a href="index.html" data-i18n="navHome">Inicio</a>
+                <div>
+                    <a href="tours-caminata-galapagos.html" style="display:inline-block;" data-i18n="navHiking">Tours Caminata</a>
+                    <button class="submenu-toggle" aria-label="Abrir submenú" data-i18n-attr="aria-label:openSubmenu" style="background:none;border:none;font-size:1.1rem;color:#333;cursor:pointer;margin-left:0.5rem;">&#9662;</button>
+                    <div class="submenu-mobile" style="display:none;flex-direction:column;margin-left:1rem;">
+                        <a href="tour-bartolome.html" data-i18n="islandBartolome">Bartolomé</a>
+                        <a href="tour-seymour-norte.html" data-i18n="islandSeymour">Seymour</a>
+                        <a href="tour-plazas.html" data-i18n="islandPlazas">Islas Plazas</a>
+                    </div>
+                </div>
+                <div>
+                    <a href="tours-snorkeling-galapagos.html" class="active" style="display:inline-block;" data-i18n="navSnorkeling">Tours Snorkeling</a>
+                    <button class="submenu-toggle-snorkel" aria-label="Abrir submenú" data-i18n-attr="aria-label:openSubmenu" style="background:none;border:none;font-size:1.1rem;color:#333;cursor:pointer;margin-left:0.5rem;">&#9662;</button>
+                    <div class="submenu-mobile-snorkel" style="display:none;flex-direction:column;margin-left:1rem;">
+                        <a href="tour-pinzon.html" data-i18n="islandPinzon">Pinzón</a>
+                        <a href="tour-santafe.html" data-i18n="islandSantaFe">Santa Fe</a>
+                    </div>
+                </div>
+                <div>
+                    <a href="blog-ruta-tortuga-las-grietas copy.html" style="display:inline-block;" data-i18n="navBlog">Blog</a>
+                    <button class="submenu-toggle-blog" aria-label="Abrir submenú" data-i18n-attr="aria-label:openSubmenu" style="background:none;border:none;font-size:1.1rem;color:#333;cursor:pointer;margin-left:0.5rem;">&#9662;</button>
+                    <div class="submenu-mobile-blog" style="display:none;flex-direction:column;margin-left:1rem;">
+                        <a href="blog-ruta-tortuga-las-grietas copy.html" data-i18n="blogTortuga">Blog Ruta Tortuga</a>
+                        <a href="bodas.html" data-i18n="weddings">Bodas</a>
+                        <a href="restaurantes.html" data-i18n="restaurants">Restaurantes</a>
+                    </div>
+                </div>
+                <a href="paquetes turisticos.html" data-i18n="navPackages">Paquetes Turisticos</a>
+                <a href="paginadecobros.html" data-i18n="navBookings">Reservas</a>
+                <a href="contactos1.html" data-i18n="navContacts">Contactos</a>
+            </nav>
+        </div>
+    </header>
+    <main class="tour-list">
+        <h1 data-i18n="pageTitle">Tours Snorkeling en Galápagos</h1>
+        <p data-i18n="pageIntro">
+            Descubre la increíble vida marina de Galápagos con nuestros tours de snorkeling en Pinzón y Santa Fe. Nada junto a lobos marinos, tortugas y tiburones, acompañado por guías certificados y equipos de calidad. ¡Reserva tu aventura acuática hoy!
+        </p>
+        <article class="tour-card">
+            <div class="image-overlay-container">
+                <h2 class="overlay-text" data-i18n="overlayPinzon">Pinzón</h2>
+                <img src="pinzon.webp" class="tour-image tour-img-modal" alt="Vista de Isla Pinzón, Galápagos - Tour de Snorkeling" loading="eager" fetchpriority="high" decoding="async">
+            </div>
+            <div class="tour-info">
+                <p><strong data-i18n="pinzonName">Isla Pinzon</strong></p>
+                <p><strong data-i18n="tourDuration">Duración del tour</strong></p>
+                <p>8 am - 4:00 pm</p>
+                <p><strong data-i18n="destinations">Destinos</strong></p>
+                <p data-i18n="pinzonStop1">Snorkeling Pinzon: 1 hora</p>
+                <p data-i18n="pinzonStop2">Playa Duración: 1 hora</p>
+                <p><strong data-i18n="siteDescription">Descripción del sitio</strong></p>
+                <p data-i18n="pinzonDesc">Pinzon y su increible fauna marina</p>
+                <p><strong data-i18n="difficultyLevel">Nivel de dificultad</strong></p>
+                <p data-i18n="difficultyHigh">ALTO</p>
+                <a href="https://wa.me/593959285913" target="_blank" class="buy-button" data-i18n="buyButton">COMPRAR</a>
+                <a href="tour-pinzon.html" class="buy-button details-button" style="margin-left:10px;">
+                    <span data-i18n="pinzonInfo">Información Tour Pinzón</span>
+                </a>
+            </div>
+        </article>
+        <article class="tour-card">
+            <div class="image-overlay-container">
+                <h2 class="overlay-text" data-i18n="overlaySantaFe">Santa Fe</h2>
+                <img src="santa fe.webp" class="tour-image tour-img-modal" alt="Vista de Isla Santa Fe, Galápagos - Tour de Snorkeling" loading="lazy" decoding="async">
+            </div>
+            <div class="tour-info">
+                <p><strong data-i18n="santaFeName">Santa Fe</strong></p>
+                <p><strong data-i18n="tourDuration">Duración del tour</strong></p>
+                <p>8 am - 3:30 pm</p>
+                <p><strong data-i18n="destinations">Destinos</strong></p>
+                <p data-i18n="santaFeStop1">Snorkeling Santa Fe Duración: 1 hora</p>
+                <p data-i18n="santaFeStop2">Playa Duración: 1 hora</p>
+                <p><strong data-i18n="siteDescription">Descripción del sitio</strong></p>
+                <p data-i18n="santaFeDesc">Santa fe y su gran colonia de lobos marinos</p>
+                <p><strong data-i18n="difficultyLevel">Nivel de dificultad</strong></p>
+                <p data-i18n="difficultyHigh">ALTO</p>
+                <a href="https://wa.me/593959285913" target="_blank" class="buy-button" data-i18n="buyButton">COMPRAR</a>
+                <a href="tour-santafe.html" class="buy-button details-button" style="margin-left:10px;">
+                    <span data-i18n="santaFeInfo">Información Tour Santa Fe</span>
+                </a>
+            </div>
+        </article>
+    </main>
+    <!-- Modal para imagen en pantalla completa -->
+    <div class="modal-img-bg" id="modalImg">
+        <img src="" alt="Imagen ampliada" id="modalImgTag">
+    </div>
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/593959285913" class="whatsapp-float" target="_blank" aria-label="WhatsApp" data-i18n-attr="aria-label:whatsappLabel">
+        <svg viewBox="0 0 32 32" fill="currentColor">
+            <path d="M16 3C9.373 3 4 8.373 4 15c0 2.65.87 5.1 2.36 7.1L4 29l7.14-2.33A12.93 12.93 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22.8c-2.1 0-4.13-.62-5.82-1.8l-.42-.27-4.24 1.39 1.39-4.13-.28-.43A9.8 9.8 0 0 1 6.2 15c0-5.4 4.4-9.8 9.8-9.8s9.8 4.4 9.8 9.8-4.4 9.8-9.8 9.8zm5.38-7.47c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.64.15-.19.29-.74.93-.91 1.12-.17.19-.34.22-.63.07-.29-.15-1.23-.45-2.34-1.43-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.64-1.54-.88-2.11-.23-.56-.47-.48-.64-.49-.17-.01-.36-.01-.56-.01-.19 0-.5.07-.76.36-.26.29-1 1-.99 2.44.01 1.44 1.03 2.84 1.18 3.04.15.19 2.03 3.1 4.93 4.23.69.28 1.23.45 1.65.57.69.22 1.32.19 1.81.12.55-.08 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.26-.19-.55-.34z"/>
+        </svg>
+    </a>
+    <script>
+        // Mostrar imagen en pantalla completa al hacer click
+        document.querySelectorAll('.tour-img-modal').forEach(function(img) {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', function() {
+                var modal = document.getElementById('modalImg');
+                var modalImg = document.getElementById('modalImgTag');
+                modalImg.src = this.src;
+                modal.classList.add('active');
+            });
+        });
+        // Cerrar modal al hacer click fuera de la imagen o en la X
+        document.getElementById('modalImg').addEventListener('click', function(e) {
+            if (e.target === this || e.target === this.querySelector('img')) {
+                this.classList.remove('active');
+            }
+        });
+        // Cerrar modal con la tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('modalImg').classList.remove('active');
+            }
+        });
+        // Menú móvil: abrir/cerrar
+        document.addEventListener('DOMContentLoaded', function() {
+            const translations = {
+                es: {
+                    metaTitle: 'Tours Snorkeling en Galápagos / Pinzon y Santa Fe con Expertos',
+                    metaDescription: 'Los MEJORES tours de Snorkeling en Galápagos! Nadar con lobos Marinos, tortugas y tiburones. Guias certificados, equipos de calidad. Reserva online seguro.',
+                    metaKeywords: 'snorkeling galápagos, tour pinzon, santa fe, excursiones acuáticas galápagos, nadar con lobos marinos, agencia, reservas, ecuador',
+                    ogDescription: 'Reserva los mejores tours de snorkeling en Galápagos y nada con lobos marinos, tortugas y tiburones. Guías certificados y equipos de calidad.',
+                    twitterDescription: 'Reserva los mejores tours de snorkeling en Galápagos y nada con lobos marinos, tortugas y tiburones. Guías certificados y equipos de calidad.',
+                    contentLanguage: 'es',
+                    openMenu: 'Abrir menú',
+                    closeMenu: 'Cerrar menú',
+                    openSubmenu: 'Abrir submenú',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: 'Inicio',
+                    navHiking: 'Tours Caminata',
+                    navSnorkeling: 'Tours Snorkeling',
+                    navPackages: 'Paquetes Turisticos',
+                    navBookings: 'Reservas',
+                    navContacts: 'Contactos',
+                    navBlog: 'Blog',
+                    tourBartolome: 'Tour Bartolomé',
+                    tourSeymour: 'Tour Seymour',
+                    tourPlazas: 'Tour Plazas',
+                    tourPinzon: 'Tour Pinzón',
+                    tourSantaFe: 'Tour Santa Fe',
+                    islandBartolome: 'Bartolomé',
+                    islandSeymour: 'Seymour',
+                    islandPlazas: 'Islas Plazas',
+                    islandPinzon: 'Pinzón',
+                    islandSantaFe: 'Santa Fe',
+                    blogTortuga: 'Blog Ruta Tortuga',
+                    weddings: 'Bodas',
+                    restaurants: 'Restaurantes',
+                    pageTitle: 'Tours Snorkeling en Galápagos',
+                    pageIntro: 'Descubre la increíble vida marina de Galápagos con nuestros tours de snorkeling en Pinzón y Santa Fe. Nada junto a lobos marinos, tortugas y tiburones, acompañado por guías certificados y equipos de calidad. ¡Reserva tu aventura acuática hoy!',
+                    overlayPinzon: 'Pinzón',
+                    overlaySantaFe: 'Santa Fe',
+                    pinzonName: 'Isla Pinzon',
+                    santaFeName: 'Santa Fe',
+                    tourDuration: 'Duración del tour',
+                    destinations: 'Destinos',
+                    pinzonStop1: 'Snorkeling Pinzon: 1 hora',
+                    pinzonStop2: 'Playa Duración: 1 hora',
+                    santaFeStop1: 'Snorkeling Santa Fe Duración: 1 hora',
+                    santaFeStop2: 'Playa Duración: 1 hora',
+                    siteDescription: 'Descripción del sitio',
+                    pinzonDesc: 'Pinzon y su increible fauna marina',
+                    santaFeDesc: 'Santa fe y su gran colonia de lobos marinos',
+                    difficultyLevel: 'Nivel de dificultad',
+                    difficultyHigh: 'ALTO',
+                    buyButton: 'COMPRAR',
+                    pinzonInfo: 'Información Tour Pinzón',
+                    santaFeInfo: 'Información Tour Santa Fe'
+                },
+                en: {
+                    metaTitle: 'Galápagos Snorkeling Tours / Pinzón and Santa Fe with Experts',
+                    metaDescription: 'The BEST snorkeling tours in Galápagos! Swim with sea lions, turtles and sharks. Certified guides and quality equipment. Secure online booking.',
+                    metaKeywords: 'galápagos snorkeling, pinzón tour, santa fe, marine excursions galápagos, swim with sea lions, agency, bookings, ecuador',
+                    ogDescription: 'Book top Galápagos snorkeling tours and swim with sea lions, turtles and sharks with certified guides.',
+                    twitterDescription: 'Book top Galápagos snorkeling tours and swim with sea lions, turtles and sharks with certified guides.',
+                    contentLanguage: 'en',
+                    openMenu: 'Open menu',
+                    closeMenu: 'Close menu',
+                    openSubmenu: 'Open submenu',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: 'Home',
+                    navHiking: 'Hiking Tours',
+                    navSnorkeling: 'Snorkeling Tours',
+                    navPackages: 'Tour Packages',
+                    navBookings: 'Bookings',
+                    navContacts: 'Contact',
+                    navBlog: 'Blog',
+                    tourBartolome: 'Bartolomé Tour',
+                    tourSeymour: 'Seymour Tour',
+                    tourPlazas: 'Plazas Tour',
+                    tourPinzon: 'Pinzón Tour',
+                    tourSantaFe: 'Santa Fe Tour',
+                    islandBartolome: 'Bartolomé',
+                    islandSeymour: 'Seymour',
+                    islandPlazas: 'Plazas Islands',
+                    islandPinzon: 'Pinzón',
+                    islandSantaFe: 'Santa Fe',
+                    blogTortuga: 'Tortuga Route Blog',
+                    weddings: 'Weddings',
+                    restaurants: 'Restaurants',
+                    pageTitle: 'Snorkeling Tours in Galápagos',
+                    pageIntro: 'Discover the incredible marine life of Galápagos with our snorkeling tours in Pinzón and Santa Fe. Swim with sea lions, turtles and sharks, guided by certified experts and quality gear.',
+                    overlayPinzon: 'Pinzón',
+                    overlaySantaFe: 'Santa Fe',
+                    pinzonName: 'Pinzón Island',
+                    santaFeName: 'Santa Fe Island',
+                    tourDuration: 'Tour duration',
+                    destinations: 'Destinations',
+                    pinzonStop1: 'Pinzón snorkeling: 1 hour',
+                    pinzonStop2: 'Beach stop: 1 hour',
+                    santaFeStop1: 'Santa Fe snorkeling: 1 hour',
+                    santaFeStop2: 'Beach stop: 1 hour',
+                    siteDescription: 'Site description',
+                    pinzonDesc: 'Pinzón and its incredible marine wildlife.',
+                    santaFeDesc: 'Santa Fe and its large sea lion colony.',
+                    difficultyLevel: 'Difficulty level',
+                    difficultyHigh: 'HIGH',
+                    buyButton: 'BUY',
+                    pinzonInfo: 'Pinzón Tour Info',
+                    santaFeInfo: 'Santa Fe Tour Info'
+                },
+                fr: { metaTitle: 'Tours Snorkeling aux Galápagos / Pinzón et Santa Fe', metaDescription: 'Les meilleurs tours de snorkeling aux Galápagos. Nagez avec lions de mer, tortues et requins.', metaKeywords: 'snorkeling galápagos, pinzón, santa fe', ogDescription: 'Réservez les meilleurs tours de snorkeling aux Galápagos.', twitterDescription: 'Réservez les meilleurs tours de snorkeling aux Galápagos.', contentLanguage: 'fr', openMenu: 'Ouvrir le menu', closeMenu: 'Fermer le menu', openSubmenu: 'Ouvrir le sous-menu', whatsappLabel: 'WhatsApp', navHome: 'Accueil', navHiking: 'Tours Randonnée', navSnorkeling: 'Tours Snorkeling', navPackages: 'Forfaits Touristiques', navBookings: 'Réservations', navContacts: 'Contacts', navBlog: 'Blog', tourBartolome: 'Tour Bartolomé', tourSeymour: 'Tour Seymour', tourPlazas: 'Tour Plazas', tourPinzon: 'Tour Pinzón', tourSantaFe: 'Tour Santa Fe', islandBartolome: 'Bartolomé', islandSeymour: 'Seymour', islandPlazas: 'Îles Plazas', islandPinzon: 'Pinzón', islandSantaFe: 'Santa Fe', blogTortuga: 'Blog Route Tortuga', weddings: 'Mariages', pageTitle: 'Tours Snorkeling aux Galápagos', pageIntro: 'Découvrez la vie marine des Galápagos avec nos tours de snorkeling à Pinzón et Santa Fe.', overlayPinzon: 'Pinzón', overlaySantaFe: 'Santa Fe', pinzonName: 'Île Pinzón', santaFeName: 'Île Santa Fe', tourDuration: 'Durée du tour', destinations: 'Destinations', pinzonStop1: 'Snorkeling Pinzón: 1 heure', pinzonStop2: 'Plage: 1 heure', santaFeStop1: 'Snorkeling Santa Fe: 1 heure', santaFeStop2: 'Plage: 1 heure', siteDescription: 'Description du site', pinzonDesc: 'Pinzón et sa faune marine incroyable.', santaFeDesc: 'Santa Fe et sa grande colonie de lions de mer.', difficultyLevel: 'Niveau de difficulté', difficultyHigh: 'ÉLEVÉ', buyButton: 'ACHETER', pinzonInfo: 'Infos Tour Pinzón', santaFeInfo: 'Infos Tour Santa Fe' },
+                de: { metaTitle: 'Galápagos Schnorcheltouren / Pinzón und Santa Fe', metaDescription: 'Die besten Schnorcheltouren auf Galápagos. Schwimmen mit Seelöwen, Schildkröten und Haien.', metaKeywords: 'galápagos schnorcheln, pinzón, santa fe', ogDescription: 'Buchen Sie die besten Schnorcheltouren auf Galápagos.', twitterDescription: 'Buchen Sie die besten Schnorcheltouren auf Galápagos.', contentLanguage: 'de', openMenu: 'Menü öffnen', closeMenu: 'Menü schließen', openSubmenu: 'Untermenü öffnen', whatsappLabel: 'WhatsApp', navHome: 'Startseite', navHiking: 'Wandertouren', navSnorkeling: 'Schnorcheltouren', navPackages: 'Reisepakete', navBookings: 'Reservierungen', navContacts: 'Kontakt', navBlog: 'Blog', tourBartolome: 'Bartolomé-Tour', tourSeymour: 'Seymour-Tour', tourPlazas: 'Plazas-Tour', tourPinzon: 'Pinzón-Tour', tourSantaFe: 'Santa-Fe-Tour', islandBartolome: 'Bartolomé', islandSeymour: 'Seymour', islandPlazas: 'Plazas-Inseln', islandPinzon: 'Pinzón', islandSantaFe: 'Santa Fe', blogTortuga: 'Tortuga-Routen Blog', weddings: 'Hochzeiten', pageTitle: 'Schnorcheltouren auf Galápagos', pageIntro: 'Entdecken Sie die Unterwasserwelt von Galápagos mit unseren Schnorcheltouren nach Pinzón und Santa Fe.', overlayPinzon: 'Pinzón', overlaySantaFe: 'Santa Fe', pinzonName: 'Insel Pinzón', santaFeName: 'Insel Santa Fe', tourDuration: 'Tourdauer', destinations: 'Ziele', pinzonStop1: 'Pinzón Schnorcheln: 1 Stunde', pinzonStop2: 'Strand: 1 Stunde', santaFeStop1: 'Santa Fe Schnorcheln: 1 Stunde', santaFeStop2: 'Strand: 1 Stunde', siteDescription: 'Ortsbeschreibung', pinzonDesc: 'Pinzón und seine beeindruckende Meeresfauna.', santaFeDesc: 'Santa Fe mit großer Seelöwenkolonie.', difficultyLevel: 'Schwierigkeitsgrad', difficultyHigh: 'HOCH', buyButton: 'KAUFEN', pinzonInfo: 'Infos Pinzón-Tour', santaFeInfo: 'Infos Santa-Fe-Tour' },
+                it: { metaTitle: 'Tour Snorkeling Galápagos / Pinzón e Santa Fe', metaDescription: 'I migliori tour snorkeling alle Galápagos. Nuota con leoni marini, tartarughe e squali.', metaKeywords: 'snorkeling galápagos, pinzón, santa fe', ogDescription: 'Prenota i migliori tour snorkeling alle Galápagos.', twitterDescription: 'Prenota i migliori tour snorkeling alle Galápagos.', contentLanguage: 'it', openMenu: 'Apri menu', closeMenu: 'Chiudi menu', openSubmenu: 'Apri sottomenu', whatsappLabel: 'WhatsApp', navHome: 'Home', navHiking: 'Tour Trekking', navSnorkeling: 'Tour Snorkeling', navPackages: 'Pacchetti Turistici', navBookings: 'Prenotazioni', navContacts: 'Contatti', navBlog: 'Blog', tourBartolome: 'Tour Bartolomé', tourSeymour: 'Tour Seymour', tourPlazas: 'Tour Plazas', tourPinzon: 'Tour Pinzón', tourSantaFe: 'Tour Santa Fe', islandBartolome: 'Bartolomé', islandSeymour: 'Seymour', islandPlazas: 'Isole Plazas', islandPinzon: 'Pinzón', islandSantaFe: 'Santa Fe', blogTortuga: 'Blog Rotta Tortuga', weddings: 'Matrimoni', pageTitle: 'Tour Snorkeling alle Galápagos', pageIntro: 'Scopri la vita marina delle Galápagos con i nostri tour snorkeling a Pinzón e Santa Fe.', overlayPinzon: 'Pinzón', overlaySantaFe: 'Santa Fe', pinzonName: 'Isola Pinzón', santaFeName: 'Isola Santa Fe', tourDuration: 'Durata del tour', destinations: 'Destinazioni', pinzonStop1: 'Snorkeling Pinzón: 1 ora', pinzonStop2: 'Spiaggia: 1 ora', santaFeStop1: 'Snorkeling Santa Fe: 1 ora', santaFeStop2: 'Spiaggia: 1 ora', siteDescription: 'Descrizione del sito', pinzonDesc: 'Pinzón e la sua incredibile fauna marina.', santaFeDesc: 'Santa Fe e la sua grande colonia di leoni marini.', difficultyLevel: 'Livello di difficoltà', difficultyHigh: 'ALTO', buyButton: 'ACQUISTA', pinzonInfo: 'Info Tour Pinzón', santaFeInfo: 'Info Tour Santa Fe' },
+                pt: { metaTitle: 'Tours de Snorkeling em Galápagos / Pinzón e Santa Fe', metaDescription: 'Os melhores tours de snorkeling em Galápagos. Nade com leões-marinhos, tartarugas e tubarões.', metaKeywords: 'snorkeling galápagos, pinzón, santa fe', ogDescription: 'Reserve os melhores tours de snorkeling em Galápagos.', twitterDescription: 'Reserve os melhores tours de snorkeling em Galápagos.', contentLanguage: 'pt', openMenu: 'Abrir menu', closeMenu: 'Fechar menu', openSubmenu: 'Abrir submenu', whatsappLabel: 'WhatsApp', navHome: 'Início', navHiking: 'Tours de Caminhada', navSnorkeling: 'Tours de Snorkeling', navPackages: 'Pacotes Turísticos', navBookings: 'Reservas', navContacts: 'Contatos', navBlog: 'Blog', tourBartolome: 'Tour Bartolomé', tourSeymour: 'Tour Seymour', tourPlazas: 'Tour Plazas', tourPinzon: 'Tour Pinzón', tourSantaFe: 'Tour Santa Fe', islandBartolome: 'Bartolomé', islandSeymour: 'Seymour', islandPlazas: 'Ilhas Plazas', islandPinzon: 'Pinzón', islandSantaFe: 'Santa Fe', blogTortuga: 'Blog Rota Tortuga', weddings: 'Casamentos', pageTitle: 'Tours de Snorkeling em Galápagos', pageIntro: 'Descubra a incrível vida marinha de Galápagos com nossos tours de snorkeling em Pinzón e Santa Fe.', overlayPinzon: 'Pinzón', overlaySantaFe: 'Santa Fe', pinzonName: 'Ilha Pinzón', santaFeName: 'Ilha Santa Fe', tourDuration: 'Duração do tour', destinations: 'Destinos', pinzonStop1: 'Snorkeling Pinzón: 1 hora', pinzonStop2: 'Praia: 1 hora', santaFeStop1: 'Snorkeling Santa Fe: 1 hora', santaFeStop2: 'Praia: 1 hora', siteDescription: 'Descrição do local', pinzonDesc: 'Pinzón e sua incrível fauna marinha.', santaFeDesc: 'Santa Fe e sua grande colônia de leões-marinhos.', difficultyLevel: 'Nível de dificuldade', difficultyHigh: 'ALTO', buyButton: 'COMPRAR', pinzonInfo: 'Informação Tour Pinzón', santaFeInfo: 'Informação Tour Santa Fe' },
+                ru: { metaTitle: 'Снорклинг Туры на Галапагосах / Пинсон и Санта-Фе', metaDescription: 'Лучшие снорклинг-туры на Галапагосах. Плавайте с морскими львами, черепахами и акулами.', metaKeywords: 'снорклинг галапагосы, пинсон, санта-фе', ogDescription: 'Бронируйте лучшие снорклинг-туры на Галапагосах.', twitterDescription: 'Бронируйте лучшие снорклинг-туры на Галапагосах.', contentLanguage: 'ru', openMenu: 'Открыть меню', closeMenu: 'Закрыть меню', openSubmenu: 'Открыть подменю', whatsappLabel: 'WhatsApp', navHome: 'Главная', navHiking: 'Пешие Туры', navSnorkeling: 'Снорклинг Туры', navPackages: 'Турпакеты', navBookings: 'Бронирование', navContacts: 'Контакты', navBlog: 'Блог', tourBartolome: 'Тур Бартоломе', tourSeymour: 'Тур Сеймур', tourPlazas: 'Тур Пласас', tourPinzon: 'Тур Пинсон', tourSantaFe: 'Тур Санта-Фе', islandBartolome: 'Бартоломе', islandSeymour: 'Сеймур', islandPlazas: 'Острова Пласас', islandPinzon: 'Пинсон', islandSantaFe: 'Санта-Фе', blogTortuga: 'Блог Маршрут Тортуга', weddings: 'Свадьбы', pageTitle: 'Снорклинг Туры на Галапагосах', pageIntro: 'Откройте удивительный подводный мир Галапагосов с турами на Пинсон и Санта-Фе.', overlayPinzon: 'Пинсон', overlaySantaFe: 'Санта-Фе', pinzonName: 'Остров Пинсон', santaFeName: 'Остров Санта-Фе', tourDuration: 'Длительность тура', destinations: 'Маршруты', pinzonStop1: 'Снорклинг Пинсон: 1 час', pinzonStop2: 'Пляж: 1 час', santaFeStop1: 'Снорклинг Санта-Фе: 1 час', santaFeStop2: 'Пляж: 1 час', siteDescription: 'Описание места', pinzonDesc: 'Пинсон и его удивительная морская фауна.', santaFeDesc: 'Санта-Фе и его большая колония морских львов.', difficultyLevel: 'Уровень сложности', difficultyHigh: 'ВЫСОКИЙ', buyButton: 'КУПИТЬ', pinzonInfo: 'Инфо Тур Пинсон', santaFeInfo: 'Инфо Тур Санта-Фе' },
+                zh: { metaTitle: '加拉帕戈斯浮潜行程 / 平松与圣菲', metaDescription: '加拉帕戈斯最佳浮潜行程。与海狮、海龟和鲨鱼同游。', metaKeywords: '加拉帕戈斯 浮潜, 平松, 圣菲', ogDescription: '预订最佳加拉帕戈斯浮潜行程。', twitterDescription: '预订最佳加拉帕戈斯浮潜行程。', contentLanguage: 'zh', openMenu: '打开菜单', closeMenu: '关闭菜单', openSubmenu: '打开子菜单', whatsappLabel: 'WhatsApp', navHome: '首页', navHiking: '徒步行程', navSnorkeling: '浮潜行程', navPackages: '旅游套餐', navBookings: '预订', navContacts: '联系', navBlog: '博客', tourBartolome: '巴托洛梅行程', tourSeymour: '西摩行程', tourPlazas: '普拉萨斯行程', tourPinzon: '平松行程', tourSantaFe: '圣菲行程', islandBartolome: '巴托洛梅', islandSeymour: '西摩', islandPlazas: '普拉萨斯群岛', islandPinzon: '平松', islandSantaFe: '圣菲', blogTortuga: '托尔图加路线博客', weddings: '婚礼', pageTitle: '加拉帕戈斯浮潜行程', pageIntro: '通过平松与圣菲浮潜行程探索加拉帕戈斯海洋生物。', overlayPinzon: '平松', overlaySantaFe: '圣菲', pinzonName: '平松岛', santaFeName: '圣菲岛', tourDuration: '行程时长', destinations: '行程点', pinzonStop1: '平松浮潜：1小时', pinzonStop2: '海滩：1小时', santaFeStop1: '圣菲浮潜：1小时', santaFeStop2: '海滩：1小时', siteDescription: '地点介绍', pinzonDesc: '平松及其丰富海洋生物。', santaFeDesc: '圣菲及其大型海狮群。', difficultyLevel: '难度等级', difficultyHigh: '高', buyButton: '购买', pinzonInfo: '平松行程信息', santaFeInfo: '圣菲行程信息' },
+                ja: { metaTitle: 'ガラパゴス シュノーケリングツアー / ピンソンとサンタフェ', metaDescription: 'ガラパゴス最高のシュノーケリングツアー。アシカ、ウミガメ、サメと泳ぐ体験。', metaKeywords: 'ガラパゴス シュノーケリング, ピンソン, サンタフェ', ogDescription: 'ガラパゴスの人気シュノーケリングツアーを予約。', twitterDescription: 'ガラパゴスの人気シュノーケリングツアーを予約。', contentLanguage: 'ja', openMenu: 'メニューを開く', closeMenu: 'メニューを閉じる', openSubmenu: 'サブメニューを開く', whatsappLabel: 'WhatsApp', navHome: 'ホーム', navHiking: 'ハイキングツアー', navSnorkeling: 'シュノーケリングツアー', navPackages: 'ツアーパッケージ', navBookings: '予約', navContacts: 'お問い合わせ', navBlog: 'ブログ', tourBartolome: 'バルトロメツアー', tourSeymour: 'セイモアツアー', tourPlazas: 'プラサスツアー', tourPinzon: 'ピンソンツアー', tourSantaFe: 'サンタフェツアー', islandBartolome: 'バルトロメ', islandSeymour: 'セイモア', islandPlazas: 'プラサス諸島', islandPinzon: 'ピンソン', islandSantaFe: 'サンタフェ', blogTortuga: 'トルトゥガルートブログ', weddings: 'ウェディング', pageTitle: 'ガラパゴス シュノーケリングツアー', pageIntro: 'ピンソンとサンタフェでガラパゴスの海洋生物を体験するシュノーケリングツアーです。', overlayPinzon: 'ピンソン', overlaySantaFe: 'サンタフェ', pinzonName: 'ピンソン島', santaFeName: 'サンタフェ島', tourDuration: 'ツアー時間', destinations: '目的地', pinzonStop1: 'ピンソンでシュノーケリング：1時間', pinzonStop2: 'ビーチ：1時間', santaFeStop1: 'サンタフェでシュノーケリング：1時間', santaFeStop2: 'ビーチ：1時間', siteDescription: 'スポット説明', pinzonDesc: 'ピンソンと豊かな海洋生物。', santaFeDesc: 'サンタフェと大きなアシカの群れ。', difficultyLevel: '難易度', difficultyHigh: '高', buyButton: '購入', pinzonInfo: 'ピンソンツアー情報', santaFeInfo: 'サンタフェツアー情報' },
+                ko: { metaTitle: '갈라파고스 스노클링 투어 / 핀손과 산타페', metaDescription: '갈라파고스 최고의 스노클링 투어. 바다사자, 거북이, 상어와 수영하세요.', metaKeywords: '갈라파고스 스노클링, 핀손, 산타페', ogDescription: '갈라파고스 최고의 스노클링 투어를 예약하세요.', twitterDescription: '갈라파고스 최고의 스노클링 투어를 예약하세요.', contentLanguage: 'ko', openMenu: '메뉴 열기', closeMenu: '메뉴 닫기', openSubmenu: '하위 메뉴 열기', whatsappLabel: 'WhatsApp', navHome: '홈', navHiking: '트레킹 투어', navSnorkeling: '스노클링 투어', navPackages: '투어 패키지', navBookings: '예약', navContacts: '연락처', navBlog: '블로그', tourBartolome: '바르톨로메 투어', tourSeymour: '세이모어 투어', tourPlazas: '플라사스 투어', tourPinzon: '핀손 투어', tourSantaFe: '산타페 투어', islandBartolome: '바르톨로메', islandSeymour: '세이모어', islandPlazas: '플라사스 제도', islandPinzon: '핀손', islandSantaFe: '산타페', blogTortuga: '토르투가 루트 블로그', weddings: '웨딩', pageTitle: '갈라파고스 스노클링 투어', pageIntro: '핀손과 산타페에서 갈라파고스 해양 생물을 만나는 스노클링 투어입니다.', overlayPinzon: '핀손', overlaySantaFe: '산타페', pinzonName: '핀손 섬', santaFeName: '산타페 섬', tourDuration: '투어 소요시간', destinations: '목적지', pinzonStop1: '핀손 스노클링: 1시간', pinzonStop2: '해변: 1시간', santaFeStop1: '산타페 스노클링: 1시간', santaFeStop2: '해변: 1시간', siteDescription: '장소 설명', pinzonDesc: '핀손과 풍부한 해양 생태.', santaFeDesc: '산타페와 큰 바다사자 군락.', difficultyLevel: '난이도', difficultyHigh: '높음', buyButton: '구매', pinzonInfo: '핀손 투어 정보', santaFeInfo: '산타페 투어 정보' }
+            };
+
+            const localeByLang = { es: 'es_EC', en: 'en_US', fr: 'fr_FR', de: 'de_DE', it: 'it_IT', pt: 'pt_BR', ru: 'ru_RU', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR' };
+
+            function setMeta(selector, content) {
+                const element = document.querySelector(selector);
+                if (element && content) element.setAttribute('content', content);
+            }
+
+            function applyLanguage(language) {
+                const activeLang = translations[language] ? language : 'es';
+                const t = translations[activeLang];
+                document.documentElement.lang = activeLang;
+                document.title = t.metaTitle;
+                setMeta('meta[name="description"]', t.metaDescription);
+                setMeta('meta[name="keywords"]', t.metaKeywords);
+                setMeta('meta[property="og:title"]', t.metaTitle);
+                setMeta('meta[property="og:description"]', t.ogDescription);
+                setMeta('meta[property="og:locale"]', localeByLang[activeLang]);
+                setMeta('meta[name="twitter:title"]', t.metaTitle);
+                setMeta('meta[name="twitter:description"]', t.twitterDescription);
+                setMeta('meta[http-equiv="content-language"]', t.contentLanguage);
+
+                document.querySelectorAll('[data-i18n]').forEach(function(element) {
+                    const key = element.getAttribute('data-i18n');
+                    if (t[key]) element.textContent = t[key];
+                });
+
+                document.querySelectorAll('[data-i18n-attr]').forEach(function(element) {
+                    const instructions = element.getAttribute('data-i18n-attr').split(';');
+                    instructions.forEach(function(rule) {
+                        const parts = rule.split(':');
+                        if (parts.length === 2) {
+                            const attributeName = parts[0].trim();
+                            const key = parts[1].trim();
+                            if (t[key]) element.setAttribute(attributeName, t[key]);
+                        }
+                    });
+                });
+
+                const selector = document.getElementById('language-selector');
+                if (selector && selector.value !== activeLang) selector.value = activeLang;
+                localStorage.setItem('redtip_language', activeLang);
+            }
+
+            const openBtn = document.querySelector('.menu-mobile-btn');
+            const closeBtn = document.querySelector('.menu-mobile .close-btn');
+            const mobileMenu = document.querySelector('.menu-mobile');
+            if (openBtn && mobileMenu) {
+                openBtn.addEventListener('click', function() { mobileMenu.classList.add('active'); });
+            }
+            if (closeBtn && mobileMenu) {
+                closeBtn.addEventListener('click', function() { mobileMenu.classList.remove('active'); });
+            }
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', function(e) { if(e.target === mobileMenu) mobileMenu.classList.remove('active'); });
+            }
+
+            // Submenú móvil toggle
+            const submenuToggle = document.querySelector('.menu-mobile .submenu-toggle');
+            const submenuMobile = document.querySelector('.menu-mobile .submenu-mobile');
+            if (submenuToggle && submenuMobile) {
+                submenuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submenuMobile.style.display = submenuMobile.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+
+            // Submenú móvil snorkeling toggle
+            const submenuToggleSnorkel = document.querySelector('.menu-mobile .submenu-toggle-snorkel');
+            const submenuMobileSnorkel = document.querySelector('.menu-mobile .submenu-mobile-snorkel');
+            if (submenuToggleSnorkel && submenuMobileSnorkel) {
+                submenuToggleSnorkel.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submenuMobileSnorkel.style.display = submenuMobileSnorkel.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+
+            // Submenú móvil Blog toggle
+            const submenuToggleBlog = document.querySelector('.menu-mobile .submenu-toggle-blog');
+            const submenuMobileBlog = document.querySelector('.menu-mobile .submenu-mobile-blog');
+            if (submenuToggleBlog && submenuMobileBlog) {
+                submenuToggleBlog.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submenuMobileBlog.style.display = submenuMobileBlog.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+
+            const languageSelector = document.getElementById('language-selector');
+            if (languageSelector) {
+                languageSelector.addEventListener('change', function() {
+                    applyLanguage(languageSelector.value);
+                });
+            }
+
+            const savedLanguage = localStorage.getItem('redtip_language');
+            const browserLanguage = (navigator.language || 'es').slice(0, 2).toLowerCase();
+            const initialLanguage = savedLanguage || (translations[browserLanguage] ? browserLanguage : 'es');
+            applyLanguage(initialLanguage);
+        });
+    </script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tours de Caminata- Galápagos</title>
+    <meta name="description" content="Información del tour de caminata en Galápagos con itinerario y recomendaciones para reservar desde Santa Cruz.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.redtipsharkagency.com/pagina-descripcion-bartolome.html">
+    <link rel="stylesheet" href="stylecaminata4nuevo1.css">
+    <style>
+        .modal-img-bg {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-img-bg.active {
+            display: flex;
+        }
+        .modal-img-bg img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 0 30px #000;
+        }
+        .modal-img-bg:after {
+            content: "✖";
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 10001;
+        }
+        @media (max-width: 600px) {
+            .modal-img-bg:after {
+                top: 10px;
+                right: 20px;
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="menu-font.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="logoredtip2.webp" alt="my website logo">
+            <!-- Botón para cambiar a inglés -->
+            <button onclick="window.location.href='tourcaminataterminadolinknuevo4_en.html'" style="float:right;margin:10px 0 0 20px;">En</button>
+            <!-- Botón para cambiar a chino -->
+            <button onclick="window.location.href='tourcaminataterminadolinknuevo4_zh.html'" style="float:right;margin:10px 0 0 10px;">中文</button>
+            <nav>
+                <a href="index.html">Inicio</a>
+                <a href="tourcaminataterminadolinknuevo4.html" class="active">Tours Caminata</a>
+                <a href="tours-snorkeling.html">Tours Snorkeling</a>
+                <a href="paquetes turisticos.html">Paquete Turisticos</a>
+                <a href="pagina de cobros1 copy 2.html">Reservas</a>
+                <a href="contactos1.html">Contactos</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="tour-list">
+        <h1>Tour de Caminata en Galápagos</h1>
+        <article class="tour-card">
+            <h2>Bartolome</h2>
+            <img src="via seymour.webp" class="tour-image tour-img-modal" alt="Caminata seymour">
+            <div class="tour-info">
+                <p><strong>Itinerario</strong></p>
+                <p>Recorrido en bus Puerto Ayora - Baltra: 1 hora</p>
+                <p>Navegacion en yate hasta Seymour Norte: 1 hora</p>
+                <P>Desembarque en Seymour norte</P>
+                <p>Caminata Seymour Norte: 1 hora</p>
+                <p>Almuerzo Abordo</p>
+                <p>Navegacion playas Bachas o Mosquera: 45 minutos</p>
+                <p>Desembarque en playa Bachas o Mosquera</p>
+                <p>Playa: 1 hora</p>
+                <p>Navegacion a Baltra</p>
+                <p>Recorrido en Bus Baltra - Puerto Ayora</p>
+                <p><strong>Nivel de Dificultad</strong></p>
+                <p>MEDIO</p>
+                <a href="https://wa.me/593959285913" target="_blank" class="buy-button">COMPRAR</a>
+            </div>
+        </article>
+
+    </main>
+    <!-- Modal para imagen en pantalla completa -->
+    <div class="modal-img-bg" id="modalImg">
+        <img src="" alt="Imagen ampliada" id="modalImgTag">
+    </div>
+    <script>
+        // Mostrar imagen en pantalla completa al hacer click
+        document.querySelectorAll('.tour-img-modal').forEach(function(img) {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', function() {
+                var modal = document.getElementById('modalImg');
+                var modalImg = document.getElementById('modalImgTag');
+                modalImg.src = this.src;
+                modal.classList.add('active');
+            });
+        });
+        // Cerrar modal al hacer click fuera de la imagen o en la X
+        document.getElementById('modalImg').addEventListener('click', function(e) {
+            if (e.target === this || e.target === this.querySelector('img')) {
+                this.classList.remove('active');
+            }
+        });
+        // Cerrar modal con la tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('modalImg').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+

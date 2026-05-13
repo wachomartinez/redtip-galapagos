@@ -1,0 +1,112 @@
+.menu-mobile-btn {
+    display: none;
+    background: #fff;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #333;
+    z-index: 10003;
+    position: fixed;
+    left: 16px;
+    top: 16px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.menu-mobile-btn:hover {
+    background: #f0f0f0;
+}
+
+.menu-mobile {
+    display: none;
+}
+
+body.mobile-menu-open {
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .menu-mobile-btn {
+        display: flex;
+    }
+
+    .menu-mobile {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        max-width: 340px;
+        height: 100vh;
+        background: #fff;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+        padding: 1.5rem;
+        transition: left 0.3s;
+        z-index: 10002;
+        overflow-y: auto;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .menu-mobile.active {
+        left: 0;
+        visibility: visible;
+        pointer-events: auto;
+        box-shadow: 0 0 0 100vmax rgba(0,0,0,0.35), 2px 0 8px rgba(0,0,0,0.15);
+    }
+
+    .menu-mobile .close-btn {
+        align-self: flex-end;
+        font-size: 2rem;
+        background: none;
+        border: none;
+        margin-bottom: 1rem;
+        cursor: pointer;
+    }
+
+    .menu-mobile a {
+        margin: 0.6rem 0;
+        color: #111;
+        text-decoration: none;
+        font-size: 1.05rem;
+    }
+
+    .menu-mobile > div {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .menu-mobile .submenu-mobile,
+    .menu-mobile .submenu-mobile-snorkel,
+    .menu-mobile .submenu-mobile-blog {
+        display: none;
+        flex-direction: column;
+        margin-left: 1rem;
+        width: 100%;
+    }
+
+    .menu-mobile .submenu-toggle,
+    .menu-mobile .submenu-toggle-snorkel,
+    .menu-mobile .submenu-toggle-blog {
+        background: none;
+        border: none;
+        font-size: 1rem;
+        color: #333;
+        cursor: pointer;
+        margin-left: 0.3rem;
+        transition: transform 0.2s ease;
+    }
+
+    .menu-mobile .submenu-toggle.is-open,
+    .menu-mobile .submenu-toggle-snorkel.is-open,
+    .menu-mobile .submenu-toggle-blog.is-open {
+        transform: rotate(180deg);
+    }
+}

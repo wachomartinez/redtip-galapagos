@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+    <meta name="theme-color" content="#25d366">
+    <title>Paquetes Turísticos Galápagos | Tours Todo Incluido con RedTipShark Agency</title>
+    <meta name="description" content="Reserva paquetes turísticos todo incluido a Galápagos: hospedaje, traslados, tours y asistencia personalizada. ¡Cotiza y vive la mejor experiencia con RedTipShark Agency!">
+    <meta name="keywords" content="paquetes turísticos galápagos, tours todo incluido, hospedaje galápagos, traslados, agencia de viajes, reservas, ecuador">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="RedTipShark Agency">
+    <meta http-equiv="content-language" content="es">
+    <link rel="canonical" href="https://www.redtipsharkagency.com/paquetes-turisticos.html">
+    <meta property="og:title" content="Paquetes Turísticos Galápagos | Tours Todo Incluido">
+    <meta property="og:description" content="Reserva paquetes turísticos todo incluido a Galápagos: hospedaje, traslados, tours y asistencia personalizada.">
+    <meta property="og:image" content="https://www.redtipsharkagency.com/paquete-turisticos-galapagos.webp">
+    <meta property="og:url" content="https://www.redtipsharkagency.com/paquetes-turisticos.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_EC">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Paquetes Turísticos Galápagos | Tours Todo Incluido">
+    <meta name="twitter:description" content="Reserva paquetes turísticos todo incluido a Galápagos: hospedaje, traslados, tours y asistencia personalizada.">
+    <meta name="twitter:image" content="https://www.redtipsharkagency.com/paquete-turisticos-galapagos.webp">
+    <link rel="icon" type="image/webp" href="logoredtip2.webp">
+    <link rel="stylesheet" href="stylecaminata4nuevo1.css">
+    <style>
+        .modal-img-bg {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-img-bg.active {
+            display: flex;
+        }
+        .modal-img-bg img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 0 30px #000;
+        }
+        .modal-img-bg:after {
+            content: "✖";
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 10001;
+        }
+        @media (max-width: 600px) {
+            .modal-img-bg:after {
+                top: 10px;
+                right: 20px;
+                font-size: 2rem;
+            }
+        }
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 38px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .whatsapp-float:hover {
+            background-color: #20ba5a;
+        }
+        .whatsapp-float svg {
+            width: 32px;
+            height: 32px;
+        }
+        @media (max-width: 600px) {
+            .whatsapp-float {
+                width: 48px;
+                height: 48px;
+                font-size: 28px;
+                bottom: 18px;
+                right: 18px;
+            }
+            .whatsapp-float svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+        /* --- Responsive Menu Styles --- */
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .menu-mobile-btn {
+            display: none;
+            background: #fff;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #333;
+            z-index: 10001;
+            position: fixed;
+            left: 30px;
+            top: 30px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .menu-mobile-btn:hover {
+            background: #f0f0f0;
+        }
+        .menu-mobile {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+            }
+            .menu-mobile-btn {
+                display: block;
+            }
+            .menu-mobile {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background: #fff;
+                box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+                padding: 2rem 1.5rem;
+                transition: left 0.3s;
+                z-index: 10000;
+            }
+            .menu-mobile.active {
+                left: 0;
+            }
+            .menu-mobile .close-btn {
+                align-self: flex-end;
+                font-size: 2rem;
+                background: none;
+                border: none;
+                margin-bottom: 2rem;
+                cursor: pointer;
+            }
+            .menu-mobile a {
+                margin: 1rem 0;
+                font-size: 1.2rem;
+            }
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        h1, h2, h3 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+        }
+        .submenu {
+            position: absolute;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            border-radius: 8px;
+            min-width: 200px;
+            display: none;
+            flex-direction: column;
+            padding: 0.5rem 0;
+            z-index: 1000;
+        }
+        .main-nav .has-submenu {
+            position: relative;
+        }
+        .main-nav .has-submenu:hover .submenu,
+        .main-nav .has-submenu:focus-within .submenu {
+            display: flex;
+        }
+        .submenu a {
+            padding: 0.5rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: 1rem;
+        }
+        .submenu a:hover {
+            background: #f2f2f2;
+        }
+        .menu-mobile .submenu-mobile,
+        .menu-mobile .submenu-mobile-snorkel {
+            display: none;
+            flex-direction: column;
+            margin-left: 1rem;
+        }
+        .menu-mobile .submenu-mobile.show,
+        .menu-mobile .submenu-mobile-snorkel.show {
+            display: flex;
+        }
+        .menu-mobile .submenu-toggle,
+        .menu-mobile .submenu-toggle-snorkel {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            color: #333;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+        /* --- Overlay title styles (añadido) --- */
+        .image-overlay-container {
+            position: relative;
+            display: block;
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .image-overlay-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            line-height: 1;
+            z-index: 2;
+            text-transform: capitalize;
+        }
+
+        @media (max-width: 600px) {
+            .overlay-text {
+                top: 8px;
+                font-size: 1rem;
+                padding: 5px 10px;
+            }
+        }
+        .language-switcher {
+            position: static;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .language-switcher select {
+            padding: 0.4rem 0.6rem;
+            border-radius: 8px;
+            border: 1px solid #d6d6d6;
+            background: #fff;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 768px) {
+            .language-switcher {
+                position: fixed;
+                top: 16px;
+                right: 16px;
+                z-index: 10002;
+            }
+            .language-switcher select {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="menu-font.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="logoredtip2.webp" alt="Logo Galápagos RedTipShark Agency">
+            <div class="language-switcher">
+                <select id="language-selector" aria-label="Seleccionar idioma">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="it">Italiano</option>
+                    <option value="pt">Português</option>
+                    <option value="ru">Русский</option>
+                    <option value="zh">中文</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                </select>
+            </div>
+            <!-- Botón para cambiar a inglés -->
+            <!-- <button onclick="window.location.href='paquetes_turisticos_en.html'" style="float:right;margin:10px 0 0 20px;">En</button> -->
+            <!-- Botón para cambiar a chino -->
+            <!-- <button onclick="window.location.href='paquetes_turisticos_zh.html'" style="float:right;margin:10px 0 0 10px;">中文</button> -->
+            <!-- Botón hamburguesa para menú móvil -->
+            <button class="menu-mobile-btn" aria-label="Abrir menú" data-i18n-attr="aria-label:openMenu">&#9776;</button>
+            <nav class="main-nav menu-desktop">
+                <a href="index.html" data-i18n="navHome">Inicio</a>
+                <div class="has-submenu">
+                    <a href="tours-caminata-galapagos.html" data-i18n="navHiking">Tours Caminata</a>
+                    <div class="submenu">
+                        <a href="tour-bartolome copy.html" data-i18n="tourBartolome">Tour Bartolomé</a>
+                        <a href="tour-seymour-norte copy.html" data-i18n="tourSeymour">Tour Seymour</a>
+                        <a href="tour-plazas copy.html" data-i18n="tourPlazas">Tour Plazas</a>
+                    </div>
+                </div>
+                <div class="has-submenu">
+                    <a href="tours-snorkeling-galapagos.html" data-i18n="navSnorkeling">Tours Snorkeling</a>
+                    <div class="submenu">
+                        <a href="tour-pinzon copy.html" data-i18n="tourPinzon">Tour Pinzón</a>
+                        <a href="tour-santafe copy.html" data-i18n="tourSantaFe">Tour Santa Fe</a>
+                    </div>
+                </div>
+                <a href="paquetes turisticos.html" class="active" data-i18n="navPackages">Paquetes Turisticos</a>
+                <a href="paginadecobros.html" data-i18n="navBookings">Reservas</a>
+                <a href="contactos1.html" data-i18n="navContacts">Contactos</a>
+                <div class="has-submenu">
+                    <a href="blog-ruta-tortuga-las-grietas copy.html" data-i18n="navBlog">Blog</a>
+                    <div class="submenu">
+                        <a href="blog-ruta-tortuga-las-grietas copy.html" data-i18n="blogTortuga">Blog Ruta Tortuga</a>
+                        <a href="bodas.html" data-i18n="weddings">Bodas</a>
+                    </div>
+                </div>
+            </nav>
+            <!-- Menú móvil oculto por defecto -->
+            <nav class="menu-mobile" aria-label="Menú móvil">
+                <button class="close-btn" aria-label="Cerrar menú" data-i18n-attr="aria-label:closeMenu">&times;</button>
+                <a href="index.html" data-i18n="navHome">Inicio</a>
+                <div>
+                    <a href="tours-caminata-galapagos.html" style="display:inline-block;" data-i18n="navHiking">Tours Caminata</a>
+                    <button class="submenu-toggle" aria-label="Abrir submenú" data-i18n-attr="aria-label:openSubmenu" style="background:none;border:none;font-size:1.1rem;color:#333;cursor:pointer;margin-left:0.5rem;">&#9662;</button>
+                    <div class="submenu-mobile" style="display:none;flex-direction:column;margin-left:1rem;">
+                        <a href="tour-bartolome copy.html" data-i18n="islandBartolome">Bartolomé</a>
+                        <a href="tour-seymour-norte copy.html" data-i18n="islandSeymour">Seymour</a>
+                        <a href="tour-plazas copy.html" data-i18n="islandPlazas">Islas Plazas</a>
+                    </div>
+                </div>
+                <div>
+                    <a href="tours-snorkeling-galapagos.html" style="display:inline-block;" data-i18n="navSnorkeling">Tours Snorkeling</a>
+                    <button class="submenu-toggle-snorkel" aria-label="Abrir submenú" data-i18n-attr="aria-label:openSubmenu" style="background:none;border:none;font-size:1.1rem;color:#333;cursor:pointer;margin-left:0.5rem;">&#9662;</button>
+                    <div class="submenu-mobile-snorkel" style="display:none;flex-direction:column;margin-left:1rem;">
+                        <a href="tour-pinzon copy.html" data-i18n="islandPinzon">Pinzón</a>
+                        <a href="tour-santafe copy.html" data-i18n="islandSantaFe">Santa Fe</a>
+                    </div>
+                </div>
+                <a href="paquetes turisticos.html" class="active" data-i18n="navPackages">Paquetes Turisticos</a>
+                <a href="paginadecobros.html" data-i18n="navBookings">Reservas</a>
+                <a href="contactos1.html" data-i18n="navContacts">Contactos</a>
+                <div>
+                    <a href="blog-ruta-tortuga-las-grietas copy.html" style="display:inline-block;" data-i18n="navBlog">Blog</a>
+                    <button class="submenu-toggle-blog" aria-label="Abrir submenú" data-i18n-attr="aria-label:openSubmenu" style="background:none;border:none;font-size:1.1rem;color:#333;cursor:pointer;margin-left:0.5rem;">&#9662;</button>
+                    <div class="submenu-mobile-blog" style="display:none;flex-direction:column;margin-left:1rem;">
+                        <a href="blog-ruta-tortuga-las-grietas copy.html" data-i18n="blogTortuga">Blog Ruta Tortuga</a>
+                        <a href="bodas.html" data-i18n="weddings">Bodas</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main class="tour-list">
+        <h1 data-i18n="pageTitle">Paquetes Turísticos Todo Incluido en Galápagos</h1>
+        <p data-i18n="pageIntro">
+            Descubre nuestros paquetes turísticos en Galápagos con todo incluido: hospedaje, traslados, tours guiados y asistencia personalizada. Vive una experiencia única y reserva el paquete que mejor se adapte a tus necesidades con RedTipShark Agency.
+        </p>
+        <article class="tour-card"> 
+            <div class="image-overlay-container">
+                <img src="paquete edicion especial.webp" class="tour-image paquete-img" alt="Paquete Edición Especial Galápagos - Todo Incluido" loading="lazy">
+                <div class="overlay-text" data-i18n="specialOverlay">Paquete Edición Especial</div>
+            </div>
+            <div class="tour-info">
+                <p><strong data-i18n="specialName">Paquete Edicion Especial</strong></p>
+                <p><strong data-i18n="durationLabel">Duración del tour</strong></p>
+                <p data-i18n="durationValue">5 Dias - 4 Noches</p>
+                <p><strong data-i18n="destinations">Destinos</strong></p>
+                <p data-i18n="day1">Dia 1: Transfer in Baltra - Hotel</p>
+                <p data-i18n="day2">Dia 2: Tour Bartolome o Seymour Norte: 1 hora</p>
+                <p data-i18n="day3">Dia 3: Libre - Hospedaje</p>
+                <p data-i18n="day4">Dia 4: Tour Pinzon o Santa Fe</p>
+                <p data-i18n="day5">Dia 5: Transfer out Hotel - Aeropuerto</p>
+                <p><strong data-i18n="difficultyLabel">Nivel de dificultad</strong></p>
+                <p data-i18n="difficultyMedium">MEDIA</p>
+                <a href="https://wa.me/593959285913" target="_blank" class="buy-button" data-i18n="buyButton">COMPRAR</a>
+                <a href="#" class="buy-button details-button" style="margin-left:10px;"
+                    data-title="Paquete Edicion Especial"
+                    data-details="Incluye: 5 días/4 noches de hospedaje, traslados aeropuerto-hotel, tour Bartolomé o Seymour Norte, tour Pinzón o Santa Fe, desayunos, guía certificado y asistencia personalizada. Recomendado llevar ropa cómoda, protector solar y documentos personales."
+                    data-i18n-attr="data-title:specialName;data-details:specialDetails">
+                    <span data-i18n="specialInfo">Información Paquete Especial</span>
+                </a>
+            </div>
+        </article>
+
+        <article class="tour-card">
+            <div class="image-overlay-container">
+                <h2 class="overlay-text" data-i18n="exploreOverlay">Paquete Explorando</h2>
+                <img src="paquete explorando.webp" class="tour-image paquete-img" alt="Paquete Explorando Galápagos - Todo Incluido" loading="lazy">
+            </div>
+            <div class="tour-info">
+                <p><strong data-i18n="exploreName">Paquete Explorando</strong></p>
+                <p><strong data-i18n="durationLabel">Duración del tour</strong></p>
+                <p data-i18n="durationValue">5 Dias - 4 Noches</p>
+                <p><strong data-i18n="destinations">Destinos</strong></p>
+                <p data-i18n="day1">Dia 1: Transfer in Baltra - Hotel</p>
+                <p data-i18n="day2">Dia 2: Tour Bartolome o Seymour Norte: 1 hora</p>
+                <p data-i18n="day3">Dia 3: Libre - Hospedaje</p>
+                <p data-i18n="day4">Dia 4: Tour Pinzon o Santa Fe</p>
+                <p data-i18n="day5">Dia 5: Transfer out Hotel - Aeropuerto</p>
+                <p><strong data-i18n="difficultyLabel">Nivel de dificultad</strong></p>
+                <p data-i18n="difficultyMedium">MEDIA</p>
+                <a href="https://wa.me/593959285913" target="_blank" class="buy-button" data-i18n="buyButton">COMPRAR</a>
+                <a href="#" class="buy-button details-button" style="margin-left:10px;"
+                    data-title="Paquete Explorando"
+                    data-details="Incluye: 5 días/4 noches de hospedaje, traslados, tour Bartolomé o Seymour Norte, tour Pinzón o Santa Fe, desayunos, guía y asistencia. Ideal para quienes desean flexibilidad y explorar por su cuenta."
+                    data-i18n-attr="data-title:exploreName;data-details:exploreDetails">
+                    <span data-i18n="exploreInfo">Información Paquete Explorando</span>
+                </a>
+            </div>
+        </article>
+
+        <article class="tour-card">
+            <div class="image-overlay-container">
+                <h2 class="overlay-text" data-i18n="completeOverlay">Paquete Completo</h2>
+                <img src="paquete completo.webp" class="tour-image paquete-img" alt="Paquete Completo Galápagos - Todo Incluido" loading="lazy">
+            </div>
+            <div class="tour-info">
+                <p><strong data-i18n="completeName">Paquete Completo</strong></p>
+                <p><strong data-i18n="durationShort">Duración</strong></p>
+                <p data-i18n="durationValue">5 Dias - 4 Noches</p>
+                <p><strong data-i18n="destinations">Destinos</strong></p>
+                <p data-i18n="day1">Dia 1: Transfer in Baltra - Hotel</p>
+                <p data-i18n="day2">Dia 2: Tour Bartolome o Seymour Norte: 1 hora</p>
+                <p data-i18n="day3">Dia 3: Libre - Hospedaje</p>
+                <p data-i18n="day4">Dia 4: Tour Pinzon o Santa Fe</p>
+                <p data-i18n="day5">Dia 5: Transfer out Hotel - Aeropuerto</p>
+                <p><strong data-i18n="difficultyLabel">Nivel de dificultad</strong></p>
+                <p data-i18n="difficultyMedium">MEDIA</p>
+                <a href="https://wa.me/593959285913" target="_blank" class="buy-button" data-i18n="buyButton">COMPRAR</a>
+                <a href="#" class="buy-button details-button" style="margin-left:10px;"
+                    data-title="Paquete Completo"
+                    data-details="Incluye: 5 días/4 noches, todos los traslados, tours a Bartolomé/Seymour y Pinzón/Santa Fe, hospedaje, desayunos, guía y asistencia. Perfecto para quienes buscan una experiencia integral en Galápagos."
+                    data-i18n-attr="data-title:completeName;data-details:completeDetails">
+                    <span data-i18n="completeInfo">Información Paquete Completo</span>
+                </a>
+            </div>
+        </article>
+
+        <article class="tour-card">
+            <div class="image-overlay-container">
+                <h2 class="overlay-text" data-i18n="basicOverlay">Paquete Basico</h2>
+                <img src="paquete basico.webp" class="tour-image paquete-img" alt="Paquete Básico Galápagos - Todo Incluido" loading="lazy">
+            </div>
+            <div class="tour-info">
+                <p><strong data-i18n="basicName">Paquete Basico</strong></p>
+                <p><strong data-i18n="durationLabel">Duración del tour</strong></p>
+                <p data-i18n="durationValue">5 Dias - 4 Noches</p>
+                <p><strong data-i18n="destinations">Destinos</strong></p>
+                <p data-i18n="day1">Dia 1: Transfer in Baltra - Hotel</p>
+                <p data-i18n="day2">Dia 2: Tour Bartolome o Seymour Norte: 1 hora</p>
+                <p data-i18n="day3">Dia 3: Libre - Hospedaje</p>
+                <p data-i18n="day4">Dia 4: Tour Pinzon o Santa Fe</p>
+                <p data-i18n="day5">Dia 5: Transfer out Hotel - Aeropuerto</p>
+                <p><strong data-i18n="difficultyLabel">Nivel de dificultad</strong></p>
+                <p data-i18n="difficultyMedium">MEDIA</p>
+                <a href="https://wa.me/593959285913" target="_blank" class="buy-button" data-i18n="buyButton">COMPRAR</a>
+                <a href="#" class="buy-button details-button" style="margin-left:10px;"
+                    data-title="Paquete Basico"
+                    data-details="Incluye: 5 días/4 noches de hospedaje, traslados principales, tour Bartolomé o Seymour, tour Pinzón o Santa Fe, desayunos y asistencia básica. Opción económica para conocer lo esencial de Galápagos."
+                    data-i18n-attr="data-title:basicName;data-details:basicDetails">
+                    <span data-i18n="basicInfo">Información Paquete Basico</span>
+                </a>
+            </div>
+        </article>
+    </main>
+    <!-- Modal para imagen en pantalla completa -->
+    <div class="modal-img-bg" id="modalImg">
+        <img src="" alt="Imagen ampliada" id="modalImgTag">
+    </div>
+    <a href="https://wa.me/593959285913" class="whatsapp-float" target="_blank" aria-label="WhatsApp" data-i18n-attr="aria-label:whatsappLabel">
+        <svg viewBox="0 0 32 32" fill="currentColor">
+            <path d="M16 3C9.373 3 4 8.373 4 15c0 2.65.87 5.1 2.36 7.1L4 29l7.14-2.33A12.93 12.93 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22.8c-2.1 0-4.13-.62-5.82-1.8l-.42-.27-4.24 1.39 1.39-4.13-.28-.43A9.8 9.8 0 0 1 6.2 15c0-5.4 4.4-9.8 9.8-9.8s9.8 4.4 9.8 9.8-4.4 9.8-9.8 9.8zm5.38-7.47c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.64.15-.19.29-.74.93-.91 1.12-.17.19-.34.22-.63.07-.29-.15-1.23-.45-2.34-1.43-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.64-1.54-.88-2.11-.23-.56-.47-.48-.64-.49-.17-.01-.36-.01-.56-.01-.19 0-.5.07-.76.36-.26.29-1 1-.99 2.44.01 1.44 1.03 2.84 1.18 3.04.15.19 2.03 3.1 4.93 4.23.69.28 1.23.45 1.65.57.69.22 1.32.19 1.81.12.55-.08 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.26-.19-.55-.34z"/>
+        </svg>
+    </a>
+    <script>
+        // Mostrar imagen en pantalla completa al hacer click
+        document.querySelectorAll('.paquete-img').forEach(function(img) {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', function() {
+                var modal = document.getElementById('modalImg');
+                var modalImg = document.getElementById('modalImgTag');
+                modalImg.src = this.src;
+                modal.classList.add('active');
+            });
+        });
+        // Cerrar modal al hacer click fuera de la imagen o en la X
+        document.getElementById('modalImg').addEventListener('click', function(e) {
+            if (e.target === this || e.target === this.querySelector('img')) {
+                this.classList.remove('active');
+            }
+        });
+        // Cerrar modal con la tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('modalImg').classList.remove('active');
+            }
+        });
+        // Menú móvil: abrir/cerrar
+        document.addEventListener('DOMContentLoaded', function() {
+            const baseEn = {
+                metaTitle: 'Galápagos Travel Packages | All-Inclusive Tours with RedTipShark Agency',
+                metaDescription: 'Book all-inclusive Galápagos travel packages: lodging, transfers, tours and personalized assistance.',
+                metaKeywords: 'galápagos travel packages, all-inclusive tours, lodging, transfers, agency, ecuador',
+                ogDescription: 'Book all-inclusive Galápagos packages with lodging, transfers and tours.',
+                twitterDescription: 'Book all-inclusive Galápagos packages with lodging, transfers and tours.',
+                contentLanguage: 'en',
+                openMenu: 'Open menu',
+                closeMenu: 'Close menu',
+                openSubmenu: 'Open submenu',
+                whatsappLabel: 'WhatsApp',
+                navHome: 'Home',
+                navHiking: 'Hiking Tours',
+                navSnorkeling: 'Snorkeling Tours',
+                navPackages: 'Tour Packages',
+                navBookings: 'Bookings',
+                navContacts: 'Contact',
+                navBlog: 'Blog',
+                tourBartolome: 'Bartolomé Tour',
+                tourSeymour: 'Seymour Tour',
+                tourPlazas: 'Plazas Tour',
+                tourPinzon: 'Pinzón Tour',
+                tourSantaFe: 'Santa Fe Tour',
+                islandBartolome: 'Bartolomé',
+                islandSeymour: 'Seymour',
+                islandPlazas: 'Plazas Islands',
+                islandPinzon: 'Pinzón',
+                islandSantaFe: 'Santa Fe',
+                blogTortuga: 'Tortuga Route Blog',
+                weddings: 'Weddings',
+                pageTitle: 'All-Inclusive Galápagos Travel Packages',
+                pageIntro: 'Discover our all-inclusive Galápagos packages with lodging, transfers, guided tours and personalized assistance.',
+                specialOverlay: 'Special Edition Package',
+                specialName: 'Special Edition Package',
+                exploreOverlay: 'Explorer Package',
+                exploreName: 'Explorer Package',
+                completeOverlay: 'Complete Package',
+                completeName: 'Complete Package',
+                basicOverlay: 'Basic Package',
+                basicName: 'Basic Package',
+                durationLabel: 'Tour duration',
+                durationShort: 'Duration',
+                durationValue: '5 Days - 4 Nights',
+                destinations: 'Destinations',
+                day1: 'Day 1: Transfer in Baltra - Hotel',
+                day2: 'Day 2: Bartolomé or North Seymour Tour: 1 hour',
+                day3: 'Day 3: Free day - Lodging',
+                day4: 'Day 4: Pinzón or Santa Fe Tour',
+                day5: 'Day 5: Transfer out Hotel - Airport',
+                difficultyLabel: 'Difficulty level',
+                difficultyMedium: 'MEDIUM',
+                buyButton: 'BUY',
+                specialInfo: 'Special Package Info',
+                specialDetails: 'Includes 5 days/4 nights lodging, airport-hotel transfers, Bartolomé or North Seymour tour, Pinzón or Santa Fe tour, breakfasts, certified guide and personalized assistance.',
+                exploreInfo: 'Explorer Package Info',
+                exploreDetails: 'Includes 5 days/4 nights lodging, transfers, Bartolomé or North Seymour tour, Pinzón or Santa Fe tour, breakfasts, guide and assistance.',
+                completeInfo: 'Complete Package Info',
+                completeDetails: 'Includes 5 days/4 nights, all transfers, tours to Bartolomé/Seymour and Pinzón/Santa Fe, lodging, breakfasts, guide and assistance.',
+                basicInfo: 'Basic Package Info',
+                basicDetails: 'Includes 5 days/4 nights lodging, main transfers, Bartolomé or Seymour tour, Pinzón or Santa Fe tour, breakfasts and basic assistance.'
+            };
+
+            const translations = {
+                es: {
+                    metaTitle: 'Paquetes Turísticos Galápagos | Tours Todo Incluido con RedTipShark Agency',
+                    metaDescription: 'Reserva paquetes turísticos todo incluido a Galápagos: hospedaje, traslados, tours y asistencia personalizada. ¡Cotiza y vive la mejor experiencia con RedTipShark Agency!',
+                    metaKeywords: 'paquetes turísticos galápagos, tours todo incluido, hospedaje galápagos, traslados, agencia de viajes, reservas, ecuador',
+                    ogDescription: 'Reserva paquetes turísticos todo incluido a Galápagos: hospedaje, traslados, tours y asistencia personalizada.',
+                    twitterDescription: 'Reserva paquetes turísticos todo incluido a Galápagos: hospedaje, traslados, tours y asistencia personalizada.',
+                    contentLanguage: 'es',
+                    openMenu: 'Abrir menú',
+                    closeMenu: 'Cerrar menú',
+                    openSubmenu: 'Abrir submenú',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: 'Inicio',
+                    navHiking: 'Tours Caminata',
+                    navSnorkeling: 'Tours Snorkeling',
+                    navPackages: 'Paquetes Turisticos',
+                    navBookings: 'Reservas',
+                    navContacts: 'Contactos',
+                    navBlog: 'Blog',
+                    tourBartolome: 'Tour Bartolomé',
+                    tourSeymour: 'Tour Seymour',
+                    tourPlazas: 'Tour Plazas',
+                    tourPinzon: 'Tour Pinzón',
+                    tourSantaFe: 'Tour Santa Fe',
+                    islandBartolome: 'Bartolomé',
+                    islandSeymour: 'Seymour',
+                    islandPlazas: 'Islas Plazas',
+                    islandPinzon: 'Pinzón',
+                    islandSantaFe: 'Santa Fe',
+                    blogTortuga: 'Blog Ruta Tortuga',
+                    weddings: 'Bodas',
+                    pageTitle: 'Paquetes Turísticos Todo Incluido en Galápagos',
+                    pageIntro: 'Descubre nuestros paquetes turísticos en Galápagos con todo incluido: hospedaje, traslados, tours guiados y asistencia personalizada. Vive una experiencia única y reserva el paquete que mejor se adapte a tus necesidades con RedTipShark Agency.',
+                    specialOverlay: 'Paquete Edición Especial',
+                    specialName: 'Paquete Edicion Especial',
+                    exploreOverlay: 'Paquete Explorando',
+                    exploreName: 'Paquete Explorando',
+                    completeOverlay: 'Paquete Completo',
+                    completeName: 'Paquete Completo',
+                    basicOverlay: 'Paquete Basico',
+                    basicName: 'Paquete Basico',
+                    durationLabel: 'Duración del tour',
+                    durationShort: 'Duración',
+                    durationValue: '5 Dias - 4 Noches',
+                    destinations: 'Destinos',
+                    day1: 'Dia 1: Transfer in Baltra - Hotel',
+                    day2: 'Dia 2: Tour Bartolome o Seymour Norte: 1 hora',
+                    day3: 'Dia 3: Libre - Hospedaje',
+                    day4: 'Dia 4: Tour Pinzon o Santa Fe',
+                    day5: 'Dia 5: Transfer out Hotel - Aeropuerto',
+                    difficultyLabel: 'Nivel de dificultad',
+                    difficultyMedium: 'MEDIA',
+                    buyButton: 'COMPRAR',
+                    specialInfo: 'Información Paquete Especial',
+                    specialDetails: 'Incluye: 5 días/4 noches de hospedaje, traslados aeropuerto-hotel, tour Bartolomé o Seymour Norte, tour Pinzón o Santa Fe, desayunos, guía certificado y asistencia personalizada. Recomendado llevar ropa cómoda, protector solar y documentos personales.',
+                    exploreInfo: 'Información Paquete Explorando',
+                    exploreDetails: 'Incluye: 5 días/4 noches de hospedaje, traslados, tour Bartolomé o Seymour Norte, tour Pinzón o Santa Fe, desayunos, guía y asistencia. Ideal para quienes desean flexibilidad y explorar por su cuenta.',
+                    completeInfo: 'Información Paquete Completo',
+                    completeDetails: 'Incluye: 5 días/4 noches, todos los traslados, tours a Bartolomé/Seymour y Pinzón/Santa Fe, hospedaje, desayunos, guía y asistencia. Perfecto para quienes buscan una experiencia integral en Galápagos.',
+                    basicInfo: 'Información Paquete Basico',
+                    basicDetails: 'Incluye: 5 días/4 noches de hospedaje, traslados principales, tour Bartolomé o Seymour, tour Pinzón o Santa Fe, desayunos y asistencia básica. Opción económica para conocer lo esencial de Galápagos.'
+                },
+                en: baseEn,
+                fr: { ...baseEn, contentLanguage: 'fr', navHome: 'Accueil', navBookings: 'Réservations', navContacts: 'Contacts', navPackages: 'Forfaits Touristiques', navHiking: 'Tours Randonnée', navBlog: 'Blog', pageTitle: 'Forfaits tout compris aux Galápagos', buyButton: 'ACHETER' },
+                de: { ...baseEn, contentLanguage: 'de', navHome: 'Startseite', navBookings: 'Reservierungen', navContacts: 'Kontakt', navPackages: 'Reisepakete', navHiking: 'Wandertouren', navSnorkeling: 'Schnorcheltouren', pageTitle: 'All-Inclusive Galápagos Reisepakete', buyButton: 'KAUFEN' },
+                it: { ...baseEn, contentLanguage: 'it', navBookings: 'Prenotazioni', navContacts: 'Contatti', navPackages: 'Pacchetti Turistici', navHiking: 'Tour Trekking', pageTitle: 'Pacchetti tutto incluso Galápagos', buyButton: 'ACQUISTA' },
+                pt: { ...baseEn, contentLanguage: 'pt', navHome: 'Início', navBookings: 'Reservas', navContacts: 'Contatos', navPackages: 'Pacotes Turísticos', navHiking: 'Tours de Caminhada', pageTitle: 'Pacotes com tudo incluído em Galápagos', buyButton: 'COMPRAR' },
+                ru: { ...baseEn, contentLanguage: 'ru', navHome: 'Главная', navBookings: 'Бронирование', navContacts: 'Контакты', navPackages: 'Турпакеты', navHiking: 'Пешие Туры', navSnorkeling: 'Снорклинг Туры', pageTitle: 'Турпакеты все включено на Галапагосы', buyButton: 'КУПИТЬ' },
+                zh: { ...baseEn, contentLanguage: 'zh', navHome: '首页', navBookings: '预订', navContacts: '联系', navPackages: '旅游套餐', navHiking: '徒步行程', navSnorkeling: '浮潜行程', pageTitle: '加拉帕戈斯全包旅游套餐', buyButton: '购买' },
+                ja: { ...baseEn, contentLanguage: 'ja', navHome: 'ホーム', navBookings: '予約', navContacts: 'お問い合わせ', navPackages: 'ツアーパッケージ', navHiking: 'ハイキングツアー', navSnorkeling: 'シュノーケリングツアー', pageTitle: 'ガラパゴス オールインクルーシブパッケージ', buyButton: '購入' },
+                ko: { ...baseEn, contentLanguage: 'ko', navHome: '홈', navBookings: '예약', navContacts: '연락처', navPackages: '투어 패키지', navHiking: '트레킹 투어', navSnorkeling: '스노클링 투어', pageTitle: '갈라파고스 올인클루시브 패키지', buyButton: '구매' }
+            };
+
+            const localeByLang = { es: 'es_EC', en: 'en_US', fr: 'fr_FR', de: 'de_DE', it: 'it_IT', pt: 'pt_BR', ru: 'ru_RU', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR' };
+
+            function setMeta(selector, content) {
+                const element = document.querySelector(selector);
+                if (element && content) element.setAttribute('content', content);
+            }
+
+            function applyLanguage(language) {
+                const activeLang = translations[language] ? language : 'es';
+                const t = translations[activeLang];
+                document.documentElement.lang = activeLang;
+                document.title = t.metaTitle;
+                setMeta('meta[name="description"]', t.metaDescription);
+                setMeta('meta[name="keywords"]', t.metaKeywords);
+                setMeta('meta[property="og:title"]', t.metaTitle);
+                setMeta('meta[property="og:description"]', t.ogDescription);
+                setMeta('meta[property="og:locale"]', localeByLang[activeLang]);
+                setMeta('meta[name="twitter:title"]', t.metaTitle);
+                setMeta('meta[name="twitter:description"]', t.twitterDescription);
+                setMeta('meta[http-equiv="content-language"]', t.contentLanguage);
+
+                document.querySelectorAll('[data-i18n]').forEach(function(element) {
+                    const key = element.getAttribute('data-i18n');
+                    if (t[key]) element.textContent = t[key];
+                });
+
+                document.querySelectorAll('[data-i18n-attr]').forEach(function(element) {
+                    const instructions = element.getAttribute('data-i18n-attr').split(';');
+                    instructions.forEach(function(rule) {
+                        const parts = rule.split(':');
+                        if (parts.length === 2) {
+                            const attributeName = parts[0].trim();
+                            const key = parts[1].trim();
+                            if (t[key]) element.setAttribute(attributeName, t[key]);
+                        }
+                    });
+                });
+
+                const selector = document.getElementById('language-selector');
+                if (selector && selector.value !== activeLang) selector.value = activeLang;
+                localStorage.setItem('redtip_language', activeLang);
+            }
+
+            const openBtn = document.querySelector('.menu-mobile-btn');
+            const closeBtn = document.querySelector('.menu-mobile .close-btn');
+            const mobileMenu = document.querySelector('.menu-mobile');
+            if (openBtn && mobileMenu) {
+                openBtn.addEventListener('click', function() { mobileMenu.classList.add('active'); });
+            }
+            if (closeBtn && mobileMenu) {
+                closeBtn.addEventListener('click', function() { mobileMenu.classList.remove('active'); });
+            }
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', function(e) { if(e.target === mobileMenu) mobileMenu.classList.remove('active'); });
+            }
+
+            // Submenú móvil toggle
+            const submenuToggle = document.querySelector('.menu-mobile .submenu-toggle');
+            const submenuMobile = document.querySelector('.menu-mobile .submenu-mobile');
+            if (submenuToggle && submenuMobile) {
+                submenuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submenuMobile.style.display = submenuMobile.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+
+            // Submenú móvil snorkeling toggle
+            const submenuToggleSnorkel = document.querySelector('.menu-mobile .submenu-toggle-snorkel');
+            const submenuMobileSnorkel = document.querySelector('.menu-mobile .submenu-mobile-snorkel');
+            if (submenuToggleSnorkel && submenuMobileSnorkel) {
+                submenuToggleSnorkel.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submenuMobileSnorkel.style.display = submenuMobileSnorkel.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+
+            // Submenú móvil Blog toggle
+            const submenuToggleBlog = document.querySelector('.menu-mobile .submenu-toggle-blog');
+            const submenuMobileBlog = document.querySelector('.menu-mobile .submenu-mobile-blog');
+            if (submenuToggleBlog && submenuMobileBlog) {
+                submenuToggleBlog.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submenuMobileBlog.style.display = submenuMobileBlog.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+
+            const languageSelector = document.getElementById('language-selector');
+            if (languageSelector) {
+                languageSelector.addEventListener('change', function() {
+                    applyLanguage(languageSelector.value);
+                });
+            }
+
+            const savedLanguage = localStorage.getItem('redtip_language');
+            const browserLanguage = (navigator.language || 'es').slice(0, 2).toLowerCase();
+            const initialLanguage = savedLanguage || (translations[browserLanguage] ? browserLanguage : 'es');
+            applyLanguage(initialLanguage);
+        });
+    </script>
+</body>
+</html>
+
+
+

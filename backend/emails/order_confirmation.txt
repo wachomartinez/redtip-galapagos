@@ -1,0 +1,11 @@
+Hola {{username}},
+
+Hemos recibido tu pedido #{{orderId}}.
+
+{{itemsText}}
+
+Total: ${{total}}
+
+Gracias por tu compra.
+
+RedTip - Pedido y delivery

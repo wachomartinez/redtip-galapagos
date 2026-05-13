@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Detalle del Restaurante</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+/* ...estilos simples para detalle y menú... */
+body{font-family:Arial,Helvetica,sans-serif;background:#f6f7fb;margin:0;padding:24px}
+.wrap{max-width:900px;margin:24px auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.06)}
+.header{display:flex;gap:16px;align-items:center}
+.header img{width:140px;height:100px;object-fit:cover;border-radius:8px}
+.titulo{margin:0;color:#1f6aa0;font-size:1.6rem}
+.sub{color:#666;margin-top:6px}
+.descripcion{margin-top:12px;color:#333;line-height:1.5}
+.menu{margin-top:18px}
+.menu h3{color:#16a085;margin-bottom:8px}
+.plato{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed #eee}
+.nombre-plato{font-weight:600;color:#333}
+.precio{color:#1f6aa0;font-weight:700}
+.back{display:inline-block;padding:8px 12px;background:#2980b9;color:#fff;text-decoration:none;border-radius:6px}
+.top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;margin-top:14px}
+.edit-btn{display:inline-block;padding:8px 12px;background:#f39c12;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700}
+.edit-btn:hover{background:#d68910}
+.edit-btn.save{background:#16a085}
+.edit-btn.save:hover{background:#138d75}
+.cancel-inline-btn{display:none;padding:8px 12px;background:#eee;color:#333;border:none;border-radius:6px;cursor:pointer;font-weight:700}
+.inline-input,.inline-textarea{width:100%;box-sizing:border-box;padding:7px 9px;border:1px solid #d7d7d7;border-radius:6px;font-family:Arial,sans-serif}
+.inline-textarea{min-height:78px;resize:vertical}
+.inline-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.inline-menu-item{display:grid;grid-template-columns:1.1fr 90px 1fr 1fr;gap:8px;padding:8px 0;border-bottom:1px dashed #eee}
+.inline-menu-cat{margin-top:10px;padding-top:8px;border-top:1px solid #f0f0f0}
+.inline-help{font-size:0.86em;color:#7b7b7b;margin-top:8px}
+.inline-mini-btn{padding:6px 9px;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.85em}
+.inline-add-btn{background:#16a085;color:#fff}
+.inline-remove-btn{background:#e74c3c;color:#fff}
+.inline-secondary-btn{background:#e8f2ff;color:#1f6aa0}
+.inline-cat-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.inline-item-remove{padding:6px 8px;border:none;border-radius:6px;background:#e74c3c;color:#fff;cursor:pointer;font-weight:700}
+.whatsapp-float{position:fixed;width:56px;height:56px;bottom:20px;right:18px;background:#25d366;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:2px 2px 10px rgba(0,0,0,0.25)}
+.rating-section{margin-top:24px;padding:16px;background:#f9f9f9;border-radius:8px;border-left:4px solid #ffc107}
+.stars{display:flex;gap:8px;margin:12px 0}
+.star{font-size:28px;cursor:pointer;color:#ddd;transition:color 0.2s}
+.star:hover,.star.active{color:#ffc107}
+.rating-text{color:#666;font-size:0.9em;margin-top:8px}
+.comments-section{margin-top:24px;padding:16px;background:#f9f9f9;border-radius:8px}
+.comment-form{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.comment-form input,.comment-form textarea{padding:10px;border:1px solid #ddd;border-radius:6px;font-family:Arial,sans-serif}
+.comment-form textarea{resize:vertical;min-height:80px}
+.btn-submit{padding:10px 16px;background:#16a085;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600}
+.btn-submit:hover{background:#138d75}
+.comment{padding:12px;margin-bottom:12px;background:#fff;border-radius:6px;border-left:3px solid #16a085}
+.comment-author{font-weight:600;color:#333}
+.comment-rating{color:#ffc107;font-size:0.9em;margin:4px 0}
+.comment-text{color:#555;margin-top:8px;line-height:1.4}
+.comment-date{color:#999;font-size:0.85em;margin-top:6px}
+  /* Carrusel para combos */
+  .combo-carousel-container{margin-top:18px}
+  .carousel{position:relative;overflow:hidden;border:1px solid #eee;border-radius:8px;background:#fff}
+  .carousel:focus{outline:2px solid rgba(31,106,160,0.12)}
+  .carousel-track{display:flex;transition:transform 0.35s ease;will-change:transform;gap:8px;cursor:grab}
+  .carousel.dragging .carousel-track{cursor:grabbing}
+  /* Slide: mostrar 3 slides a la vez (título arriba de la imagen) */
+  .slide{width:33.3333%;box-sizing:border-box;padding:10px;display:flex;flex-direction:column;gap:8px;align-items:center;user-select:none;touch-action:pan-y}
+  .slide img{width:100%;height:120px;object-fit:cover;border-radius:8px}
+  .slide .info{width:100%;text-align:center}
+  .slide .nombre-plato{font-size:1.05em;margin-bottom:6px;color:#1f6aa0;font-weight:700;text-align:center}
+  .slide .info .desc{color:#555;margin:8px 0}
+  .add-btn{margin-top:8px;padding:8px 12px;background:#16a085;color:#fff;border:none;border-radius:6px;cursor:pointer}
+  .add-btn:hover{background:#138d75}
+  .qty-box{display:flex;gap:8px;align-items:center;margin-top:8px;justify-content:center}
+  .qty-box input[type="number"]{width:70px;padding:8px;border:1px solid #ddd;border-radius:6px}
+  .qty-box .total{font-weight:700;color:#1f6aa0;margin-left:12px}
+  .carousel-controls{position:absolute;top:50%;left:0;right:0;display:flex;justify-content:space-between;padding:0 8px;transform:translateY(-50%);z-index:10}
+  .carousel-controls button{background:rgba(0,0,0,0.5);color:#fff;border:none;padding:8px 10px;border-radius:6px;cursor:pointer}
+  .carousel-dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+  .carousel-dots button{width:10px;height:10px;border-radius:50%;border:none;background:#ddd;cursor:pointer}
+  .carousel-dots button.active{background:#1f6aa0}
+
+  /* Galería de imágenes (restaurantes) */
+  .image-gallery-container .image-slide img{width:100%;height:280px;object-fit:cover;border-radius:8px}
+  .image-gallery-container{margin-top:16px;margin-bottom:6px}
+
+  /* Responsive: ajustar cantidad visible por pantalla */
+  @media (max-width:1024px){ .slide{width:33.3333%} }
+  @media (max-width:768px){ .slide{width:50%} }
+  @media (max-width:480px){ .slide{width:100%} .carousel-controls{display:none} }
+  
+</style>
+    <link rel="stylesheet" href="menu-font.css">
+</head>
+<body>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="wrap">
+  <meta name="description" content="Detalle de restaurante en Galápagos con información práctica para turistas y familias.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.redtipsharkagency.com/restaurante_detalle.html">
+  <div class="top-actions">
+    <a class="back" href="restaurantes.html">← Volver a restaurantes</a>
+    <button id="editRestaurantBtn" class="edit-btn" type="button">Editar</button>
+    <button id="cancelInlineEditBtn" class="cancel-inline-btn" type="button">Cancelar</button>
+  </div>
+
+  <div id="detalle"></div>
+  
+  <!-- SECCIÓN DE PUNTAJE -->
+  <div class="rating-section">
+    <h3 style="margin-top:0">Califica este restaurante</h3>
+    <div class="stars" id="stars"></div>
+    <div class="rating-text" id="rating-text">Haz clic en las estrellas para calificar</div>
+  </div>
+
+  <!-- SECCIÓN DE COMENTARIOS -->
+  <div class="comments-section">
+    <h3>Comentarios</h3>
+    <div class="comment-form">
+      <input type="text" id="comment-name" placeholder="Tu nombre" maxlength="50">
+      <textarea id="comment-text" placeholder="Escribe tu comentario..."></textarea>
+      <button class="btn-submit" onclick="addComment()">Publicar comentario</button>
+    </div>
+    <div id="comments-list"></div>
+  </div>
+</div>
+
+<a id="wa-btn" class="whatsapp-float" target="_blank" aria-label="WhatsApp" href="#">
+  <!-- icon simple -->
+  <svg width="28" height="28" viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.8 4.6 2.2 6.5L5 29l7.8-1.9c1.7.5 3.5.8 5.2.8 6.6 0 12-5.4 12-12S22.6 3 16 3z"/><path d="M22 19.6c-0.2-0.1-1.2-0.6-1.4-0.7-0.2-0.1-0.3-0.1-0.5 0-0.2 0.1-0.8 0.4-1 0.6-0.2 0.3-0.5 0.3-1 0.1-0.5-0.2-1.8-0.7-3.4-2.1-1.3-1.2-2.2-2.8-2.5-3.5-0.2-0.6 0-0.9 0.1-1.1 0.1-0.1 0.2-0.3 0.3-0.4"></path></svg>
+</a>
+
+<script>
+// Datos de ejemplo (añade/edita según necesites)
+const RESTAURANTES = {
+  sirenita: {
+    nombre: 'Antojitos la Sirenita',
+    imagen: 'sirenita.webp',
+    descripcion: 'Pollo frito, bandejas y combos rápidos. Preparación casera y servicio a domicilio.',
+    direccion: 'Calle Principal #123, Puerto Ayora',
+    telefono: '+593959285913',
+    apertura: '8:00',
+    cierre: '22:00',
+    menu: [
+      { categoria: 'Combos', items: [] },
+      { categoria: 'Bebidas', items: [
+        { nombre: 'Refresco 500ml', precio: '1.00' }
+      ]}
+    ]
+  },
+  corvichegaby: {
+    nombre: 'Corviches Gaby',
+    imagen: 'corvichegaby.webp',
+    gallery: ['corvichegaby.webp','corvichegaby.webp','corvichegaby.webp'],
+    descripcion: 'Especialistas en corviche tradicional de pescado fresco.',
+    direccion: 'Av. del Mar 45',
+    telefono: '+593959285913',
+    apertura: '10:00',
+    cierre: '20:00',
+    menu: [
+      { categoria: 'Combos', items: [] },
+      { categoria: 'Bebidas', items: [
+        { nombre: 'Refresco 500ml', precio: '1.00' }
+      ]},
+      { categoria: 'Corviches', items: [
+        { nombre: 'Corviche Clásico', precio: '2.00' },
+        { nombre: 'Corviche Especial', precio: '2.50' }
+      ]}
+    ]
+  },
+  uramakisushi: {
+    nombre: 'Uramaki Sushi',
+    imagen: 'uramakisushi.webp',
+    descripcion: 'Sushi y platos asiáticos con ingredientes locales. Opciones vegetarianas.',
+    direccion: 'Plaza Central local 7',
+    telefono: '+593959285913',
+    apertura: '12:00',
+    cierre: '22:30',
+    menu: [
+      { categoria: 'Combos', items: [] },
+      { categoria: 'Bebidas', items: [
+        { nombre: 'Refresco 500ml', precio: '1.00' }
+      ]}
+    ]
+  },
+  comidachina: {
+    nombre: 'Comida China',
+    imagen: 'chaulafan island.webp',
+    descripcion: 'Chaulafán y tallarines especiales, platos para compartir.',
+    direccion: 'Mercado Central',
+    telefono: '+593959285913',
+    apertura: '11:00',
+    cierre: '22:00',
+    menu: [
+      { categoria: 'Combos', items: [] },
+      { categoria: 'Bebidas', items: [
+        { nombre: 'Refresco 500ml', precio: '1.00' }
+      ]}
+    ]
+  }
+};
+
+let currentRestaurant = '';
+let currentRating = 0;
+let currentData = null;
+let isInlineEditing = false;
+
+function escHtml(s){
+  return String(s || '').replace(/[&<>]/g, function(ch){
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[ch];
+  });
+}
+
+function escAttr(s){
+  return String(s || '').replace(/[&<>"]/g, function(ch){
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch];
+  });
+}
+
+function getParam(name){
+  return (new URLSearchParams(window.location.search)).get(name) || '';
+}
+function formatCurrency(v){ return '$' + v; }
+
+function parseHHMM(t){
+  const parts = String(t || '').trim().split(':').map(function(p){ return parseInt(p, 10); });
+  return { h: isNaN(parts[0]) ? 0 : parts[0], m: isNaN(parts[1]) ? 0 : (parts[1] || 0) };
+}
+
+function formatHHMM(t){
+  const p = parseHHMM(t);
+  return String(p.h).padStart(2, '0') + ':' + String(p.m).padStart(2, '0');
+}
+
+function isCurrentlyOpen(openStr, closeStr){
+  const now = new Date();
+  const open = parseHHMM(openStr);
+  const close = parseHHMM(closeStr);
+  const openDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), open.h, open.m);
+  let closeDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), close.h, close.m);
+
+  if(closeDate <= openDate){
+    closeDate.setDate(closeDate.getDate() + 1);
+  }
+  if(now < openDate){
+    const prevOpenDate = new Date(openDate); prevOpenDate.setDate(openDate.getDate() - 1);
+    const prevCloseDate = new Date(closeDate); prevCloseDate.setDate(closeDate.getDate() - 1);
+    if(now >= prevOpenDate && now <= prevCloseDate) return true;
+  }
+  return now >= openDate && now <= closeDate;
+}
+
+function mapMenuItemsToMenu(menuItems){
+  const names = Array.isArray(menuItems) ? menuItems : [];
+  const comboItems = names.slice(0, 5).map(function(n){
+    return { nombre: String(n || '').trim(), precio: '0.00', desc: '' };
+  }).filter(function(i){ return i.nombre; });
+  return [
+    { categoria: 'Combos', items: comboItems },
+    { categoria: 'Bebidas', items: [{ nombre: 'Refresco 500ml', precio: '1.00' }] }
+  ];
+}
+
+function normalizeMenu(rawMenu){
+  const source = Array.isArray(rawMenu) ? rawMenu : [];
+  const cleaned = source.map(function(cat){
+    const categoria = String((cat && cat.categoria) || '').trim() || 'Categoria';
+    const items = Array.isArray(cat && cat.items) ? cat.items : [];
+    const hasShowCarousel = !!(cat && Object.prototype.hasOwnProperty.call(cat, 'showCarousel'));
+    const showCarousel = hasShowCarousel ? !!cat.showCarousel : undefined;
+    const safeItems = items.map(function(it){
+      return {
+        nombre: String((it && it.nombre) || '').trim(),
+        precio: String((it && it.precio) || '0.00').trim() || '0.00',
+        desc: String((it && it.desc) || '').trim(),
+        imagen: String((it && it.imagen) || '').trim()
+      };
+    }).filter(function(it){ return it.nombre; });
+    return { categoria: categoria, items: safeItems, showCarousel: showCarousel };
+  }).filter(function(cat){ return cat.categoria; });
+  return cleaned.length ? cleaned : [{ categoria: 'Combos', items: [] }, { categoria: 'Bebidas', items: [{ nombre: 'Refresco 500ml', precio: '1.00', desc: '' }] }];
+}
+
+function shouldCategoryUseCarousel(cat){
+  const name = String((cat && cat.categoria) || '').trim().toLowerCase();
+  return name === 'combos' || name === 'bebidas';
+}
+
+function inlineMenuItemHtml(it){
+  return '<div class="inline-menu-item">'
+    + '<input class="inline-input inline-item-nombre" type="text" value="' + escAttr(it.nombre || '') + '" placeholder="Nombre">'
+    + '<input class="inline-input inline-item-precio" type="text" value="' + escAttr(it.precio || '') + '" placeholder="Precio">'
+    + '<input class="inline-input inline-item-desc" type="text" value="' + escAttr(it.desc || '') + '" placeholder="Descripción">'
+    + '<div class="inline-row" style="margin-top:0">'
+    + '<input class="inline-input inline-item-imagen" type="text" value="' + escAttr(it.imagen || '') + '" placeholder="Imagen (opcional)" title="Haz clic para subir una foto" readonly>'
+    + '<input class="inline-item-file" type="file" accept="image/*" style="display:none">'
+    + '<button type="button" class="inline-item-remove" title="Eliminar slide">X</button>'
+    + '</div>'
+    + '</div>';
+}
+
+function wireInlineMenuControls(){
+  const detalle = document.getElementById('detalle');
+  if(!detalle || !isInlineEditing) return;
+
+  if(detalle.dataset.inlineMenuWired === '1') return;
+  detalle.dataset.inlineMenuWired = '1';
+
+  detalle.addEventListener('click', function(e){
+    if(!isInlineEditing) return;
+
+    const addBtn = e.target.closest('.inline-add-item');
+    if(addBtn){
+      const cat = addBtn.closest('.inline-menu-cat');
+      if(!cat) return;
+      const slot = cat.querySelector('.inline-items-slot');
+      if(!slot) return;
+      slot.insertAdjacentHTML('beforeend', inlineMenuItemHtml({ nombre:'', precio:'0.00', desc:'', imagen:'' }));
+      return;
+    }
+
+    const removeCarouselBtn = e.target.closest('.inline-remove-carousel');
+    if(removeCarouselBtn){
+      const cat = removeCarouselBtn.closest('.inline-menu-cat');
+      if(!cat) return;
+      const toggle = cat.querySelector('.inline-cat-carousel');
+      if(toggle) toggle.checked = false;
+      const slot = cat.querySelector('.inline-items-slot');
+      if(slot) slot.innerHTML = '';
+      return;
+    }
+
+    const removeBtn = e.target.closest('.inline-item-remove');
+    if(removeBtn){
+      const row = removeBtn.closest('.inline-menu-item');
+      if(row) row.remove();
+      return;
+    }
+
+    const imageInput = e.target.closest('.inline-item-imagen');
+    if(imageInput){
+      const row = imageInput.closest('.inline-row');
+      const fileInput = row ? row.querySelector('.inline-item-file') : null;
+      if(fileInput) fileInput.click();
+    }
+  });
+
+  detalle.addEventListener('change', function(e){
+    if(!isInlineEditing) return;
+    const fileInput = e.target.closest('.inline-item-file');
+    if(!fileInput || !fileInput.files || !fileInput.files[0]) return;
+    const row = fileInput.closest('.inline-row');
+    const imageInput = row ? row.querySelector('.inline-item-imagen') : null;
+    if(!imageInput) return;
+
+    const reader = new FileReader();
+    reader.onload = function(evt){
+      imageInput.value = String((evt && evt.target && evt.target.result) || '');
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+    fileInput.value = '';
+  });
+}
+
+function getRestaurantOverrides(){
+  try{
+    const raw = localStorage.getItem('rt_restaurant_overrides');
+    const parsed = raw ? JSON.parse(raw) : {};
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  }catch(_e){
+    return {};
+  }
+}
+
+function saveRestaurantOverride(slug, data){
+  const key = String(slug || '').trim().toLowerCase();
+  if(!key) return;
+  const all = getRestaurantOverrides();
+  all[key] = data;
+  localStorage.setItem('rt_restaurant_overrides', JSON.stringify(all));
+}
+
+function applyRestaurantOverride(slug, baseData){
+  const key = String(slug || '').trim().toLowerCase();
+  if(!key) return baseData;
+  const all = getRestaurantOverrides();
+  const patch = all[key];
+  if(!patch || typeof patch !== 'object') return baseData;
+  return {
+    nombre: patch.nombre || baseData.nombre,
+    imagen: patch.imagen || baseData.imagen,
+    descripcion: patch.descripcion || baseData.descripcion,
+    direccion: patch.direccion || baseData.direccion,
+    telefono: patch.telefono || baseData.telefono,
+    apertura: patch.apertura || baseData.apertura,
+    cierre: patch.cierre || baseData.cierre,
+    menu: normalizeMenu(patch.menu || baseData.menu)
+  };
+}
+
+function updateRecentRestaurantRecord(slug, data){
+  try{
+    const key = String(slug || '').trim().toLowerCase();
+    const raw = localStorage.getItem('rt_recent_restaurants');
+    const list = raw ? JSON.parse(raw) : [];
+    const safe = Array.isArray(list) ? list : [];
+    const idx = safe.findIndex(function(item){
+      return String((item && item.slug) || '').trim().toLowerCase() === key;
+    });
+    if(idx === -1) return;
+    const updated = Object.assign({}, safe[idx], {
+      nombre: data.nombre,
+      imagen_url: data.imagen,
+      descripcion: data.descripcion,
+      direccion: data.direccion,
+      telefono: data.telefono,
+      apertura: data.apertura,
+      cierre: data.cierre,
+      menu_json: JSON.stringify(data.menu),
+      menu_items: (data.menu || []).reduce(function(acc, cat){
+        return acc.concat((Array.isArray(cat.items) ? cat.items : []).map(function(it){ return it.nombre; }));
+      }, [])
+    });
+    safe[idx] = updated;
+    localStorage.setItem('rt_recent_restaurants', JSON.stringify(safe));
+  }catch(_e){}
+}
+
+function collectInlineEditedData(){
+  const nombre = (document.getElementById('inlineNombre') || {}).value || '';
+  const imagen = (document.getElementById('inlineImagen') || {}).value || '';
+  const direccion = (document.getElementById('inlineDireccion') || {}).value || '';
+  const telefono = (document.getElementById('inlineTelefono') || {}).value || '';
+  const apertura = (document.getElementById('inlineApertura') || {}).value || '';
+  const cierre = (document.getElementById('inlineCierre') || {}).value || '';
+  const descripcion = (document.getElementById('inlineDescripcion') || {}).value || '';
+
+  const menuMap = {};
+  document.querySelectorAll('.inline-menu-cat').forEach(function(catEl){
+    const idx = Number(catEl.getAttribute('data-cat-idx'));
+    if(Number.isNaN(idx)) return;
+    const catNameInput = catEl.querySelector('.inline-cat-name');
+    const categoria = String((catNameInput && catNameInput.value) || '').trim() || 'Categoria';
+    const carouselToggle = catEl.querySelector('.inline-cat-carousel');
+    const hasCarouselToggle = !!carouselToggle;
+    menuMap[idx] = { categoria: categoria, items: [], showCarousel: hasCarouselToggle ? !!carouselToggle.checked : undefined };
+    catEl.querySelectorAll('.inline-menu-item').forEach(function(itemEl){
+      const inNombre = itemEl.querySelector('.inline-item-nombre');
+      const inPrecio = itemEl.querySelector('.inline-item-precio');
+      const inDesc = itemEl.querySelector('.inline-item-desc');
+      const inImagen = itemEl.querySelector('.inline-item-imagen');
+      const itemNombre = String((inNombre && inNombre.value) || '').trim();
+      if(!itemNombre) return;
+      menuMap[idx].items.push({
+        nombre: itemNombre,
+        precio: String((inPrecio && inPrecio.value) || '0.00').trim() || '0.00',
+        desc: String((inDesc && inDesc.value) || '').trim(),
+        imagen: String((inImagen && inImagen.value) || '').trim()
+      });
+    });
+  });
+
+  const menu = Object.keys(menuMap).sort(function(a,b){ return Number(a) - Number(b); }).map(function(k){ return menuMap[k]; });
+  return {
+    nombre: String(nombre).trim(),
+    imagen: String(imagen).trim(),
+    direccion: String(direccion).trim(),
+    telefono: String(telefono).trim(),
+    apertura: String(apertura).trim(),
+    cierre: String(cierre).trim(),
+    descripcion: String(descripcion).trim(),
+    menu: normalizeMenu(menu)
+  };
+}
+
+function loadFromRecentLocal(key){
+  try{
+    const raw = localStorage.getItem('rt_recent_restaurants');
+    const list = raw ? JSON.parse(raw) : [];
+    const recent = Array.isArray(list) ? list : [];
+    const found = recent.find(function(item){
+      return String((item && item.slug) || '').toLowerCase() === String(key || '').toLowerCase();
+    });
+    if(!found) return null;
+
+    // Intentar construir el menú completo desde menu_json (guardado desde el formulario)
+    let menu = null;
+    if(found.menu_json){
+      try{
+        const parsed = typeof found.menu_json === 'string' ? JSON.parse(found.menu_json) : found.menu_json;
+        if(Array.isArray(parsed) && parsed.length) menu = parsed;
+      }catch(_e){
+        // Fallback a menu_items si menu_json viene inválido
+      }
+    }
+    if(!menu) menu = mapMenuItemsToMenu(found.menu_items);
+
+    return {
+      nombre: found.nombre || 'Restaurante',
+      imagen: found.imagen_url || 'pizzaencantada.webp',
+      descripcion: found.descripcion || 'Nuevo restaurante agregado por usuarios.',
+      direccion: found.direccion || 'Dirección no especificada',
+      telefono: found.telefono || '+593959285913',
+      apertura: found.apertura || '08:00',
+      cierre: found.cierre || '22:00',
+      menu: menu
+    };
+  }catch(_e){
+    return null;
+  }
+}
+
+async function loadFromAPI(key){
+  try{
+    const base = (window.location.protocol==='file:') ? 'http://localhost:3000' : '';
+    const res = await fetch(`${base}/api/restaurants/${encodeURIComponent(key)}`);
+    if(!res.ok) return null;
+    const json = await res.json();
+    const r = json.restaurant;
+    let menu = [{ categoria: 'Combos', items: [] }, { categoria: 'Bebidas', items: [{ nombre: 'Refresco 500ml', precio: '1.00' }] }];
+    if(r && r.menu_json){
+      try{
+        const parsed = typeof r.menu_json === 'string' ? JSON.parse(r.menu_json) : r.menu_json;
+        if(Array.isArray(parsed) && parsed.length){
+          menu = parsed;
+        }
+      }catch(_e){
+        // Si menu_json viene inválido, usamos fallback por defecto.
+      }
+    }
+    return {
+      nombre: r.nombre,
+      imagen: r.imagen_url || '',
+      descripcion: r.descripcion || '',
+      direccion: r.direccion || '',
+      telefono: r.telefono || '',
+      apertura: r.apertura || '',
+      cierre: r.cierre || '',
+      menu: menu
+    };
+  }catch(e){ return null; }
+}
+
+async function render(key){
+  let data = RESTAURANTES[key];
+  if(!data) data = loadFromRecentLocal(key);
+  if(!data) data = await loadFromAPI(key);
+  const out = document.getElementById('detalle');
+  if(!data){ out.innerHTML = '<p>No se encontró información para este restaurante.</p>'; document.getElementById('wa-btn').href = '#'; return; }
+  data = applyRestaurantOverride(key, data);
+  data.menu = normalizeMenu(data.menu);
+  currentData = data;
+
+  let html = '';
+  /* galería eliminada por petición: no se inserta el contenedor 'image-gallery' */
+  const hasHorario = data.apertura && data.cierre;
+  const openText = hasHorario ? formatHHMM(data.apertura) : '';
+  const closeText = hasHorario ? formatHHMM(data.cierre) : '';
+  const openNow = hasHorario ? isCurrentlyOpen(data.apertura, data.cierre) : false;
+  const horario = hasHorario
+    ? (`Abre: ${openText} <strong style="color:${openNow ? '#145a32' : '#7f1d1d'}">${openNow ? 'Abierto' : 'Cerrado'}</strong> · Cierra: ${closeText}`)
+    : (data.horas || '');
+  if(isInlineEditing){
+    html += `<div class="header"><img src="${escAttr(data.imagen)}" alt="${escAttr(data.nombre)}"><div style="flex:1">`;
+    html += `<input id="inlineNombre" class="inline-input" type="text" value="${escAttr(data.nombre)}">`;
+    html += `<div class="inline-row"><input id="inlineDireccion" class="inline-input" type="text" placeholder="Dirección" value="${escAttr(data.direccion)}"><input id="inlineTelefono" class="inline-input" type="text" placeholder="Teléfono" value="${escAttr(data.telefono)}"></div>`;
+    html += `<div class="inline-row"><input id="inlineApertura" class="inline-input" type="text" placeholder="08:00" value="${escAttr(formatHHMM(data.apertura || '08:00'))}"><input id="inlineCierre" class="inline-input" type="text" placeholder="22:00" value="${escAttr(formatHHMM(data.cierre || '22:00'))}"></div>`;
+    html += `<div class="inline-row"><input id="inlineImagen" class="inline-input" type="text" placeholder="Imagen URL" value="${escAttr(data.imagen)}"></div>`;
+    html += `</div></div>`;
+    html += `<div class="descripcion"><textarea id="inlineDescripcion" class="inline-textarea">${escHtml(data.descripcion)}</textarea></div>`;
+  } else {
+    html += `<div class="header"><img src="${escAttr(data.imagen)}" alt="${escAttr(data.nombre)}"><div><h1 class="titulo">${escHtml(data.nombre)}</h1><div class="sub">${escHtml(data.direccion)} · Tel: ${escHtml(data.telefono)}</div>${horario?`<div class="sub">Horario: ${horario}</div>`:''}</div></div>`;
+    html += `<div class="descripcion">${escHtml(data.descripcion)}</div>`;
+  }
+  html += '<div class="menu">';
+  data.menu.forEach(function(cat, catIdx){
+    const hasCarousel = shouldCategoryUseCarousel(cat);
+    if(isInlineEditing){
+      html += `<div class="inline-menu-cat" data-cat-idx="${catIdx}">`;
+      html += `<input class="inline-input inline-cat-name" type="text" value="${escAttr(cat.categoria)}">`;
+      if(hasCarousel){
+        const checked = cat.showCarousel === false ? '' : 'checked';
+        html += `<div class="inline-cat-actions"><label><input type="checkbox" class="inline-cat-carousel" ${checked}> Mostrar carrusel</label><button type="button" class="inline-mini-btn inline-remove-btn inline-remove-carousel">Eliminar carrusel</button><button type="button" class="inline-mini-btn inline-add-btn inline-add-item">Agregar slide</button></div>`;
+      } else {
+        html += `<div class="inline-cat-actions"><button type="button" class="inline-mini-btn inline-add-btn inline-add-item">Agregar item</button></div>`;
+      }
+      html += '<div class="inline-items-slot">';
+    } else {
+      html += `<h3>${escHtml(cat.categoria)}</h3>`;
+    }
+    // No mostrar los items para la categoría 'Rolls'
+    if(cat.categoria !== 'Rolls'){
+      cat.items.forEach(function(it){
+        if(isInlineEditing){
+          html += `<div class="inline-menu-item">`;
+          html += `<input class="inline-input inline-item-nombre" type="text" value="${escAttr(it.nombre)}" placeholder="Nombre">`;
+          html += `<input class="inline-input inline-item-precio" type="text" value="${escAttr(it.precio)}" placeholder="Precio">`;
+          html += `<input class="inline-input inline-item-desc" type="text" value="${escAttr(it.desc || '')}" placeholder="Descripción">`;
+          html += `<input class="inline-input inline-item-imagen" type="text" value="${escAttr(it.imagen || '')}" placeholder="Imagen (opcional)">`;
+          html += `</div>`;
+        } else {
+          html += `<div class="plato"><div><div class="nombre-plato">${escHtml(it.nombre)}</div><div style="color:#666;font-size:0.95em">${escHtml(it.desc||'')}</div></div><div class="precio">${formatCurrency(it.precio)}</div></div>`;
+        }
+      });
+    }
+
+    // Si esta categoría es 'Combos', insertar el contenedor del carrusel justo debajo de sus items
+    if(!isInlineEditing && cat.categoria==='Combos' && cat.showCarousel !== false){
+      html += '<div id="combo-carousel" class="combo-carousel-container"></div>';
+    }
+    // Si esta categoría es 'Bebidas', insertar un contenedor de carrusel para bebidas
+    if(!isInlineEditing && cat.categoria==='Bebidas' && cat.showCarousel !== false){
+      html += '<div id="bebidas-carousel" class="combo-carousel-container"></div>';
+    }
+    if(isInlineEditing){
+      html += '</div>';
+      html += '</div>';
+    }
+  });
+  if(isInlineEditing){
+    html += '<div class="inline-help">Edita directamente en los campos y pulsa Guardar para aplicar los cambios.</div>';
+  }
+  html += '</div>';
+  out.innerHTML = html;
+
+  // galería de imágenes eliminada por petición (no se llama a buildImageCarousel)
+
+  // crear carrusel de combos si existe la categoría 'Combos'
+  const combosCat = data.menu.find(c=>c.categoria==='Combos');
+  if(!isInlineEditing && combosCat && combosCat.showCarousel !== false && Array.isArray(combosCat.items) && combosCat.items.length){
+    const slides = [];
+    combosCat.items.forEach(function(item, i){
+      slides.push({nombre: item.nombre, precio: item.precio, desc: item.desc||'', imagen: item.imagen || data.imagen || `combo${i+1}.webp`});
+    });
+    buildComboCarousel('combo-carousel', slides);
+  }
+
+  // crear carrusel de bebidas si existe la categoría 'Bebidas'
+  const bebidasCat = data.menu.find(c=>c.categoria==='Bebidas');
+  if(!isInlineEditing && bebidasCat && bebidasCat.showCarousel !== false && Array.isArray(bebidasCat.items) && bebidasCat.items.length){
+    const bslides = bebidasCat.items.map((item, idx)=>({nombre: item.nombre, precio: item.precio||'1.00', desc: item.desc||'', imagen: item.imagen || data.imagen || `bebida${idx+1}.webp`}));
+    buildComboCarousel('bebidas-carousel', bslides);
+  }
+
+  const wa = document.getElementById('wa-btn');
+  const tel = data.telefono.replace(/\D/g,'');
+  const text = encodeURIComponent(`Hola, quisiera hacer un pedido/consulta en ${data.nombre}`);
+  wa.href = `https://wa.me/${tel}?text=${text}`;
+  wireInlineMenuControls();
+}
+
+function initStars(){
+  const container = document.getElementById('stars');
+  container.innerHTML = '';
+  for(let i=1;i<=5;i++){
+    const star = document.createElement('span');
+    star.className = 'star';
+    star.textContent = '★';
+    star.onclick = ()=>setRating(i);
+    container.appendChild(star);
+  }
+  loadRatings();
+}
+
+function setRating(n){
+  currentRating = n;
+  updateStars();
+  const texts = ['','Malo','Regular','Bien','Muy Bien','Excelente'];
+  document.getElementById('rating-text').textContent = texts[n];
+  saveRatings();
+}
+
+function updateStars(){
+  document.querySelectorAll('#stars .star').forEach((s,i)=>{
+    s.classList.toggle('active', i<currentRating);
+  });
+}
+
+function saveRatings(){
+  const key = currentRestaurant;
+  const ratings = JSON.parse(localStorage.getItem('ratings')||'{}');
+  if(!ratings[key]) ratings[key] = [];
+  ratings[key].push({rating: currentRating, date: new Date().toLocaleDateString()});
+  localStorage.setItem('ratings', JSON.stringify(ratings));
+}
+
+function loadRatings(){
+  const key = currentRestaurant;
+  const ratings = JSON.parse(localStorage.getItem('ratings')||'{}');
+  if(ratings[key] && ratings[key].length>0){
+    const avg = Math.round(ratings[key].reduce((a,r)=>a+r.rating,0)/ratings[key].length);
+    currentRating = avg;
+    updateStars();
+    const texts = ['','Malo','Regular','Bien','Muy Bien','Excelente'];
+    document.getElementById('rating-text').textContent = `${texts[avg]} (${ratings[key].length} valoraciones)`;
+  }
+}
+
+function addComment(){
+  const name = document.getElementById('comment-name').value.trim();
+  const text = document.getElementById('comment-text').value.trim();
+  
+  if(!name){alert('Por favor ingresa tu nombre');return;}
+  if(!text){alert('Por favor escribe un comentario');return;}
+  
+  const key = currentRestaurant;
+  const comments = JSON.parse(localStorage.getItem('comments')||'{}');
+  if(!comments[key]) comments[key] = [];
+  comments[key].push({name, text, rating: currentRating, date: new Date().toLocaleDateString()});
+  localStorage.setItem('comments', JSON.stringify(comments));
+  
+  document.getElementById('comment-name').value = '';
+  document.getElementById('comment-text').value = '';
+  loadComments();
+}
+
+function loadComments(){
+  const key = currentRestaurant;
+  const comments = JSON.parse(localStorage.getItem('comments')||'{}');
+  const list = document.getElementById('comments-list');
+  
+  if(!comments[key] || comments[key].length===0){
+    list.innerHTML = '<p style="color:#999">No hay comentarios aún. ¡Sé el primero!</p>';
+    return;
+  }
+  
+  list.innerHTML = comments[key].map(c=>`
+    <div class="comment">
+      <div class="comment-author">${c.name}</div>
+      <div class="comment-rating">${'★'.repeat(c.rating)}${'☆'.repeat(5-c.rating)}</div>
+      <div class="comment-text">${c.text}</div>
+      <div class="comment-date">${c.date}</div>
+    </div>
+  `).join('');
+}
+
+// Construye un carrusel de combos con imágenes, descripción, selector de cantidad, botón 'Agregar', y soporte completo (drag/teclado/autoplay/responsive)
+function buildComboCarousel(containerId, slides){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  const trackId = containerId + '-track';
+  let html = `<div class="carousel" tabindex="0" aria-label="Carrusel de combos"><div class="carousel-track" id="${trackId}">`;
+  slides.forEach((s, idx)=>{
+    html += `<div class="slide" data-index="${idx}">
+      <div class="nombre-plato">${s.nombre}</div>
+      <img src="${s.imagen}" alt="${s.nombre}">
+      <div class="info">
+        <div class="desc">${s.desc||''}</div>
+        <div class="qty-box">
+          <label for="qty-${containerId}-${idx}">Cantidad:</label>
+          <input id="qty-${containerId}-${idx}" type="number" min="0" value="0" data-price="${s.precio}">
+          <div class="total" id="total-${containerId}-${idx}">${formatCurrency(0)}</div>
+        </div>
+        <button class="add-btn" data-idx="${idx}" data-name="${s.nombre}" data-price="${s.precio}">Agregar</button>
+      </div>
+    </div>`;
+  });
+  html += `</div><div class="carousel-controls"><button type="button" aria-label="Anterior" data-action="prev">‹</button><button type="button" aria-label="Siguiente" data-action="next">›</button></div></div><div class="carousel-dots" id="${containerId}-dots"></div>`;
+  container.innerHTML = html;
+
+  const carouselEl = container.querySelector('.carousel');
+  const track = document.getElementById(trackId);
+  let current = 0; // left-most visible slide index based on slidesPerView
+  let slidesPerView = 3; // default to 3 slides visible
+  const setSlidesPerView = ()=>{
+    const w = container.clientWidth;
+    if(w < 480) slidesPerView = 1;
+    else if(w < 768) slidesPerView = 2;
+    else slidesPerView = 3;
+    // set slide widths to match slidesPerView
+    track.querySelectorAll('.slide').forEach(sl=> sl.style.width = (100/slidesPerView) + '%');
+  };
+  setSlidesPerView();
+
+  let maxIndex = Math.max(0, slides.length - slidesPerView);
+  const updateDots = ()=>{
+    const dots = document.getElementById(containerId+'-dots');
+    const pages = Math.max(1, maxIndex + 1);
+    dots.innerHTML = Array.from({length:pages}).map((_,i)=>`<button data-dot="${i}" class="${i===current?'active':''}" aria-label="Ir al slide ${i+1}"></button>`).join('');
+  };
+
+  const update = ()=>{
+    maxIndex = Math.max(0, slides.length - slidesPerView);
+    if(current>maxIndex) current = maxIndex;
+    const shiftPercent = (100 / slidesPerView) * current;
+    track.style.transform = `translateX(-${shiftPercent}%)`;
+    updateDots();
+  };
+  update();
+
+  // Controls
+  container.querySelectorAll('.carousel-controls button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ if(btn.dataset.action==='prev') current = Math.max(0, current-1); else current = Math.min(maxIndex, current+1); update(); });
+  });
+
+  // Dots
+  container.addEventListener('click', e=>{
+    const dot = e.target.closest('button[data-dot]');
+    if(dot){ current = parseInt(dot.dataset.dot); update(); }
+  });
+
+  // Quantity updates
+  slides.forEach((s, idx)=>{
+    const input = document.getElementById(`qty-${containerId}-${idx}`);
+    const totalEl = document.getElementById(`total-${containerId}-${idx}`);
+    input.addEventListener('input', ()=>{
+      const qty = Math.max(0, parseInt(input.value)||0);
+      totalEl.textContent = formatCurrency((parseFloat(s.precio)||0)*qty);
+    });
+  });
+
+  // Add to cart logic (basic, stored in localStorage)
+  container.querySelectorAll('.add-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const idx = btn.dataset.idx;
+      const name = btn.dataset.name;
+      const price = parseFloat(btn.dataset.price)||0;
+      const qtyInput = document.getElementById(`qty-${containerId}-${idx}`);
+      let qty = Math.max(0, parseInt(qtyInput.value)||0);
+      if(qty<=0){ qty = 1; qtyInput.value = 1; const totalEl = document.getElementById(`total-${containerId}-${idx}`); totalEl.textContent = formatCurrency(price); }
+      const cart = JSON.parse(localStorage.getItem('cart')||'[]');
+      cart.push({name, price, qty, addedAt: new Date().toISOString()});
+      localStorage.setItem('cart', JSON.stringify(cart));
+      // small confirmation
+      btn.textContent = 'Añadido';
+      setTimeout(()=> btn.textContent = 'Agregar',900);
+    });
+  });
+
+  // Drag / touch support using pointer events
+  let isDown = false, startX = 0, deltaX = 0;
+  carouselEl.addEventListener('pointerdown', e=>{ carouselEl.setPointerCapture(e.pointerId); isDown = true; startX = e.clientX; deltaX = 0; carouselEl.classList.add('dragging'); });
+  carouselEl.addEventListener('pointermove', e=>{ if(!isDown) return; deltaX = e.clientX - startX; const tempShift = (100 / slidesPerView) * current; track.style.transform = `translateX(calc(-${tempShift}% + ${deltaX}px))`; });
+  const endDrag = e=>{ if(!isDown) return; isDown = false; carouselEl.classList.remove('dragging'); if(Math.abs(deltaX) > 40){ if(deltaX < 0) current = Math.min(maxIndex, current+1); else current = Math.max(0, current-1); } deltaX = 0; update(); };
+  carouselEl.addEventListener('pointerup', endDrag);
+  carouselEl.addEventListener('pointercancel', endDrag);
+
+  // Keyboard navigation
+  carouselEl.addEventListener('keydown', e=>{
+    if(e.key==='ArrowLeft'){ current = Math.max(0, current-1); update(); }
+    else if(e.key==='ArrowRight'){ current = Math.min(maxIndex, current+1); update(); }
+  });
+
+  // Autoplay (pause on hover/focus)
+  let autoTimer = null;
+  const startAuto = ()=>{ if(autoTimer) return; autoTimer = setInterval(()=>{ current = current < maxIndex ? current+1 : 0; update(); }, 3500); };
+  const stopAuto = ()=>{ if(autoTimer){ clearInterval(autoTimer); autoTimer = null; } };
+  carouselEl.addEventListener('mouseenter', stopAuto);
+  carouselEl.addEventListener('mouseleave', startAuto);
+  carouselEl.addEventListener('focusin', stopAuto);
+  carouselEl.addEventListener('focusout', startAuto);
+  if(slides.length > slidesPerView) startAuto();
+
+  // Resize handling: recompute slidesPerView and adjust
+  let resizeTimer = null;
+  window.addEventListener('resize', ()=>{ clearTimeout(resizeTimer); resizeTimer = setTimeout(()=>{ const old = slidesPerView; setSlidesPerView(); if(old !== slidesPerView) update(); }, 150); });
+}
+
+// Construye una galería de imágenes para el restaurante (1 slide visible)
+function buildImageCarousel(containerId, images){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  const trackId = containerId + '-track';
+  let html = `<div class="carousel" tabindex="0" aria-label="Galería de imágenes"><div class="carousel-track" id="${trackId}">`;
+  images.forEach((src, idx)=>{
+    html += `<div class="slide image-slide" data-index="${idx}"><img src="${src}" alt="Imagen ${idx+1}"></div>`;
+  });
+  html += `</div><div class="carousel-controls"><button type="button" aria-label="Anterior" data-action="prev">‹</button><button type="button" aria-label="Siguiente" data-action="next">›</button></div></div><div class="carousel-dots" id="${containerId}-dots"></div>`;
+  container.innerHTML = html;
+
+  const carouselEl = container.querySelector('.carousel');
+  const track = document.getElementById(trackId);
+  let current = 0;
+  const slidesPerView = 1;
+  track.querySelectorAll('.slide').forEach(sl=> sl.style.width = (100/slidesPerView) + '%');
+  const maxIndex = Math.max(0, images.length - slidesPerView);
+  const update = ()=>{
+    const shiftPercent = (100 / slidesPerView) * current;
+    track.style.transform = `translateX(-${shiftPercent}%)`;
+    const dots = document.getElementById(containerId+'-dots');
+    const pages = Math.max(1, maxIndex + 1);
+    dots.innerHTML = Array.from({length:pages}).map((_,i)=>`<button data-dot="${i}" class="${i===current?'active':''}" aria-label="Ir al slide ${i+1}"></button>`).join('');
+  };
+  update();
+
+  container.querySelectorAll('.carousel-controls button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ if(btn.dataset.action==='prev') current = Math.max(0, current-1); else current = Math.min(maxIndex, current+1); update(); });
+  });
+
+  container.addEventListener('click', e=>{
+    const dot = e.target.closest('button[data-dot]');
+    if(dot){ current = parseInt(dot.dataset.dot); update(); }
+  });
+
+  // autoscroll if more than 1 image
+  let autoTimer = null;
+  if(images.length > 1){
+    autoTimer = setInterval(()=>{ current = current < maxIndex ? current+1 : 0; update(); }, 3500);
+    carouselEl.addEventListener('mouseenter', ()=>{ clearInterval(autoTimer); autoTimer = null;});
+    carouselEl.addEventListener('mouseleave', ()=>{ if(!autoTimer) autoTimer = setInterval(()=>{ current = current < maxIndex ? current+1 : 0; update(); }, 3500); });
+  }
+
+  carouselEl.addEventListener('keydown', e=>{
+    if(e.key==='ArrowLeft'){ current = Math.max(0, current-1); update(); }
+    else if(e.key==='ArrowRight'){ current = Math.min(maxIndex, current+1); update(); }
+  });
+}
+
+const r = (getParam('r') || 'sirenita').toLowerCase();
+currentRestaurant = r;
+render(r);
+initStars();
+loadComments();
+
+const editBtn = document.getElementById('editRestaurantBtn');
+const cancelInlineBtn = document.getElementById('cancelInlineEditBtn');
+
+editBtn.addEventListener('click', function(){
+  if(!isInlineEditing){
+    isInlineEditing = true;
+    editBtn.textContent = 'Guardar';
+    editBtn.classList.add('save');
+    cancelInlineBtn.style.display = 'inline-block';
+    render(currentRestaurant);
+    return;
+  }
+
+  try{
+    const draft = collectInlineEditedData();
+    if(!draft.nombre){ alert('El nombre es obligatorio.'); return; }
+    if(!draft.apertura || !draft.cierre){ alert('Apertura y cierre son obligatorios.'); return; }
+    draft.imagen = draft.imagen || (currentData && currentData.imagen) || 'pizzaencantada.webp';
+
+    saveRestaurantOverride(currentRestaurant, draft);
+    updateRecentRestaurantRecord(currentRestaurant, draft);
+    if(RESTAURANTES[currentRestaurant]) RESTAURANTES[currentRestaurant] = draft;
+
+    isInlineEditing = false;
+    editBtn.textContent = 'Editar';
+    editBtn.classList.remove('save');
+    cancelInlineBtn.style.display = 'none';
+    render(currentRestaurant);
+    alert('Cambios guardados.');
+  }catch(_e){
+    alert('No se pudieron guardar los cambios.');
+  }
+});
+
+cancelInlineBtn.addEventListener('click', function(){
+  isInlineEditing = false;
+  editBtn.textContent = 'Editar';
+  editBtn.classList.remove('save');
+  cancelInlineBtn.style.display = 'none';
+  render(currentRestaurant);
+});
+</script>
+</body>
+</html>
+
+
+
+

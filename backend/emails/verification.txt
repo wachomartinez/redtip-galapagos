@@ -1,0 +1,9 @@
+Hola {{username}},
+
+Gracias por registrarte en RedTip. Verifica tu correo visitando el siguiente enlace:
+
+{{verifyUrl}}
+
+Si no solicitaste esto, ignora este mensaje.
+
+RedTip - Pedido y delivery

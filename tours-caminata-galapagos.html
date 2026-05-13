@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tours Caminata en Galápagos - Excursiones a Bartolome, Seymour y Plazas | RedTipShark Agency</title>
+    <meta name="description" content="Descubre los mejores tours de caminata en Galápagos: Bartolome, Seymour Norte e Islas Plazas. Reserva tu aventura con guías expertos y vive la naturaleza única de las islas.">
+    <meta name="keywords" content="Galápagos, tours caminata, Bartolome, Seymour, Plazas, excursiones, naturaleza, agencia, Ecuador, reservas">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.redtipsharkagency.com/tours-caminata-galapagos.html">
+    <meta property="og:title" content="Tours Caminata en Galápagos - Bartolome, Seymour y Plazas | RedTipShark Agency">
+    <meta property="og:description" content="Reserva los mejores tours de caminata en Galápagos y explora Bartolome, Seymour Norte e Islas Plazas con guías expertos.">
+    <meta property="og:image" content="https://www.redtipsharkagency.com/logoredtip2.webp">
+    <meta property="og:url" content="https://www.redtipsharkagency.com/tours-caminata-galapagos.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_EC">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tours Caminata en Galápagos - Bartolome, Seymour y Plazas | RedTipShark Agency">
+    <meta name="twitter:description" content="Reserva los mejores tours de caminata en Galápagos y explora Bartolome, Seymour Norte e Islas Plazas con guías expertos.">
+    <meta name="twitter:image" content="https://www.redtipsharkagency.com/logoredtip2.webp">
+    <link rel="icon" type="image/webp" href="logoredtip2.webp">
+    <link rel="stylesheet" href="stylecaminata4nuevo1.css">
+    <style>
+        .modal-img-bg {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-img-bg.active {
+            display: flex;
+        }
+        .modal-img-bg img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 0 30px #000;
+        }
+        .modal-img-bg:after {
+            content: "✖";
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 10001;
+        }
+        @media (max-width: 600px) {
+            .modal-img-bg:after {
+                top: 10px;
+                right: 20px;
+                font-size: 2rem;
+            }
+        }
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 38px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .whatsapp-float:hover {
+            background-color: #20ba5a;
+        }
+        .whatsapp-float svg {
+            width: 32px;
+            height: 32px;
+        }
+        @media (max-width: 600px) {
+            .whatsapp-float {
+                width: 48px;
+                height: 48px;
+                font-size: 28px;
+                bottom: 18px;
+                right: 18px;
+            }
+            .whatsapp-float svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+        /* --- Responsive Menu Styles --- */
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .menu-mobile-btn {
+            display: none;
+            background: #fff; /* Fondo blanco, puedes cambiar el color */
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #333;
+            z-index: 10001;
+            position: fixed;
+            left: 30px;
+            top: 30px;
+            border-radius: 50%; /* Opcional: redondea el botón */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12); /* Opcional: sombra */
+            width: 52px; /* Opcional: tamaño fijo */
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .menu-mobile-btn:hover {
+            background: #f0f0f0; /* Color de fondo al pasar el mouse */
+        }
+        .menu-mobile {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+            }
+            .menu-mobile-btn {
+                display: block;
+            }
+            .menu-mobile {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background: #fff;
+                box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+                padding: 2rem 1.5rem;
+                transition: left 0.3s;
+                z-index: 10000;
+            }
+            .menu-mobile.active {
+                left: 0;
+            }
+            .menu-mobile .close-btn {
+                align-self: flex-end;
+                font-size: 2rem;
+                background: none;
+                border: none;
+                margin-bottom: 2rem;
+                cursor: pointer;
+            }
+            .menu-mobile a {
+                margin: 1rem 0;
+                font-size: 1.2rem;
+            }
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        h1, h2, h3 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+        }
+        .submenu-container {
+            position: relative;
+            display: inline-block;
+        }
+        .submenu-toggle {
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+        .submenu {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 0 0 8px 8px;
+            min-width: 180px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            padding: 0;
+            margin: 0;
+            z-index: 10;
+        }
+        .submenu li {
+            list-style: none;
+        }
+        .submenu li a {
+            display: block;
+            padding: 10px 18px;
+            color: #222;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .submenu li a:hover {
+            background: #f0f0f0;
+        }
+        .submenu-container:hover .submenu,
+        .submenu-container:focus-within .submenu {
+            display: block;
+        }
+        /* Opcional: para dispositivos táctiles, mostrar submenu al hacer click */
+        @media (max-width: 800px) {
+            .submenu {
+                position: static;
+                box-shadow: none;
+                border: none;
+                background: #fff;
+            }
+        }
+        .image-overlay-container {
+            position: relative;
+            display: block;
+            width: 100%;
+            max-width: 720px; /* opcional, ajustar según diseño */
+            margin: 0 auto;
+        }
+
+        .image-overlay-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            line-height: 1;
+            z-index: 2;
+            text-transform: capitalize;
+        }
+
+        /* Ajustes para pantallas pequeñas */
+        @media (max-width: 600px) {
+            .overlay-text {
+                top: 8px;
+                font-size: 1rem;
+                padding: 5px 10px;
+            }
+        }
+        .language-switcher {
+            position: static;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .language-switcher select {
+            padding: 0.4rem 0.6rem;
+            border-radius: 8px;
+            border: 1px solid #d6d6d6;
+            background: #fff;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 768px) {
+            .language-switcher {
+                position: fixed;
+                top: 16px;
+                right: 16px;
+                z-index: 10002;
+            }
+            .language-switcher select {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <meta name="author" content="RedTipShark Agency">
+    <meta http-equiv="content-language" content="es">
+    <link rel="stylesheet" href="menu-font.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="logoredtip2.webp" alt="Logo Galápagos RedTipShark Agency" loading="eager" fetchpriority="high" decoding="async">
+            <div class="language-switcher">
+                <select id="language-selector" aria-label="Seleccionar idioma">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="it">Italiano</option>
+                    <option value="pt">Português</option>
+                    <option value="ru">Русский</option>
+                    <option value="zh">中文</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                </select>
+            </div>
+            <!-- Botón para cambiar a inglés -->
+            <!-- <button onclick="window.location.href='tourcaminataterminadolinknuevo4_en.html'" style="float:right;margin:10px 0 0 20px;">En</button> -->
+            <!-- Botón para cambiar a chino -->
+            <!-- <button onclick="window.location.href='tourcaminataterminadolinknuevo4_zh.html'" style="float:right;margin:10px 0 0 10px;">中文</button> -->
+            <!-- Botón hamburguesa para menú móvil -->
+            <button class="menu-mobile-btn" aria-label="Abrir menú" data-i18n-attr="aria-label:openMenu">&#9776;</button>
+            <nav class="main-nav menu-desktop">
+                <a href="index.html" data-i18n="navHome">Inicio</a>
+                <div class="submenu-container">
+                    <a href="tours-caminata-galapagos.html" class="active submenu-toggle" data-i18n="navHiking">Tours Caminata ▼</a>
+                    <ul class="submenu">
+                        <li><a href="tour-bartolome copy.html" data-i18n="islandBartolome">Bartolomé</a></li>
+                        <li><a href="tour-seymour-norte.html" data-i18n="islandSeymour">Seymour</a></li>
+                        <li><a href="tour-plazas.html" data-i18n="islandPlazas">Islas Plazas</a></li>
+                    </ul>
+                </div>
+                <div class="submenu-container">
+                    <a href="tours-snorkeling-galapagos.html" class="submenu-toggle" data-i18n="navSnorkeling">Tours Snorkeling ▼</a>
+                    <ul class="submenu">
+                        <li><a href="tour-pinzon.html" data-i18n="islandPinzon">Pinzón</a></li>
+                        <li><a href="tour-santafe.html" data-i18n="islandSantaFe">Santa Fe</a></li>
+                    </ul>
+                </div>
+                <a href="paquetes turisticos.html" data-i18n="navPackages">Paquete Turisticos</a>
+                <a href="paginadecobros.html" data-i18n="navBookings">Reservas</a>
+                <a href="contactos1.html" data-i18n="navContacts">Contactos</a>
+                <a href="restaurantes.html" data-i18n="restaurants">Restaurantes</a>
+                <div class="submenu-container">
+                    <a href="blog-ruta-tortuga-las-grietas copy.html" class="submenu-toggle" data-i18n="navBlog">Blog ▼</a>
+                    <ul class="submenu">
+                        <li><a href="blog-ruta-tortuga-las-grietas copy.html" data-i18n="blogTortuga">Blog Ruta Tortuga</a></li>
+                        <li><a href="bodas.html" data-i18n="weddings">Bodas</a></li>
+                        <li><a href="restaurantes.html" data-i18n="restaurants">Restaurantes</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- Menú móvil oculto por defecto -->
+            <nav class="menu-mobile" aria-label="Menú móvil">
+                <button class="close-btn" aria-label="Cerrar menú" data-i18n-attr="aria-label:closeMenu">&times;</button>
+                <a href="index.html" data-i18n="navHome">Inicio</a>
+                <div>
+                    <a href="tours-caminata-galapagos.html" class="active" style="display:inline-block;" data-i18n="navHikingLabel">Tours Caminata</a>
+                    <button class="submenu-toggle" aria-label="Abrir submenú" data-i18n-attr="aria-label:openSubmenu" style="background:none;border:none;font-size:1.1rem;color:#333;cursor:pointer;margin-left:0.5rem;">&#9662;</button>
+                    <div class="submenu-mobile" style="display:none;flex-direction:column;margin-left:1rem;">
+                        <a href="tour-bartolome.html" data-i18n="islandBartolome">Bartolomé</a>
+                        <a href="tour-seymour-norte.html" data-i18n="islandSeymour">Seymour</a>
+                        <a href="tour-plazas.html" data-i18n="islandPlazas">Islas Plazas</a>
+                    </div>
+                </div>
+                <div>
+                    <a href="tours-snorkeling-galapagos.html" style="display:inline-block;" data-i18n="navSnorkelingLabel">Tours Snorkeling</a>
+                    <button class="submenu-toggle-snorkel" aria-label="Abrir submenú" data-i18n-attr="aria-label:openSubmenu" style="background:none;border:none;font-size:1.1rem;color:#333;cursor:pointer;margin-left:0.5rem;">&#9662;</button>
+                    <div class="submenu-mobile-snorkel" style="display:none;flex-direction:column;margin-left:1rem;">
+                        <a href="tour-pinzon.html" data-i18n="islandPinzon">Pinzón</a>
+                        <a href="tour-santafe.html" data-i18n="islandSantaFe">Santa Fe</a>
+                    </div>
+                </div>
+                <a href="paquetes turisticos.html" data-i18n="navPackages">Paquete Turisticos</a>
+                <a href="paginadecobros.html" data-i18n="navBookings">Reservas</a>
+                <a href="contactos1.html" data-i18n="navContacts">Contactos</a>
+                <a href="restaurantes.html" data-i18n="restaurants">Restaurantes</a>
+                <div>
+                    <a href="blog-ruta-tortuga-las-grietas copy.html" style="display:inline-block;" data-i18n="navBlogLabel">Blog</a>
+                    <button class="submenu-toggle-blog" aria-label="Abrir submenú" data-i18n-attr="aria-label:openSubmenu" style="background:none;border:none;font-size:1.1rem;color:#333;cursor:pointer;margin-left:0.5rem;">&#9662;</button>
+                    <div class="submenu-mobile-blog" style="display:none;flex-direction:column;margin-left:1rem;">
+                        <a href="blog-ruta-tortuga-las-grietas copy.html" data-i18n="blogTortuga">Blog Ruta Tortuga</a>
+                        <a href="bodas.html" data-i18n="weddings">Bodas</a>
+                        <a href="restaurantes.html" data-i18n="restaurants">Restaurantes</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="tour-list">
+        <h1 data-i18n="pageTitle">Tours Caminata en Galápagos</h1>
+        <p data-i18n="pageIntro">
+            Explora las Islas Galápagos con nuestros tours de caminata a Bartolome, Seymour Norte e Islas Plazas. Disfruta de la naturaleza, la fauna y paisajes únicos con guías expertos. Reserva tu aventura y vive una experiencia inolvidable.
+        </p>
+        <article class="tour-card">
+            <div class="image-overlay-container">
+                <h2 class="overlay-text" data-i18n="overlayBartolome">Bartolome</h2>
+                <img src="bartolome.webp" class="tour-image tour-img-modal" alt="Vista panorámica de Isla Bartolomé, Galápagos" loading="eager" fetchpriority="high" decoding="async">
+            </div>
+            <div class="tour-info">
+                <p><strong data-i18n="bartolomeName">Isla Bartolome</strong></p>
+                <p><strong data-i18n="tourDuration">Duracion del tour</strong></p>
+                <p>7 am - 4:00 pm</p>
+                <p><strong data-i18n="destinations">Destinations</strong></p>
+                <p data-i18n="bartolomeStop1">Bartolomé : 1 hora</p>
+                <p data-i18n="bartolomeStop2">Bartolomé playa : 1 hora</p>
+                <p><strong data-i18n="siteDescription">Descripcion del sitio</strong></p>
+                <p data-i18n="bartolomeDesc">Bartolomé and its impressive view that enchants all tourists</p>
+                <p><strong data-i18n="difficultyLevel">Nivel de Dificultad</strong></p>
+                <p data-i18n="difficultyMedium">MEDIO</p>
+                <a href="https://wa.me/593959285913" target="_blank" class="buy-button" data-i18n="buyButton">COMPRAR</a>
+                <a href="tour-bartolome.html" class="buy-button details-button" style="margin-left:10px;">
+                    <span data-i18n="bartolomeInfo">Información Tour Bartolome</span>
+                </a>
+            </div>
+        </article>
+
+        <article class="tour-card">
+            <div class="image-overlay-container">
+                <h2 class="overlay-text" data-i18n="overlaySeymour">Seymour</h2>
+                <img src="seymour.webp" class="tour-image tour-img-modal" alt="Vista de Isla Seymour, Galápagos" loading="lazy" decoding="async">
+            </div>
+            <div class="tour-info">
+                <p><strong data-i18n="seymourName">Isla Seymour</strong></p>
+                <p><strong data-i18n="tourDuration">Duracion del tour</strong></p>
+                <p>8 am - 3:30 pm</p>
+                <p><strong data-i18n="destinationsEs">Destinos</strong></p>
+                <p data-i18n="seymourStop1">Caminata Seymour: 1 hora</p>
+                <p data-i18n="seymourStop2">Playa Bachas : 1 hour</p>
+                <p><strong data-i18n="siteDescription">Descripcion del sitio</strong></p>
+                <p data-i18n="seymourDesc">Seymour is known for the nesting area of blue-footed boobies and frigatebirds</p>
+                <p><strong data-i18n="difficultyLevel">Nivel de Dificultad</strong></p>
+                <p data-i18n="difficultyMedium">MEDIO</p>
+                <a href="https://wa.me/593959285913" target="_blank" class="buy-button" data-i18n="buyButton">COMPRAR</a>
+                <a href="tour-seymour-norte.html" class="buy-button details-button" style="margin-left:10px;">
+                    <span data-i18n="seymourInfo">Información Tour Seymour</span>
+                </a>
+            </div>
+        </article>
+
+        <article class="tour-card">
+            <div class="image-overlay-container">
+                <h2 class="overlay-text" data-i18n="overlayPlazas">Plazas</h2>
+                <img src="islas plazas.webp" class="tour-image tour-img-modal" alt="Vista de Islas Plazas, Galápagos" loading="lazy" decoding="async">
+            </div>
+            <div class="tour-info">
+                <p><strong data-i18n="plazasName">Isla Plazas</strong></p>
+                <p><strong data-i18n="tourDuration">Duracion del tour</strong></p>
+                <p>8 am - 3:30 pm</p>
+                <p><strong data-i18n="destinationsEs">Destinos</strong></p>
+                <p data-i18n="plazasStop1">Caminata Plazas: 1 hora</p>
+                <p data-i18n="plazasStop2">Snorkeling Punta Carrion : 1 hour</p>
+                <p><strong data-i18n="siteDescription">Descripcion del sitio</strong></p>
+                <p data-i18n="plazasDesc">Conocida por su vibrante flora de cactus, colonias de lobos marinos y iguanas terrestres</p>
+                <p><strong data-i18n="difficultyLevel">Nivel de Dificultad</strong></p>
+                <p data-i18n="difficultyMedium">MEDIO</p>
+                <a href="https://wa.me/593959285913" target="_blank" class="buy-button" data-i18n="buyButton">COMPRAR</a>
+                <a href="tour-plazas.html" class="buy-button details-button" style="margin-left:10px;">
+                    <span data-i18n="plazasInfo">Información Tour Plazas</span>
+                </a>
+            </div>
+        </article>
+    </main>
+    <!-- Modal para imagen en pantalla completa -->
+    <div class="modal-img-bg" id="modalImg">
+        <img src="" alt="Imagen ampliada" id="modalImgTag">
+    </div>
+    <a href="https://wa.me/593959285913" class="whatsapp-float" target="_blank" aria-label="WhatsApp" data-i18n-attr="aria-label:whatsappLabel">
+        <svg viewBox="0 0 32 32" fill="currentColor">
+            <path d="M16 3C9.373 3 4 8.373 4 15c0 2.65.87 5.1 2.36 7.1L4 29l7.14-2.33A12.93 12.93 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22.8c-2.1 0-4.13-.62-5.82-1.8l-.42-.27-4.24 1.39 1.39-4.13-.28-.43A9.8 9.8 0 0 1 6.2 15c0-5.4 4.4-9.8 9.8-9.8s9.8 4.4 9.8 9.8-4.4 9.8-9.8 9.8zm5.38-7.47c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.64.15-.19.29-.74.93-.91 1.12-.17.19-.34.22-.63.07-.29-.15-1.23-.45-2.34-1.43-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.64-1.54-.88-2.11-.23-.56-.47-.48-.64-.49-.17-.01-.36-.01-.56-.01-.19 0-.5.07-.76.36-.26.29-1 1-.99 2.44.01 1.44 1.03 2.84 1.18 3.04.15.19 2.03 3.1 4.93 4.23.69.28 1.23.45 1.65.57.69.22 1.32.19 1.81.12.55-.08 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.26-.19-.55-.34z"/>
+        </svg>
+    </a>
+    <!-- Modal para detalles del tour -->
+    <div id="detailsModal" style="display:none;position:fixed;z-index:10001;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;">
+        <div style="background:#fff;padding:2rem 1.5rem;border-radius:12px;max-width:90vw;max-height:80vh;overflow:auto;position:relative;">
+            <button id="closeDetailsModal" style="position:absolute;top:10px;right:15px;font-size:1.5rem;background:none;border:none;cursor:pointer;">&times;</button>
+            <h2 id="detailsModalTitle"></h2>
+            <p id="detailsModalContent"></p>
+        </div>
+    </div>
+    <script>
+        // Mostrar imagen en pantalla completa al hacer click
+        document.querySelectorAll('.tour-img-modal').forEach(function(img) {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', function() {
+                var modal = document.getElementById('modalImg');
+                var modalImg = document.getElementById('modalImgTag');
+                modalImg.src = this.src;
+                modal.classList.add('active');
+            });
+        });
+        // Cerrar modal al hacer click fuera de la imagen o en la X
+        document.getElementById('modalImg').addEventListener('click', function(e) {
+            if (e.target === this || e.target === this.querySelector('img')) {
+                this.classList.remove('active');
+            }
+        });
+        // Cerrar modal con la tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('modalImg').classList.remove('active');
+            }
+        });
+        // Menú móvil: abrir/cerrar
+        document.addEventListener('DOMContentLoaded', function() {
+            const translations = {
+                es: {
+                    metaTitle: 'Tours Caminata en Galápagos - Excursiones a Bartolome, Seymour y Plazas | RedTipShark Agency',
+                    metaDescription: 'Descubre los mejores tours de caminata en Galápagos: Bartolome, Seymour Norte e Islas Plazas. Reserva tu aventura con guías expertos y vive la naturaleza única de las islas.',
+                    metaKeywords: 'Galápagos, tours caminata, Bartolome, Seymour, Plazas, excursiones, naturaleza, agencia, Ecuador, reservas',
+                    ogDescription: 'Reserva los mejores tours de caminata en Galápagos y explora Bartolome, Seymour Norte e Islas Plazas con guías expertos.',
+                    twitterDescription: 'Reserva los mejores tours de caminata en Galápagos y explora Bartolome, Seymour Norte e Islas Plazas con guías expertos.',
+                    contentLanguage: 'es',
+                    openMenu: 'Abrir menú',
+                    closeMenu: 'Cerrar menú',
+                    openSubmenu: 'Abrir submenú',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: 'Inicio',
+                    navHiking: 'Tours Caminata ▼',
+                    navHikingLabel: 'Tours Caminata',
+                    navSnorkeling: 'Tours Snorkeling ▼',
+                    navSnorkelingLabel: 'Tours Snorkeling',
+                    navPackages: 'Paquete Turisticos',
+                    navBookings: 'Reservas',
+                    navContacts: 'Contactos',
+                    restaurants: 'Restaurantes',
+                    navBlog: 'Blog ▼',
+                    navBlogLabel: 'Blog',
+                    blogTortuga: 'Blog Ruta Tortuga',
+                    weddings: 'Bodas',
+                    islandBartolome: 'Bartolomé',
+                    islandSeymour: 'Seymour',
+                    islandPlazas: 'Islas Plazas',
+                    islandPinzon: 'Pinzón',
+                    islandSantaFe: 'Santa Fe',
+                    pageTitle: 'Tours Caminata en Galápagos',
+                    pageIntro: 'Explora las Islas Galápagos con nuestros tours de caminata a Bartolome, Seymour Norte e Islas Plazas. Disfruta de la naturaleza, la fauna y paisajes únicos con guías expertos. Reserva tu aventura y vive una experiencia inolvidable.',
+                    overlayBartolome: 'Bartolome',
+                    overlaySeymour: 'Seymour',
+                    overlayPlazas: 'Plazas',
+                    bartolomeName: 'Isla Bartolome',
+                    seymourName: 'Isla Seymour',
+                    plazasName: 'Isla Plazas',
+                    tourDuration: 'Duracion del tour',
+                    destinations: 'Destinations',
+                    destinationsEs: 'Destinos',
+                    bartolomeStop1: 'Bartolomé : 1 hora',
+                    bartolomeStop2: 'Bartolomé playa : 1 hora',
+                    seymourStop1: 'Caminata Seymour: 1 hora',
+                    seymourStop2: 'Playa Bachas : 1 hour',
+                    plazasStop1: 'Caminata Plazas: 1 hora',
+                    plazasStop2: 'Snorkeling Punta Carrion : 1 hour',
+                    siteDescription: 'Descripcion del sitio',
+                    bartolomeDesc: 'Bartolomé and its impressive view that enchants all tourists',
+                    seymourDesc: 'Seymour is known for the nesting area of blue-footed boobies and frigatebirds',
+                    plazasDesc: 'Conocida por su vibrante flora de cactus, colonias de lobos marinos y iguanas terrestres',
+                    difficultyLevel: 'Nivel de Dificultad',
+                    difficultyMedium: 'MEDIO',
+                    buyButton: 'COMPRAR',
+                    bartolomeInfo: 'Información Tour Bartolome',
+                    seymourInfo: 'Información Tour Seymour',
+                    plazasInfo: 'Información Tour Plazas'
+                },
+                en: {
+                    metaTitle: 'Galápagos Hiking Tours - Excursions to Bartolomé, Seymour and Plazas | RedTipShark Agency',
+                    metaDescription: 'Discover the best hiking tours in Galápagos: Bartolomé, North Seymour and Plazas Islands. Book your adventure with expert guides and enjoy unique island nature.',
+                    metaKeywords: 'Galápagos, hiking tours, Bartolomé, Seymour, Plazas, excursions, nature, agency, Ecuador, bookings',
+                    ogDescription: 'Book the best Galápagos hiking tours and explore Bartolomé, North Seymour and Plazas Islands with expert guides.',
+                    twitterDescription: 'Book the best Galápagos hiking tours and explore Bartolomé, North Seymour and Plazas Islands with expert guides.',
+                    contentLanguage: 'en',
+                    openMenu: 'Open menu',
+                    closeMenu: 'Close menu',
+                    openSubmenu: 'Open submenu',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: 'Home',
+                    navHiking: 'Hiking Tours ▼',
+                    navHikingLabel: 'Hiking Tours',
+                    navSnorkeling: 'Snorkeling Tours ▼',
+                    navSnorkelingLabel: 'Snorkeling Tours',
+                    navPackages: 'Tour Packages',
+                    navBookings: 'Bookings',
+                    navContacts: 'Contact',
+                    restaurants: 'Restaurants',
+                    navBlog: 'Blog ▼',
+                    navBlogLabel: 'Blog',
+                    blogTortuga: 'Tortuga Route Blog',
+                    weddings: 'Weddings',
+                    islandBartolome: 'Bartolomé',
+                    islandSeymour: 'Seymour',
+                    islandPlazas: 'Plazas Islands',
+                    islandPinzon: 'Pinzón',
+                    islandSantaFe: 'Santa Fe',
+                    pageTitle: 'Hiking Tours in Galápagos',
+                    pageIntro: 'Explore the Galápagos Islands with our hiking tours to Bartolomé, North Seymour and Plazas Islands. Enjoy wildlife and unique landscapes with expert guides. Book your adventure and live an unforgettable experience.',
+                    overlayBartolome: 'Bartolomé',
+                    overlaySeymour: 'Seymour',
+                    overlayPlazas: 'Plazas',
+                    bartolomeName: 'Bartolomé Island',
+                    seymourName: 'Seymour Island',
+                    plazasName: 'Plazas Island',
+                    tourDuration: 'Tour duration',
+                    destinations: 'Destinations',
+                    destinationsEs: 'Destinations',
+                    bartolomeStop1: 'Bartolomé: 1 hour',
+                    bartolomeStop2: 'Bartolomé beach: 1 hour',
+                    seymourStop1: 'Seymour hike: 1 hour',
+                    seymourStop2: 'Bachas Beach: 1 hour',
+                    plazasStop1: 'Plazas hike: 1 hour',
+                    plazasStop2: 'Punta Carrión snorkeling: 1 hour',
+                    siteDescription: 'Site description',
+                    bartolomeDesc: 'Bartolomé and its impressive viewpoint that enchants all travelers.',
+                    seymourDesc: 'Seymour is known for nesting areas of blue-footed boobies and frigatebirds.',
+                    plazasDesc: 'Known for vibrant cactus flora, sea lion colonies and land iguanas.',
+                    difficultyLevel: 'Difficulty level',
+                    difficultyMedium: 'MEDIUM',
+                    buyButton: 'BUY',
+                    bartolomeInfo: 'Bartolomé Tour Info',
+                    seymourInfo: 'Seymour Tour Info',
+                    plazasInfo: 'Plazas Tour Info'
+                },
+                fr: {
+                    metaTitle: 'Tours Randonnée aux Galápagos - Bartolomé, Seymour et Plazas | RedTipShark Agency',
+                    metaDescription: 'Découvrez les meilleurs tours de randonnée aux Galápagos : Bartolomé, Seymour Nord et îles Plazas. Réservez votre aventure avec des guides experts.',
+                    metaKeywords: 'Galápagos, tours randonnée, Bartolomé, Seymour, Plazas, excursions, nature, agence, Équateur, réservations',
+                    ogDescription: 'Réservez les meilleurs tours de randonnée aux Galápagos avec des guides experts.',
+                    twitterDescription: 'Réservez les meilleurs tours de randonnée aux Galápagos avec des guides experts.',
+                    contentLanguage: 'fr',
+                    openMenu: 'Ouvrir le menu',
+                    closeMenu: 'Fermer le menu',
+                    openSubmenu: 'Ouvrir le sous-menu',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: 'Accueil',
+                    navHiking: 'Tours Randonnée ▼',
+                    navHikingLabel: 'Tours Randonnée',
+                    navSnorkeling: 'Tours Snorkeling ▼',
+                    navSnorkelingLabel: 'Tours Snorkeling',
+                    navPackages: 'Forfaits Touristiques',
+                    navBookings: 'Réservations',
+                    navContacts: 'Contacts',
+                    restaurants: 'Restaurants',
+                    navBlog: 'Blog ▼',
+                    navBlogLabel: 'Blog',
+                    blogTortuga: 'Blog Route Tortuga',
+                    weddings: 'Mariages',
+                    islandBartolome: 'Bartolomé',
+                    islandSeymour: 'Seymour',
+                    islandPlazas: 'Îles Plazas',
+                    islandPinzon: 'Pinzón',
+                    islandSantaFe: 'Santa Fe',
+                    pageTitle: 'Tours Randonnée aux Galápagos',
+                    pageIntro: 'Explorez les îles Galápagos avec nos tours de randonnée vers Bartolomé, Seymour Nord et les îles Plazas. Profitez de la nature et de paysages uniques avec des guides experts.',
+                    overlayBartolome: 'Bartolomé',
+                    overlaySeymour: 'Seymour',
+                    overlayPlazas: 'Plazas',
+                    bartolomeName: 'Île Bartolomé',
+                    seymourName: 'Île Seymour',
+                    plazasName: 'Île Plazas',
+                    tourDuration: 'Durée du tour',
+                    destinations: 'Destinations',
+                    destinationsEs: 'Destinations',
+                    bartolomeStop1: 'Bartolomé : 1 heure',
+                    bartolomeStop2: 'Plage de Bartolomé : 1 heure',
+                    seymourStop1: 'Randonnée Seymour : 1 heure',
+                    seymourStop2: 'Plage Bachas : 1 heure',
+                    plazasStop1: 'Randonnée Plazas : 1 heure',
+                    plazasStop2: 'Snorkeling Punta Carrión : 1 heure',
+                    siteDescription: 'Description du site',
+                    bartolomeDesc: 'Bartolomé et son point de vue impressionnant qui enchante tous les visiteurs.',
+                    seymourDesc: 'Seymour est connue pour les zones de nidification des fous à pieds bleus et des frégates.',
+                    plazasDesc: 'Connue pour ses cactus colorés, ses colonies d’otaries et ses iguanes terrestres.',
+                    difficultyLevel: 'Niveau de difficulté',
+                    difficultyMedium: 'MOYEN',
+                    buyButton: 'ACHETER',
+                    bartolomeInfo: 'Infos Tour Bartolomé',
+                    seymourInfo: 'Infos Tour Seymour',
+                    plazasInfo: 'Infos Tour Plazas'
+                },
+                de: {
+                    metaTitle: 'Galápagos Wandertouren - Bartolomé, Seymour und Plazas | RedTipShark Agency',
+                    metaDescription: 'Entdecken Sie die besten Wandertouren auf Galápagos: Bartolomé, North Seymour und Plazas-Inseln. Buchen Sie Ihr Abenteuer mit erfahrenen Guides.',
+                    metaKeywords: 'Galápagos, Wandertouren, Bartolomé, Seymour, Plazas, Ausflüge, Natur, Agentur, Ecuador, Buchung',
+                    ogDescription: 'Buchen Sie die besten Galápagos-Wandertouren mit erfahrenen Guides.',
+                    twitterDescription: 'Buchen Sie die besten Galápagos-Wandertouren mit erfahrenen Guides.',
+                    contentLanguage: 'de',
+                    openMenu: 'Menü öffnen',
+                    closeMenu: 'Menü schließen',
+                    openSubmenu: 'Untermenü öffnen',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: 'Startseite',
+                    navHiking: 'Wandertouren ▼',
+                    navHikingLabel: 'Wandertouren',
+                    navSnorkeling: 'Schnorcheltouren ▼',
+                    navSnorkelingLabel: 'Schnorcheltouren',
+                    navPackages: 'Reisepakete',
+                    navBookings: 'Reservierungen',
+                    navContacts: 'Kontakt',
+                    restaurants: 'Restaurants',
+                    navBlog: 'Blog ▼',
+                    navBlogLabel: 'Blog',
+                    blogTortuga: 'Tortuga-Routen Blog',
+                    weddings: 'Hochzeiten',
+                    islandBartolome: 'Bartolomé',
+                    islandSeymour: 'Seymour',
+                    islandPlazas: 'Plazas-Inseln',
+                    islandPinzon: 'Pinzón',
+                    islandSantaFe: 'Santa Fe',
+                    pageTitle: 'Wandertouren auf Galápagos',
+                    pageIntro: 'Entdecken Sie die Galápagos-Inseln mit unseren Wandertouren nach Bartolomé, North Seymour und Plazas-Inseln. Erleben Sie Natur und einzigartige Landschaften mit erfahrenen Guides.',
+                    overlayBartolome: 'Bartolomé',
+                    overlaySeymour: 'Seymour',
+                    overlayPlazas: 'Plazas',
+                    bartolomeName: 'Insel Bartolomé',
+                    seymourName: 'Insel Seymour',
+                    plazasName: 'Insel Plazas',
+                    tourDuration: 'Tourdauer',
+                    destinations: 'Ziele',
+                    destinationsEs: 'Ziele',
+                    bartolomeStop1: 'Bartolomé: 1 Stunde',
+                    bartolomeStop2: 'Bartolomé-Strand: 1 Stunde',
+                    seymourStop1: 'Seymour-Wanderung: 1 Stunde',
+                    seymourStop2: 'Bachas-Strand: 1 Stunde',
+                    plazasStop1: 'Plazas-Wanderung: 1 Stunde',
+                    plazasStop2: 'Punta Carrión Schnorcheln: 1 Stunde',
+                    siteDescription: 'Ortsbeschreibung',
+                    bartolomeDesc: 'Bartolomé mit seinem beeindruckenden Aussichtspunkt begeistert alle Besucher.',
+                    seymourDesc: 'Seymour ist bekannt für Nistplätze von Blaufußtölpeln und Fregattvögeln.',
+                    plazasDesc: 'Bekannt für farbenreiche Kakteen, Seelöwenkolonien und Landleguane.',
+                    difficultyLevel: 'Schwierigkeitsgrad',
+                    difficultyMedium: 'MITTEL',
+                    buyButton: 'KAUFEN',
+                    bartolomeInfo: 'Infos Bartolomé-Tour',
+                    seymourInfo: 'Infos Seymour-Tour',
+                    plazasInfo: 'Infos Plazas-Tour'
+                },
+                it: {
+                    metaTitle: 'Tour Trekking Galápagos - Bartolomé, Seymour e Plazas | RedTipShark Agency',
+                    metaDescription: 'Scopri i migliori tour trekking alle Galápagos: Bartolomé, Seymour Norte e Isole Plazas. Prenota la tua avventura con guide esperte.',
+                    metaKeywords: 'Galápagos, tour trekking, Bartolomé, Seymour, Plazas, escursioni, natura, agenzia, Ecuador, prenotazioni',
+                    ogDescription: 'Prenota i migliori tour trekking alle Galápagos con guide esperte.',
+                    twitterDescription: 'Prenota i migliori tour trekking alle Galápagos con guide esperte.',
+                    contentLanguage: 'it',
+                    openMenu: 'Apri menu',
+                    closeMenu: 'Chiudi menu',
+                    openSubmenu: 'Apri sottomenu',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: 'Home',
+                    navHiking: 'Tour Trekking ▼',
+                    navHikingLabel: 'Tour Trekking',
+                    navSnorkeling: 'Tour Snorkeling ▼',
+                    navSnorkelingLabel: 'Tour Snorkeling',
+                    navPackages: 'Pacchetti Turistici',
+                    navBookings: 'Prenotazioni',
+                    navContacts: 'Contatti',
+                    restaurants: 'Ristoranti',
+                    navBlog: 'Blog ▼',
+                    navBlogLabel: 'Blog',
+                    blogTortuga: 'Blog Rotta Tortuga',
+                    weddings: 'Matrimoni',
+                    islandBartolome: 'Bartolomé',
+                    islandSeymour: 'Seymour',
+                    islandPlazas: 'Isole Plazas',
+                    islandPinzon: 'Pinzón',
+                    islandSantaFe: 'Santa Fe',
+                    pageTitle: 'Tour Trekking alle Galápagos',
+                    pageIntro: 'Esplora le Isole Galápagos con i nostri tour trekking a Bartolomé, Seymour Norte e Isole Plazas. Goditi natura e paesaggi unici con guide esperte.',
+                    overlayBartolome: 'Bartolomé',
+                    overlaySeymour: 'Seymour',
+                    overlayPlazas: 'Plazas',
+                    bartolomeName: 'Isola Bartolomé',
+                    seymourName: 'Isola Seymour',
+                    plazasName: 'Isola Plazas',
+                    tourDuration: 'Durata del tour',
+                    destinations: 'Destinazioni',
+                    destinationsEs: 'Destinazioni',
+                    bartolomeStop1: 'Bartolomé: 1 ora',
+                    bartolomeStop2: 'Spiaggia Bartolomé: 1 ora',
+                    seymourStop1: 'Trekking Seymour: 1 ora',
+                    seymourStop2: 'Spiaggia Bachas: 1 ora',
+                    plazasStop1: 'Trekking Plazas: 1 ora',
+                    plazasStop2: 'Snorkeling Punta Carrión: 1 ora',
+                    siteDescription: 'Descrizione del sito',
+                    bartolomeDesc: 'Bartolomé e il suo impressionante punto panoramico che incanta tutti i visitatori.',
+                    seymourDesc: 'Seymour è nota per le aree di nidificazione delle sule piediazzurri e delle fregate.',
+                    plazasDesc: 'Conosciuta per la vivace flora di cactus, colonie di leoni marini e iguane terrestri.',
+                    difficultyLevel: 'Livello di difficoltà',
+                    difficultyMedium: 'MEDIO',
+                    buyButton: 'ACQUISTA',
+                    bartolomeInfo: 'Info Tour Bartolomé',
+                    seymourInfo: 'Info Tour Seymour',
+                    plazasInfo: 'Info Tour Plazas'
+                },
+                pt: {
+                    metaTitle: 'Tours de Caminhada em Galápagos - Bartolomé, Seymour e Plazas | RedTipShark Agency',
+                    metaDescription: 'Descubra os melhores tours de caminhada em Galápagos: Bartolomé, Seymour Norte e Ilhas Plazas. Reserve sua aventura com guias especializados.',
+                    metaKeywords: 'Galápagos, tours caminhada, Bartolomé, Seymour, Plazas, excursões, natureza, agência, Equador, reservas',
+                    ogDescription: 'Reserve os melhores tours de caminhada em Galápagos com guias especializados.',
+                    twitterDescription: 'Reserve os melhores tours de caminhada em Galápagos com guias especializados.',
+                    contentLanguage: 'pt',
+                    openMenu: 'Abrir menu',
+                    closeMenu: 'Fechar menu',
+                    openSubmenu: 'Abrir submenu',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: 'Início',
+                    navHiking: 'Tours de Caminhada ▼',
+                    navHikingLabel: 'Tours de Caminhada',
+                    navSnorkeling: 'Tours de Snorkeling ▼',
+                    navSnorkelingLabel: 'Tours de Snorkeling',
+                    navPackages: 'Pacotes Turísticos',
+                    navBookings: 'Reservas',
+                    navContacts: 'Contatos',
+                    restaurants: 'Restaurantes',
+                    navBlog: 'Blog ▼',
+                    navBlogLabel: 'Blog',
+                    blogTortuga: 'Blog Rota Tortuga',
+                    weddings: 'Casamentos',
+                    islandBartolome: 'Bartolomé',
+                    islandSeymour: 'Seymour',
+                    islandPlazas: 'Ilhas Plazas',
+                    islandPinzon: 'Pinzón',
+                    islandSantaFe: 'Santa Fe',
+                    pageTitle: 'Tours de Caminhada em Galápagos',
+                    pageIntro: 'Explore as Ilhas Galápagos com nossos tours de caminhada para Bartolomé, Seymour Norte e Ilhas Plazas. Aproveite a natureza e paisagens únicas com guias especializados.',
+                    overlayBartolome: 'Bartolomé',
+                    overlaySeymour: 'Seymour',
+                    overlayPlazas: 'Plazas',
+                    bartolomeName: 'Ilha Bartolomé',
+                    seymourName: 'Ilha Seymour',
+                    plazasName: 'Ilha Plazas',
+                    tourDuration: 'Duração do tour',
+                    destinations: 'Destinos',
+                    destinationsEs: 'Destinos',
+                    bartolomeStop1: 'Bartolomé: 1 hora',
+                    bartolomeStop2: 'Praia Bartolomé: 1 hora',
+                    seymourStop1: 'Caminhada Seymour: 1 hora',
+                    seymourStop2: 'Praia Bachas: 1 hora',
+                    plazasStop1: 'Caminhada Plazas: 1 hora',
+                    plazasStop2: 'Snorkeling Punta Carrión: 1 hora',
+                    siteDescription: 'Descrição do local',
+                    bartolomeDesc: 'Bartolomé e seu impressionante mirante que encanta todos os visitantes.',
+                    seymourDesc: 'Seymour é conhecida pelas áreas de nidificação de atobás-de-patas-azuis e fragatas.',
+                    plazasDesc: 'Conhecida por sua flora vibrante de cactos, colônias de leões-marinhos e iguanas terrestres.',
+                    difficultyLevel: 'Nível de dificuldade',
+                    difficultyMedium: 'MÉDIO',
+                    buyButton: 'COMPRAR',
+                    bartolomeInfo: 'Informações Tour Bartolomé',
+                    seymourInfo: 'Informações Tour Seymour',
+                    plazasInfo: 'Informações Tour Plazas'
+                },
+                ru: {
+                    metaTitle: 'Пешие Туры на Галапагосах - Бартоломе, Сеймур и Пласас | RedTipShark Agency',
+                    metaDescription: 'Откройте лучшие пешие туры на Галапагосах: Бартоломе, Норт-Сеймур и острова Пласас. Бронируйте приключение с опытными гидами.',
+                    metaKeywords: 'Галапагосы, пешие туры, Бартоломе, Сеймур, Пласас, экскурсии, природа, агентство, Эквадор, бронирование',
+                    ogDescription: 'Бронируйте лучшие пешие туры на Галапагосах с опытными гидами.',
+                    twitterDescription: 'Бронируйте лучшие пешие туры на Галапагосах с опытными гидами.',
+                    contentLanguage: 'ru',
+                    openMenu: 'Открыть меню',
+                    closeMenu: 'Закрыть меню',
+                    openSubmenu: 'Открыть подменю',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: 'Главная',
+                    navHiking: 'Пешие Туры ▼',
+                    navHikingLabel: 'Пешие Туры',
+                    navSnorkeling: 'Снорклинг Туры ▼',
+                    navSnorkelingLabel: 'Снорклинг Туры',
+                    navPackages: 'Турпакеты',
+                    navBookings: 'Бронирование',
+                    navContacts: 'Контакты',
+                    restaurants: 'Рестораны',
+                    navBlog: 'Блог ▼',
+                    navBlogLabel: 'Блог',
+                    blogTortuga: 'Блог Маршрут Тортуга',
+                    weddings: 'Свадьбы',
+                    islandBartolome: 'Бартоломе',
+                    islandSeymour: 'Сеймур',
+                    islandPlazas: 'Острова Пласас',
+                    islandPinzon: 'Пинсон',
+                    islandSantaFe: 'Санта-Фе',
+                    pageTitle: 'Пешие Туры на Галапагосах',
+                    pageIntro: 'Исследуйте Галапагосские острова с нашими пешими турами на Бартоломе, Норт-Сеймур и Пласас. Наслаждайтесь природой и уникальными пейзажами с опытными гидами.',
+                    overlayBartolome: 'Бартоломе',
+                    overlaySeymour: 'Сеймур',
+                    overlayPlazas: 'Пласас',
+                    bartolomeName: 'Остров Бартоломе',
+                    seymourName: 'Остров Сеймур',
+                    plazasName: 'Остров Пласас',
+                    tourDuration: 'Длительность тура',
+                    destinations: 'Маршруты',
+                    destinationsEs: 'Маршруты',
+                    bartolomeStop1: 'Бартоломе: 1 час',
+                    bartolomeStop2: 'Пляж Бартоломе: 1 час',
+                    seymourStop1: 'Прогулка по Сеймуру: 1 час',
+                    seymourStop2: 'Пляж Бачас: 1 час',
+                    plazasStop1: 'Прогулка по Пласас: 1 час',
+                    plazasStop2: 'Снорклинг Пунта Каррион: 1 час',
+                    siteDescription: 'Описание места',
+                    bartolomeDesc: 'Бартоломе и его впечатляющая панорама очаровывают всех путешественников.',
+                    seymourDesc: 'Сеймур известен местами гнездования голубоногих олуш и фрегатов.',
+                    plazasDesc: 'Известен яркой кактусовой флорой, колониями морских львов и наземными игуанами.',
+                    difficultyLevel: 'Уровень сложности',
+                    difficultyMedium: 'СРЕДНИЙ',
+                    buyButton: 'КУПИТЬ',
+                    bartolomeInfo: 'Информация о туре Бартоломе',
+                    seymourInfo: 'Информация о туре Сеймур',
+                    plazasInfo: 'Информация о туре Пласас'
+                },
+                zh: {
+                    metaTitle: '加拉帕戈斯徒步行程 - 巴托洛梅、西摩与普拉萨斯 | RedTipShark Agency',
+                    metaDescription: '探索最佳加拉帕戈斯徒步行程：巴托洛梅、北西摩和普拉萨斯群岛。与专业向导一起预订您的冒险之旅。',
+                    metaKeywords: '加拉帕戈斯, 徒步行程, 巴托洛梅, 西摩, 普拉萨斯, 旅行, 自然, 旅行社, 厄瓜多尔, 预订',
+                    ogDescription: '预订最佳加拉帕戈斯徒步行程，与专业向导探索群岛。',
+                    twitterDescription: '预订最佳加拉帕戈斯徒步行程，与专业向导探索群岛。',
+                    contentLanguage: 'zh',
+                    openMenu: '打开菜单',
+                    closeMenu: '关闭菜单',
+                    openSubmenu: '打开子菜单',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: '首页',
+                    navHiking: '徒步行程 ▼',
+                    navHikingLabel: '徒步行程',
+                    navSnorkeling: '浮潜行程 ▼',
+                    navSnorkelingLabel: '浮潜行程',
+                    navPackages: '旅游套餐',
+                    navBookings: '预订',
+                    navContacts: '联系',
+                    restaurants: '餐厅',
+                    navBlog: '博客 ▼',
+                    navBlogLabel: '博客',
+                    blogTortuga: '托尔图加路线博客',
+                    weddings: '婚礼',
+                    islandBartolome: '巴托洛梅',
+                    islandSeymour: '西摩',
+                    islandPlazas: '普拉萨斯群岛',
+                    islandPinzon: '平松',
+                    islandSantaFe: '圣菲',
+                    pageTitle: '加拉帕戈斯徒步行程',
+                    pageIntro: '通过我们的徒步行程探索加拉帕戈斯群岛：巴托洛梅、北西摩与普拉萨斯群岛。与专业向导一起欣赏自然与独特风景。',
+                    overlayBartolome: '巴托洛梅',
+                    overlaySeymour: '西摩',
+                    overlayPlazas: '普拉萨斯',
+                    bartolomeName: '巴托洛梅岛',
+                    seymourName: '西摩岛',
+                    plazasName: '普拉萨斯岛',
+                    tourDuration: '行程时长',
+                    destinations: '行程点',
+                    destinationsEs: '行程点',
+                    bartolomeStop1: '巴托洛梅：1小时',
+                    bartolomeStop2: '巴托洛梅海滩：1小时',
+                    seymourStop1: '西摩徒步：1小时',
+                    seymourStop2: '巴查斯海滩：1小时',
+                    plazasStop1: '普拉萨斯徒步：1小时',
+                    plazasStop2: '卡里翁角浮潜：1小时',
+                    siteDescription: '地点介绍',
+                    bartolomeDesc: '巴托洛梅及其令人惊叹的观景点让每位游客着迷。',
+                    seymourDesc: '西摩以蓝脚鲣鸟和军舰鸟的筑巢区而闻名。',
+                    plazasDesc: '以鲜艳的仙人掌植被、海狮群和陆地鬣蜥而闻名。',
+                    difficultyLevel: '难度等级',
+                    difficultyMedium: '中等',
+                    buyButton: '购买',
+                    bartolomeInfo: '巴托洛梅行程信息',
+                    seymourInfo: '西摩行程信息',
+                    plazasInfo: '普拉萨斯行程信息'
+                },
+                ja: {
+                    metaTitle: 'ガラパゴス ハイキングツアー - バルトロメ、セイモア、プラサス | RedTipShark Agency',
+                    metaDescription: 'ガラパゴスの人気ハイキングツアーを体験：バルトロメ、ノースセイモア、プラサス諸島。専門ガイドとともに冒険を予約。',
+                    metaKeywords: 'ガラパゴス, ハイキングツアー, バルトロメ, セイモア, プラサス, 自然, 旅行代理店, エクアドル, 予約',
+                    ogDescription: '専門ガイドと巡るガラパゴスの人気ハイキングツアーを予約。',
+                    twitterDescription: '専門ガイドと巡るガラパゴスの人気ハイキングツアーを予約。',
+                    contentLanguage: 'ja',
+                    openMenu: 'メニューを開く',
+                    closeMenu: 'メニューを閉じる',
+                    openSubmenu: 'サブメニューを開く',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: 'ホーム',
+                    navHiking: 'ハイキングツアー ▼',
+                    navHikingLabel: 'ハイキングツアー',
+                    navSnorkeling: 'シュノーケリングツアー ▼',
+                    navSnorkelingLabel: 'シュノーケリングツアー',
+                    navPackages: 'ツアーパッケージ',
+                    navBookings: '予約',
+                    navContacts: 'お問い合わせ',
+                    restaurants: 'レストラン',
+                    navBlog: 'ブログ ▼',
+                    navBlogLabel: 'ブログ',
+                    blogTortuga: 'トルトゥガルートブログ',
+                    weddings: 'ウェディング',
+                    islandBartolome: 'バルトロメ',
+                    islandSeymour: 'セイモア',
+                    islandPlazas: 'プラサス諸島',
+                    islandPinzon: 'ピンソン',
+                    islandSantaFe: 'サンタフェ',
+                    pageTitle: 'ガラパゴス ハイキングツアー',
+                    pageIntro: 'バルトロメ、ノースセイモア、プラサス諸島へのハイキングツアーでガラパゴスを探索。専門ガイドとともに自然と唯一無二の景観を満喫できます。',
+                    overlayBartolome: 'バルトロメ',
+                    overlaySeymour: 'セイモア',
+                    overlayPlazas: 'プラサス',
+                    bartolomeName: 'バルトロメ島',
+                    seymourName: 'セイモア島',
+                    plazasName: 'プラサス島',
+                    tourDuration: 'ツアー時間',
+                    destinations: '目的地',
+                    destinationsEs: '目的地',
+                    bartolomeStop1: 'バルトロメ：1時間',
+                    bartolomeStop2: 'バルトロメビーチ：1時間',
+                    seymourStop1: 'セイモア散策：1時間',
+                    seymourStop2: 'バチャスビーチ：1時間',
+                    plazasStop1: 'プラサス散策：1時間',
+                    plazasStop2: 'プンタ・カリオンでのシュノーケリング：1時間',
+                    siteDescription: 'スポット説明',
+                    bartolomeDesc: 'バルトロメの印象的な展望はすべての旅行者を魅了します。',
+                    seymourDesc: 'セイモアはアオアシカツオドリとグンカンドリの営巣地で有名です。',
+                    plazasDesc: '鮮やかなサボテン植生、アシカの群れ、リクイグアナで知られています。',
+                    difficultyLevel: '難易度',
+                    difficultyMedium: '中級',
+                    buyButton: '購入',
+                    bartolomeInfo: 'バルトロメツアー情報',
+                    seymourInfo: 'セイモアツアー情報',
+                    plazasInfo: 'プラサスツアー情報'
+                },
+                ko: {
+                    metaTitle: '갈라파고스 트레킹 투어 - 바르톨로메, 세이모어, 플라사스 | RedTipShark Agency',
+                    metaDescription: '갈라파고스 최고의 트레킹 투어를 만나보세요: 바르톨로메, 노스 세이모어, 플라사스 제도. 전문 가이드와 함께 모험을 예약하세요.',
+                    metaKeywords: '갈라파고스, 트레킹 투어, 바르톨로메, 세이모어, 플라사스, 자연, 여행사, 에콰도르, 예약',
+                    ogDescription: '전문 가이드와 함께 갈라파고스 최고의 트레킹 투어를 예약하세요.',
+                    twitterDescription: '전문 가이드와 함께 갈라파고스 최고의 트레킹 투어를 예약하세요.',
+                    contentLanguage: 'ko',
+                    openMenu: '메뉴 열기',
+                    closeMenu: '메뉴 닫기',
+                    openSubmenu: '하위 메뉴 열기',
+                    whatsappLabel: 'WhatsApp',
+                    navHome: '홈',
+                    navHiking: '트레킹 투어 ▼',
+                    navHikingLabel: '트레킹 투어',
+                    navSnorkeling: '스노클링 투어 ▼',
+                    navSnorkelingLabel: '스노클링 투어',
+                    navPackages: '투어 패키지',
+                    navBookings: '예약',
+                    navContacts: '연락처',
+                    restaurants: '레스토랑',
+                    navBlog: '블로그 ▼',
+                    navBlogLabel: '블로그',
+                    blogTortuga: '토르투가 루트 블로그',
+                    weddings: '웨딩',
+                    islandBartolome: '바르톨로메',
+                    islandSeymour: '세이모어',
+                    islandPlazas: '플라사스 제도',
+                    islandPinzon: '핀손',
+                    islandSantaFe: '산타페',
+                    pageTitle: '갈라파고스 트레킹 투어',
+                    pageIntro: '바르톨로메, 노스 세이모어, 플라사스 제도로 가는 트레킹 투어로 갈라파고스를 탐험하세요. 전문 가이드와 함께 자연과 독특한 풍경을 즐기세요.',
+                    overlayBartolome: '바르톨로메',
+                    overlaySeymour: '세이모어',
+                    overlayPlazas: '플라사스',
+                    bartolomeName: '바르톨로메 섬',
+                    seymourName: '세이모어 섬',
+                    plazasName: '플라사스 섬',
+                    tourDuration: '투어 소요시간',
+                    destinations: '목적지',
+                    destinationsEs: '목적지',
+                    bartolomeStop1: '바르톨로메: 1시간',
+                    bartolomeStop2: '바르톨로메 해변: 1시간',
+                    seymourStop1: '세이모어 트레킹: 1시간',
+                    seymourStop2: '바차스 해변: 1시간',
+                    plazasStop1: '플라사스 트레킹: 1시간',
+                    plazasStop2: '푼타 카리온 스노클링: 1시간',
+                    siteDescription: '장소 설명',
+                    bartolomeDesc: '바르톨로메의 인상적인 전망은 모든 여행자를 매료시킵니다.',
+                    seymourDesc: '세이모어는 푸른발부비새와 프리깃새의 번식지로 유명합니다.',
+                    plazasDesc: '선인장 식생, 바다사자 군락, 육지이구아나로 유명합니다.',
+                    difficultyLevel: '난이도',
+                    difficultyMedium: '중간',
+                    buyButton: '구매',
+                    bartolomeInfo: '바르톨로메 투어 정보',
+                    seymourInfo: '세이모어 투어 정보',
+                    plazasInfo: '플라사스 투어 정보'
+                }
+            };
+
+            const localeByLang = {
+                es: 'es_EC',
+                en: 'en_US',
+                fr: 'fr_FR',
+                de: 'de_DE',
+                it: 'it_IT',
+                pt: 'pt_BR',
+                ru: 'ru_RU',
+                zh: 'zh_CN',
+                ja: 'ja_JP',
+                ko: 'ko_KR'
+            };
+
+            function setMeta(selector, content) {
+                const element = document.querySelector(selector);
+                if (element && content) {
+                    element.setAttribute('content', content);
+                }
+            }
+
+            function applyLanguage(language) {
+                const activeLang = translations[language] ? language : 'es';
+                const t = translations[activeLang];
+
+                document.documentElement.lang = activeLang;
+                document.title = t.metaTitle;
+
+                setMeta('meta[name="description"]', t.metaDescription);
+                setMeta('meta[name="keywords"]', t.metaKeywords);
+                setMeta('meta[property="og:title"]', t.metaTitle);
+                setMeta('meta[property="og:description"]', t.ogDescription);
+                setMeta('meta[property="og:locale"]', localeByLang[activeLang]);
+                setMeta('meta[name="twitter:title"]', t.metaTitle);
+                setMeta('meta[name="twitter:description"]', t.twitterDescription);
+                setMeta('meta[http-equiv="content-language"]', t.contentLanguage);
+
+                document.querySelectorAll('[data-i18n]').forEach(function(element) {
+                    const key = element.getAttribute('data-i18n');
+                    if (t[key]) {
+                        element.textContent = t[key];
+                    }
+                });
+
+                document.querySelectorAll('[data-i18n-attr]').forEach(function(element) {
+                    const instructions = element.getAttribute('data-i18n-attr').split(';');
+                    instructions.forEach(function(rule) {
+                        const parts = rule.split(':');
+                        if (parts.length === 2) {
+                            const attributeName = parts[0].trim();
+                            const key = parts[1].trim();
+                            if (t[key]) {
+                                element.setAttribute(attributeName, t[key]);
+                            }
+                        }
+                    });
+                });
+
+                const selector = document.getElementById('language-selector');
+                if (selector && selector.value !== activeLang) {
+                    selector.value = activeLang;
+                }
+
+                localStorage.setItem('redtip_language', activeLang);
+            }
+
+            const openBtn = document.querySelector('.menu-mobile-btn');
+            const closeBtn = document.querySelector('.menu-mobile .close-btn');
+            const mobileMenu = document.querySelector('.menu-mobile');
+            if (openBtn && mobileMenu) {
+                openBtn.addEventListener('click', function() {
+                    mobileMenu.classList.add('active');
+                });
+            }
+            if (closeBtn && mobileMenu) {
+                closeBtn.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                });
+            }
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', function(e) {
+                    if(e.target === mobileMenu) mobileMenu.classList.remove('active');
+                });
+            }
+
+            // Submenú móvil toggle
+            const submenuToggle = document.querySelector('.menu-mobile .submenu-toggle');
+            const submenuMobile = document.querySelector('.menu-mobile .submenu-mobile');
+            if (submenuToggle && submenuMobile) {
+                submenuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submenuMobile.style.display = submenuMobile.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+
+            // Submenú móvil snorkeling toggle
+            const submenuToggleSnorkel = document.querySelector('.menu-mobile .submenu-toggle-snorkel');
+            const submenuMobileSnorkel = document.querySelector('.menu-mobile .submenu-mobile-snorkel');
+            if (submenuToggleSnorkel && submenuMobileSnorkel) {
+                submenuToggleSnorkel.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submenuMobileSnorkel.style.display = submenuMobileSnorkel.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+
+            // Submenú móvil Blog toggle
+            const submenuToggleBlog = document.querySelector('.menu-mobile .submenu-toggle-blog');
+            const submenuMobileBlog = document.querySelector('.menu-mobile .submenu-mobile-blog');
+            if (submenuToggleBlog && submenuMobileBlog) {
+                submenuToggleBlog.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    submenuMobileBlog.style.display = submenuMobileBlog.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+
+            const languageSelector = document.getElementById('language-selector');
+            if (languageSelector) {
+                languageSelector.addEventListener('change', function() {
+                    applyLanguage(languageSelector.value);
+                });
+            }
+
+            const savedLanguage = localStorage.getItem('redtip_language');
+            const browserLanguage = (navigator.language || 'es').slice(0, 2).toLowerCase();
+            const initialLanguage = savedLanguage || (translations[browserLanguage] ? browserLanguage : 'es');
+            applyLanguage(initialLanguage);
+        });
+
+        // Modal detalles del tour
+        document.querySelectorAll('.details-button').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.getElementById('detailsModalTitle').textContent = this.getAttribute('data-title');
+                document.getElementById('detailsModalContent').textContent = this.getAttribute('data-details');
+                document.getElementById('detailsModal').style.display = 'flex';
+            });
+        });
+        document.getElementById('closeDetailsModal').addEventListener('click', function() {
+            document.getElementById('detailsModal').style.display = 'none';
+        });
+        document.getElementById('detailsModal').addEventListener('click', function(e) {
+            if (e.target === this) this.style.display = 'none';
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('detailsModal').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,8 @@
+Nuevo pedido #{{orderId}}
+Usuario: {{username}} ({{email}})
+
+{{itemsText}}
+
+Total: ${{total}}
+
+Revisar panel de administración.

@@ -1,0 +1,87 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+body {
+    background-color: #232323;
+}
+
+header {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+    height: 100%;
+}
+
+nav {
+    display: flex;
+    gap: 50px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #232323;
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    transition: .4s ease;
+}
+
+nav a:hover {
+    transition: .4s ease;
+    border-bottom: 2px solid #232323;
+}
+
+img {
+    width: 100px;
+}
+
+body {
+    background-image: url(vista\ bartolome\ 2.webp);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed
+}
+
+.imagen {
+    width: 350px;
+    height: 250px;
+    border-radius: 25px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 5);
+    border: 1px solid greenyellow;
+}
+
+.imagen {
+    float: left;
+    margin: 20px;
+}
+
+.imagen2 {
+    width: 350px;
+    height: 250px;
+    border-radius: 25px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 5);
+    border: 1px solid greenyellow;
+}
+
+.imagen2 {
+    float: left;
+    margin: 20px;
+}
+
+nav, nav a, button {
+    font-family: 'Times New Roman', Times, serif !important;
+}
+

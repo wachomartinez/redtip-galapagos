@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Confirmación de pedido</title>
+    <style>body{font-family:Arial,sans-serif;color:#333} .container{max-width:640px;margin:20px auto;padding:20px;border-radius:8px;background:#fff;border:1px solid #eee} .items{background:#f9f9f9;padding:8px;border-radius:6px}</style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Hola {{username}}</h2>
+      <p>Hemos recibido tu pedido <strong>#{{orderId}}</strong>. Detalle:</p>
+      <div class="items">{{itemsHtml}}</div>
+      <p><strong>Total:</strong> ${{total}}</p>
+      <p>Gracias por preferirnos.</p>
+      <hr>
+      <small>RedTip - Pedido y delivery</small>
+    </div>
+  </body>
+</html>
