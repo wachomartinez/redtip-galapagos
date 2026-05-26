@@ -534,6 +534,13 @@ app.post('/api/forgot-password', async (req, res) => {
     if (!email) {
       return res.status(400).json({ error: 'Email requerido' });
     }
+    const isProduction = String(process.env.NODE_ENV || '').trim().toLowerCase() === 'production';
+const smtpReady = !!(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
+
+if (isProduction && !smtpReady) {
+  console.error('SMTP no configurado en production (faltan SMTP_HOST/SMTP_USER/SMTP_PASS)');
+  return res.status(500).json({ error: 'Servicio de correo no configurado. Contacta al administrador.' });
+}
 
     const user = db.prepare('SELECT id, username, email FROM users WHERE lower(email) = ?').get(email);
     if (!user) {
