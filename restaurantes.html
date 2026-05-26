@@ -165,8 +165,8 @@
         .topbar .brand { font-weight:700; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.4); pointer-events:auto; }
         .hamburger-btn { width:44px; height:44px; background:rgba(0,0,0,0.55); color:#fff; border-radius:8px; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; pointer-events:auto; }
         .hamburger-btn:focus { outline:2px solid #fff; }
-        .hamburger-menu { position: fixed; top:0; left:-320px; width:280px; height:100%; background:#fff; box-shadow: 2px 0 12px rgba(0,0,0,0.15); transition:left .28s ease; z-index:10004; padding:20px; display:flex; flex-direction:column; gap:10px; overflow:auto; }
-        .hamburger-menu.open { left:0; }
+        .hamburger-menu { position: fixed; top:0; left:0; width:280px; height:100%; background:#fff; box-shadow: 2px 0 12px rgba(0,0,0,0.15); transform:translateX(-100%); transition:transform .28s ease; z-index:10004; padding:20px; display:flex; flex-direction:column; gap:10px; overflow:auto; }
+        .hamburger-menu.open { transform:translateX(0); }
         .hamburger-menu a{ color:#2c3e50; text-decoration:none; padding:10px 6px; border-radius:6px; display:block; font-weight:600;}
         .hamburger-menu .menu-header{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:6px;}
         .hamburger-menu .menu-actions{ margin-top:8px; display:flex; flex-direction:column; gap:8px; }
@@ -212,11 +212,17 @@
         .cart-modal .total{ font-weight:800; text-align:right; margin-top:8px; }
         .orders-modal{ position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); background:#fff; padding:14px; border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,0.3); z-index:10007; display:none; width:90%; max-width:600px; }
         .orders-modal.open{ display:block; max-height:80vh; overflow:auto; }
+        .menu-toast{ position:fixed; right:16px; top:72px; max-width:360px; padding:10px 12px; border-radius:10px; color:#fff; font-weight:700; box-shadow:0 10px 24px rgba(0,0,0,0.24); z-index:10020; opacity:0; transform:translateY(-8px); pointer-events:none; transition:opacity .25s ease, transform .25s ease; }
+        .menu-toast.show{ opacity:1; transform:translateY(0); }
+        .menu-toast.ok{ background:#1e7e34; }
+        .menu-toast.error{ background:#b00020; }
+        @media (max-width:480px){ .menu-toast{ left:10px; right:10px; top:64px; max-width:none; } }
 
     </style>
     <link rel="stylesheet" href="menu-font.css">
 </head>
 <body>
+  <div id="menuToast" class="menu-toast" aria-live="polite"></div>
     <header class="topbar" role="banner">
         <button class="hamburger-btn" id="hamburgerToggle" aria-label="Abrir menú" aria-expanded="false">
             <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect y="1" width="20" height="2" rx="1" fill="#fff"/><rect y="6" width="20" height="2" rx="1" fill="#fff"/><rect y="11" width="20" height="2" rx="1" fill="#fff"/></svg>
@@ -243,32 +249,31 @@
             </div>
             <button id="forgotPasswordBtn" style="margin-top:8px;padding:8px;border-radius:6px;background:#f39c12;color:#fff;border:none;cursor:pointer;width:100%">Recuperar clave</button>
             <div id="forgotPasswordInline" style="display:none;margin-top:8px;padding:8px;border:1px solid #f5d08a;border-radius:6px;background:#fff8ea">
-  <label for="forgotEmailInput" style="font-weight:700;display:block">Correo de recuperacion</label>
-  <input id="forgotEmailInput" type="email" placeholder="correo@ejemplo.com" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;box-sizing:border-box;">
-  <div style="display:flex;gap:8px;margin-top:8px">
-    <button id="forgotEmailSendBtn" style="flex:1;padding:8px;border-radius:6px;background:#f39c12;color:#fff;border:none;cursor:pointer">Enviar enlace</button>
-    <button id="forgotEmailCancelBtn" style="padding:8px;border-radius:6px;background:#eee;color:#333;border:none;cursor:pointer">Cancelar</button>
-  </div>
-</div>
+              <label for="forgotEmailInput" style="font-weight:700;display:block">Correo de recuperacion</label>
+              <input id="forgotEmailInput" type="email" placeholder="correo@ejemplo.com" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;box-sizing:border-box;">
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button id="forgotEmailSendBtn" style="flex:1;padding:8px;border-radius:6px;background:#f39c12;color:#fff;border:none;cursor:pointer">Enviar enlace</button>
+                <button id="forgotEmailCancelBtn" style="padding:8px;border-radius:6px;background:#eee;color:#333;border:none;cursor:pointer">Cancelar</button>
+              </div>
+            </div>
             <div id="menuLoginMsg" style="color:#b00020;margin-top:8px;display:none"></div>
-
             <!-- Formulario de registro dentro del menú (oculto inicialmente) -->
             <hr style="margin-top:12px;border:none;border-top:1px solid #eee">
             <button id="toggleRegister" style="margin-top:10px;padding:8px;border-radius:6px;background:#2980b9;color:#fff;border:none;cursor:pointer;width:100%">Crear cuenta</button>
             <div id="menuRegister" style="display:none;margin-top:10px">
-                <label for="regName" style="font-weight:700;display:block;margin-top:6px">Nombre de usuario</label>
-                <input id="regName" type="text" placeholder="Usuario" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
-                <label for="regEmail" style="font-weight:700;display:block;margin-top:8px">Email</label>
-                <input id="regEmail" type="email" placeholder="correo@ejemplo.com" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
-                <label for="regPass" style="font-weight:700;display:block;margin-top:8px">Contraseña</label>
-                <input id="regPass" type="password" placeholder="Contraseña" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
-                <label for="regPhone" style="font-weight:700;display:block;margin-top:8px">Teléfono (opcional)</label>
-                <input id="regPhone" type="text" placeholder="099876543" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
-                <div style="display:flex;gap:8px;margin-top:8px">
-                    <button id="registerBtn" class="btn-primary" style="flex:1;padding:8px;border-radius:6px;background:#16a085;color:#fff;border:none;cursor:pointer">Registrar</button>
-                    <button id="cancelRegisterBtn" class="btn-secondary" style="padding:8px;border-radius:6px;background:#eee;color:#333;border:none;cursor:pointer">Cancelar</button>
-                </div>
-                <div id="registerMsg" style="color:#b00020;margin-top:8px;display:none"></div>
+              <label for="regName" style="font-weight:700;display:block;margin-top:6px">Nombre de usuario</label>
+              <input id="regName" type="text" placeholder="Usuario" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
+              <label for="regEmail" style="font-weight:700;display:block;margin-top:8px">Email</label>
+              <input id="regEmail" type="email" placeholder="correo@ejemplo.com" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
+              <label for="regPass" style="font-weight:700;display:block;margin-top:8px">Contraseña</label>
+              <input id="regPass" type="password" placeholder="Contraseña" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
+              <label for="regPhone" style="font-weight:700;display:block;margin-top:8px">Teléfono (opcional)</label>
+              <input id="regPhone" type="text" placeholder="099876543" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin-top:6px;">
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button id="registerBtn" class="btn-primary" style="flex:1;padding:8px;border-radius:6px;background:#16a085;color:#fff;border:none;cursor:pointer">Registrar</button>
+                <button id="cancelRegisterBtn" class="btn-secondary" style="padding:8px;border-radius:6px;background:#eee;color:#333;border:none;cursor:pointer">Cancelar</button>
+              </div>
+              <div id="registerMsg" style="color:#b00020;margin-top:8px;display:none"></div>
             </div>
         </div>
           <div id="menuProfile" class="menu-profile">
@@ -282,7 +287,9 @@
         <button id="logoutBtn" style="display:none;padding:8px 10px;border-radius:6px;background:#e74c3c;color:#fff;border:none;cursor:pointer;margin-top:6px;">Cerrar sesión</button>
         <a href="index.html">Inicio</a>
         <a id="crearRestauranteLink" href="crear-restaurante.html" style="display:none;margin-top:4px;">Crear restaurante</a>
-        <div id="mis-restaurantes-menu" style="display:none;margin-top:6px;padding:6px 0;border-top:1px solid rgba(255,255,255,0.15)"></div>
+        <div id="mis-restaurantes-menu" style="display:block;margin-top:6px;padding:6px 0;border-top:1px solid rgba(255,255,255,0.15)">
+          <div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>
+        </div>
         <div class="menu-actions">
           <button id="viewOrdersBtn" type="button" style="display:none;padding:8px 10px;border-radius:6px;background:#8e44ad;color:#fff;border:none;cursor:pointer">Mis pedidos</button>
             <button id="openLoginBtn" class="btn-primary" style="display:none;padding:8px 10px;border-radius:6px;background:#16a085;color:#fff;border:none;cursor:pointer">Ingresar</button>
@@ -295,96 +302,23 @@
 
         <div class="categoria" id="created-category-comida-rapida">
             <h2>Comida rapida</h2>
-            <div class="restaurante">
-                <a class="restaurante-link" href="restaurante_detalle.html?r=sirenita">
-                    <img src="sirenita.webp" alt="Antojitos la Sirenita">
-                    <div>
-                        <div class="nombre">Antojitos la Sirenita</div>
-                        <div class="ofrece">Comida rapida: pollo, bandejitas.</div>
-                        <div class="sub" style="color:#666;font-size:0.95em">Abre: 8:00 · Cierra: 22:00</div>
-                  <div style="margin-top:6px;">
-                    <span style="font-size:0.9em;color:#1f6aa0;text-decoration:underline;">Enlace: Ver Antojitos la Sirenita</span>
-                  </div>
-                        <button class="order-btn" data-id="sirenita" data-name="Antojitos la Sirenita" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
-                    </div>
-                </a>
-            </div>
-            <div id="sirenita-mini-carousel" class="listing-carousel mini-listing" aria-label="Mini carrusel Antojitos la Sirenita"></div>
-            <div class="restaurante">
-                <a class="restaurante-link" href="restaurante_detalle.html?r=corvichegaby">
-                    <img src="corvichegaby.webp" alt="Corviches Gaby">
-                    <div>
-                        <div class="nombre">Corviches Gaby</div>
-                        <div class="ofrece">Deliciosos corviches de pescado</div>
-                        <div class="sub" style="color:#666;font-size:0.95em">Abre: 10:00 · Cierra: 20:00</div>
-                        <button class="order-btn" data-id="corvichegaby" data-name="Corviches Gaby" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
-                    </div>
-                </a>
-            </div>
             <div id="comida-rapida-carousel" class="listing-carousel" aria-label="Carrusel de comida rápida"></div>
             <div id="created-restaurants-rapida"></div>
         </div> 
 
         <div class="categoria" id="created-category-comida-internacional">
             <h2>Comida Internacional</h2>
-            <div class="restaurante">
-                <a class="restaurante-link" href="restaurante_detalle.html?r=uramakisushi">
-                    <img src="uramakisushi.webp" alt="Uramaki suhi">
-                    <div>
-                        <div class="nombre">Uramaki Sushi</div>
-                        <div class="ofrece">Sushi, sashimi y platos asiáticos con ingredientes locales.</div>
-                        <div class="sub" style="color:#666;font-size:0.95em">Abre: 12:00 · Cierra: 22:30</div>
-                        <button class="order-btn" data-id="uramakisushi" data-name="Uramaki Sushi" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
-                    </div>
-                </a>
-            </div>
-            <div id="uramakisushi-mini-carousel" class="listing-carousel mini-listing" aria-label="Mini carrusel Uramaki Sushi"></div>
-            <div class="restaurante">
-                <a class="restaurante-link" href="restaurante_detalle.html?r=comidachina">
-                    <img src="chaulafan island.webp" alt="Comida China">
-                    <div>
-                        <div class="nombre">Comida China</div>
-                        <div class="ofrece">CHAULAFAN Y TALLARIN ESPECIAL</div>
-                        <div class="sub" style="color:#666;font-size:0.95em">Abre: 11:00 · Cierra: 22:00</div>
-                        <button class="order-btn" data-id="comidachina" data-name="Comida China" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
-                    </div>
-                </a>
-            </div>
             <div id="internacional-carousel" class="listing-carousel" aria-label="Carrusel de comida internacional"></div>
             <div id="created-restaurants-internacional"></div>
         </div> 
 
         <div class="categoria" id="created-category-cafeterias-y-postres">
             <h2>Cafeterías y Postres</h2>
-            <div class="restaurante">
-                <a class="restaurante-link" href="restaurante_detalle.html?r=postreria444">
-                    <img src="lapostreria444.webp" alt="La Postreria 444">
-                    <div>
-                        <div class="nombre">La Postreria 444</div>
-                        <div class="ofrece">Fresas con crema, donas.</div>
-                        <div class="sub" style="color:#666;font-size:0.95em">Abre: 09:00 · Cierra: 20:00</div>
-                        <button class="order-btn" data-id="postreria444" data-name="La Postreria 444" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
-                    </div>
-                </a>
-            </div>
-            <div id="postreria444-mini-carousel" class="listing-carousel mini-listing" aria-label="Mini carrusel La Postreria 444"></div>
             <div id="created-restaurants-postres"></div>
         </div>
 
         <div class="categoria" id="created-category-pizzerias-y-pastas">
             <h2>Pizzerías y Pastas</h2>
-            <div class="restaurante">
-                <a class="restaurante-link" href="restaurante_detalle.html?r=pizzaencantada">
-                    <img src="pizzaencantada.webp" alt="pizzaencantada">
-                    <div>
-                        <div class="nombre">Pizzería Encantada</div>
-                        <div class="ofrece">Pizzas al horno de leña, pastas y ensaladas frescas.</div>
-                        <div class="sub" style="color:#666;font-size:0.95em">Abre: 11:00 · Cierra: 23:00</div>
-                        <button class="order-btn" data-id="pizzaencantada" data-name="Pizzería Encantada" style="margin-top:8px;padding:8px 10px;background:#e67e22;color:#fff;border:none;border-radius:6px;cursor:pointer">Pedir</button>
-                    </div>
-                </a>
-            </div>
-            <div id="pizzaencantada-mini-carousel" class="listing-carousel mini-listing" aria-label="Mini carrusel Pizzería Encantada"></div>
               <div id="created-restaurants-under-pizza"></div>
         </div>
               <div id="dynamic-created-categories"></div>
@@ -456,21 +390,59 @@
 
 <script>
 (function(){
+  const PROD_API_BASE = 'https://redtip-galapagos.onrender.com';
   const API_BASE = (
     window.REDTIP_API_BASE ||
     localStorage.getItem('rt_api_base') ||
     ((window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
       ? 'http://localhost:3000'
-      : '')
+      : PROD_API_BASE)
   ).replace(/\/$/, '');
+
+  function getForgotPasswordApiBases() {
+    const configured = String(window.REDTIP_API_BASE || localStorage.getItem('rt_api_base') || '').trim().replace(/\/$/, '');
+    const defaults = (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? ['http://localhost:3000', PROD_API_BASE]
+      : [PROD_API_BASE, 'http://localhost:3000'];
+    return Array.from(new Set([configured, API_BASE].concat(defaults).filter(Boolean)));
+  }
 
   function buildListingCarousel(containerId, slides){
     const container = document.getElementById(containerId);
     if(!container) return;
+    const safeSlides = (Array.isArray(slides) ? slides : []).filter(function(s){
+      const slideName = String((s && s.nombre) || '').trim();
+      const slideNameKey = slideName.toLowerCase();
+      const deletedByName = (typeof isRestaurantDeletedByName === 'function')
+        ? isRestaurantDeletedByName(slideName)
+        : false;
+      if(deletedByName) return false;
+
+      const deletedSlugs = (typeof getDeletedRestaurantSlugs === 'function') ? getDeletedRestaurantSlugs() : [];
+      const hiddenAdminSlugs = (typeof getAdminFallbackHiddenSlugs === 'function') ? getAdminFallbackHiddenSlugs() : [];
+      const hiddenSlugs = Array.from(new Set([].concat(deletedSlugs, hiddenAdminSlugs)));
+      const fallbackRestaurants = (typeof getAdminHardcodedFallbackRestaurants === 'function')
+        ? getAdminHardcodedFallbackRestaurants()
+        : [];
+      const fallbackMatch = fallbackRestaurants.find(function(r){
+        return String((r && r.nombre) || '').trim().toLowerCase() === slideNameKey;
+      });
+      if(fallbackMatch){
+        const fallbackSlug = String((fallbackMatch && fallbackMatch.slug) || '').trim().toLowerCase();
+        if(fallbackSlug && hiddenSlugs.indexOf(fallbackSlug) !== -1) return false;
+      }
+      return true;
+    });
+    if(!safeSlides.length){
+      container.innerHTML = '';
+      container.style.display = 'none';
+      return;
+    }
+    container.style.display = '';
     container.innerHTML = '';
     const carousel = document.createElement('div'); carousel.className = 'carousel'; carousel.setAttribute('tabindex','0');
     const track = document.createElement('div'); track.className = 'carousel-track';
-    slides.forEach(s=>{
+    safeSlides.forEach(s=>{
       const slide = document.createElement('div'); slide.className = 'slide';
       slide.innerHTML = `<img src="${s.imagen}" alt="${s.nombre}"><div class="nombre">${s.nombre}</div>`;
       track.appendChild(slide);
@@ -485,20 +457,20 @@
 
     container.appendChild(carousel); container.appendChild(dots);
 
-    let current = 0; let slidesPerView = 3; let maxIndex = Math.max(0, slides.length - slidesPerView);
+    let current = 0; let slidesPerView = 3; let maxIndex = Math.max(0, safeSlides.length - slidesPerView);
 
     function setSlidesPerView(){
       const w = container.clientWidth;
       slidesPerView = (w < 480) ? 1 : (w < 768) ? 2 : 3;
       track.querySelectorAll('.slide').forEach(sl => sl.style.minWidth = (100/slidesPerView) + '%');
-      maxIndex = Math.max(0, slides.length - slidesPerView);
+      maxIndex = Math.max(0, safeSlides.length - slidesPerView);
       if(current>maxIndex) current = maxIndex;
       update();
     }
 
     function update(){
       track.style.transform = `translateX(-${(100/slidesPerView)*current}%)`;
-      dots.innerHTML = slides.map((_,i)=>`<button data-dot="${i}" class="${i===current?'active':''}" aria-label="Ir al slide ${i+1}"></button>`).join('');
+      dots.innerHTML = safeSlides.map((_,i)=>`<button data-dot="${i}" class="${i===current?'active':''}" aria-label="Ir al slide ${i+1}"></button>`).join('');
     }
 
     controls.querySelectorAll('button[data-action]').forEach(btn=>{
@@ -517,39 +489,15 @@
 
   // Inicializar carruseles con slides de ejemplo (ajusta imágenes/nombres según necesites)
 
-  buildListingCarousel('comida-rapida-carousel', [
-    {nombre:'Antojitos la Sirenita', imagen:'sirenita.webp'},
-    {nombre:'Corviches Gaby', imagen:'corvichegaby.webp'}
-  ]);
+  buildListingCarousel('comida-rapida-carousel', []);
 
-  buildListingCarousel('internacional-carousel', [
-    {nombre:'Uramaki Sushi', imagen:'uramakisushi.webp'},
-    {nombre:'Comida China', imagen:'chaulafan island.webp'}
-  ]);
+  buildListingCarousel('internacional-carousel', []);
 
-  buildListingCarousel('sirenita-mini-carousel', [
-    {nombre:'Bandeja especial', imagen:'sirenita.webp'},
-    {nombre:'Pollo frito', imagen:'sirenita.webp'},
-    {nombre:'Empanada', imagen:'sirenita.webp'}
-  ]);
+  buildListingCarousel('uramakisushi-mini-carousel', []);
 
-  buildListingCarousel('uramakisushi-mini-carousel', [
-    {nombre:'Sashimi', imagen:'uramakisushi.webp'},
-    {nombre:'Maki', imagen:'uramakisushi.webp'},
-    {nombre:'Tempura', imagen:'uramakisushi.webp'}
-  ]);
+  buildListingCarousel('postreria444-mini-carousel', []);
 
-  buildListingCarousel('postreria444-mini-carousel', [
-    {nombre:'Fresas con crema', imagen:'lapostreria444.webp'},
-    {nombre:'Donas', imagen:'lapostreria444.webp'},
-    {nombre:'Cappuccino', imagen:'lapostreria444.webp'}
-  ]);
-
-  buildListingCarousel('pizzaencantada-mini-carousel', [
-    {nombre:'Pizza Margarita', imagen:'pizzaencantada.webp'},
-    {nombre:'Pizza Hawaiana', imagen:'pizzaencantada.webp'},
-    {nombre:'Pasta Carbonara', imagen:'pizzaencantada.webp'}
-  ]);
+  buildListingCarousel('pizzaencantada-mini-carousel', []);
 
   function esc(s){
     return String(s || '').replace(/[&<>'"]/g, function(c){
@@ -586,9 +534,43 @@
     const noisyNames = new Set(['jijujyj', 'si f', 'wachis']);
     const noisySlugs = new Set(['jijujyj', 'si-f', 'wachis']);
     const isDeleted = isRestaurantDeleted(slug);
-    return isDeleted ||
-      slug === 'estela' || slug.startsWith('estela-') || nombre === 'estela' ||
+    const isDeletedByName = isRestaurantDeletedByName(nombre);
+    return isDeleted || isDeletedByName ||
       noisyNames.has(nombre) || noisySlugs.has(slug);
+  }
+
+  function getDeletedRestaurantNames(){
+    try{
+      const raw = localStorage.getItem('rt_deleted_restaurant_names');
+      const list = raw ? JSON.parse(raw) : [];
+      return Array.isArray(list)
+        ? list.map(function(s){ return String(s || '').trim().toLowerCase(); }).filter(Boolean)
+        : [];
+    }catch(_e){
+      return [];
+    }
+  }
+
+  function setDeletedRestaurantNames(names){
+    const unique = Array.from(new Set((Array.isArray(names) ? names : [])
+      .map(function(s){ return String(s || '').trim().toLowerCase(); })
+      .filter(Boolean)));
+    localStorage.setItem('rt_deleted_restaurant_names', JSON.stringify(unique));
+  }
+
+  function markRestaurantDeletedByName(name){
+    const key = String(name || '').trim().toLowerCase();
+    if(!key) return;
+    const deleted = getDeletedRestaurantNames();
+    if(deleted.indexOf(key) !== -1) return;
+    deleted.push(key);
+    setDeletedRestaurantNames(deleted);
+  }
+
+  function isRestaurantDeletedByName(name){
+    const key = String(name || '').trim().toLowerCase();
+    if(!key) return false;
+    return getDeletedRestaurantNames().indexOf(key) !== -1;
   }
 
   function getDeletedRestaurantSlugs(){
@@ -606,8 +588,7 @@
   function resetRestaurantLocalStateOnce(){
     try{
       if(localStorage.getItem('rt_restaurants_state_reset_done') === '1') return;
-      localStorage.removeItem('rt_deleted_restaurants');
-      // No borrar los restaurantes recientes: ahí se guardan los que el usuario acaba de crear.
+      // Mantener listas de eliminados para que los borrados persistan tras recargar.
       localStorage.setItem('rt_restaurants_state_reset_done', '1');
     }catch(_e){}
   }
@@ -761,6 +742,32 @@
   }
 
   async function renderCreatedRestaurantsByCategory(){
+    function readAllUserRestaurantsFromLocalStorage(){
+      try{
+        const out = [];
+        const seen = new Set();
+        for(let i = 0; i < localStorage.length; i += 1){
+          const key = String(localStorage.key(i) || '');
+          if(!key || key.indexOf('rt_user_restaurants_') !== 0) continue;
+          const raw = localStorage.getItem(key);
+          const list = raw ? JSON.parse(raw) : [];
+          const safeList = Array.isArray(list) ? list : [];
+          safeList.forEach(function(item){
+            if(shouldHideRestaurant(item)) return;
+            const slug = String((item && item.slug) || '').trim().toLowerCase();
+            const name = String((item && item.nombre) || '').trim().toLowerCase();
+            const dedupeKey = slug || name;
+            if(!dedupeKey || seen.has(dedupeKey)) return;
+            seen.add(dedupeKey);
+            out.push(item);
+          });
+        }
+        return out;
+      }catch(_e){
+        return [];
+      }
+    }
+
     const allHosts = [
       document.getElementById('created-restaurants-rapida'),
       document.getElementById('created-restaurants-internacional'),
@@ -770,7 +777,9 @@
     allHosts.forEach(function(h){ h.innerHTML = ''; });
     const dynamicWrapper = document.getElementById('dynamic-created-categories');
     if(dynamicWrapper) dynamicWrapper.innerHTML = '';
+
     const recent = getRecentCreatedRestaurants();
+  const userRecent = readAllUserRestaurantsFromLocalStorage();
     const apiCreated = [];
     try{
       const res = await fetch(API_BASE + '/api/restaurants');
@@ -785,20 +794,35 @@
 
     const merged = [];
     const seenSlugs = new Set();
+    const seenNames = new Set();
 
     apiCreated.forEach(function(r){
       if(shouldHideRestaurant(r)) return;
-      const key = String((r && r.slug) || '').trim().toLowerCase();
-      if(key && seenSlugs.has(key)) return;
-      if(key) seenSlugs.add(key);
+      const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+      const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+      if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+      if(slugKey) seenSlugs.add(slugKey);
+      if(nameKey) seenNames.add(nameKey);
       merged.push(r);
     });
 
     recent.forEach(function(r){
       if(shouldHideRestaurant(r)) return;
-      const key = String((r && r.slug) || '').trim().toLowerCase();
-      if(key && seenSlugs.has(key)) return;
-      if(key) seenSlugs.add(key);
+      const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+      const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+      if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+      if(slugKey) seenSlugs.add(slugKey);
+      if(nameKey) seenNames.add(nameKey);
+      merged.push(r);
+    });
+
+    userRecent.forEach(function(r){
+      if(shouldHideRestaurant(r)) return;
+      const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+      const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+      if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+      if(slugKey) seenSlugs.add(slugKey);
+      if(nameKey) seenNames.add(nameKey);
       merged.push(r);
     });
 
@@ -823,10 +847,49 @@
         section.scrollIntoView({ behavior:'smooth', block:'start' });
       }
     }
+
+    // Reaplicar ocultamiento por slug/nombre tras cualquier render.
+    purgeHiddenRestaurantsFromPageDom();
+
+    try{
+      window.dispatchEvent(new CustomEvent('rt:restaurants-rendered', {
+        detail: { total: merged.length }
+      }));
+    }catch(_e){}
   }
+
+  function purgeHiddenRestaurantsFromPageDom(){
+    try{
+      document.querySelectorAll('.restaurante-link[href*="restaurante_detalle.html?r="]').forEach(function(link){
+        const href = String(link.getAttribute('href') || '');
+        const match = href.match(/[?&]r=([^&#]+)/i);
+        const slug = match ? decodeURIComponent(match[1]).trim() : '';
+        const nombreEl = link.querySelector('.nombre');
+        const nombre = String((nombreEl && nombreEl.textContent) || '').trim();
+        if(!shouldHideRestaurant({ slug: slug, nombre: nombre })) return;
+
+        const card = link.closest('.restaurante');
+        if(card) card.remove();
+      });
+    }catch(_e){}
+
+    try{ if(typeof hideDeletedSlidesFromCarousels === 'function') hideDeletedSlidesFromCarousels(); }catch(_e){}
+    try{ if(typeof enforceDeletedRestaurantsHidden === 'function') enforceDeletedRestaurantsHidden(); }catch(_e){}
+  }
+
+  // Exponer helpers para scripts posteriores del menú.
+  window.shouldHideRestaurant = shouldHideRestaurant;
+  window.isRestaurantDeletedByName = isRestaurantDeletedByName;
+  window.isRestaurantDeleted = isRestaurantDeleted;
+  window.getDeletedRestaurantSlugs = getDeletedRestaurantSlugs;
+  window.getRecentCreatedRestaurants = getRecentCreatedRestaurants;
+  window.renderCreatedRestaurantsByCategory = renderCreatedRestaurantsByCategory;
+  window.purgeHiddenRestaurantsFromPageDom = purgeHiddenRestaurantsFromPageDom;
 
   // Limpia estado legado solo una vez para evitar ocultamientos antiguos.
   resetRestaurantLocalStateOnce();
+  purgeHiddenRestaurantsFromPageDom();
+  if(typeof enforceDeletedRestaurantsHidden === 'function') enforceDeletedRestaurantsHidden();
   renderCreatedRestaurantsByCategory();
 
   // Horario: muestra badge "Abierto"/"Cerrado", formatea HH:MM y colorea tiempos
@@ -907,15 +970,62 @@
   const topbarAvatar = document.getElementById('topbarAvatar');
   const topbarName = document.getElementById('topbarName');
   const viewOrdersBtn = document.getElementById('viewOrdersBtn');
+  const PROD_API_BASE = 'https://redtip-galapagos.onrender.com';
   const API_BASE = (
     window.REDTIP_API_BASE ||
     localStorage.getItem('rt_api_base') ||
     ((window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
       ? 'http://localhost:3000'
-      : '')
+      : PROD_API_BASE)
   ).replace(/\/$/, '');
 
-  function openMenu(){ menu.classList.add('open'); overlay.classList.add('open'); toggleBtn.setAttribute('aria-expanded','true'); menu.setAttribute('aria-hidden','false'); }
+  function getForgotPasswordApiBases() {
+    const configured = String(window.REDTIP_API_BASE || localStorage.getItem('rt_api_base') || '').trim().replace(/\/$/, '');
+    const defaults = (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? ['http://localhost:3000', PROD_API_BASE]
+      : [PROD_API_BASE, 'http://localhost:3000'];
+    return Array.from(new Set([configured, API_BASE].concat(defaults).filter(Boolean)));
+  }
+
+  function openMenu(){
+    menu.classList.add('open');
+    overlay.classList.add('open');
+    toggleBtn.setAttribute('aria-expanded','true');
+    menu.setAttribute('aria-hidden','false');
+    if(localStorage.getItem('rt_user')){
+      try { renderMisRestaurantesMenu(); } catch(_e) {}
+      setTimeout(function(){ try { forceSyncMenuFromCreatedSections(); } catch(_e) {} }, 200);
+      setTimeout(function(){
+        try{
+          const target = document.getElementById('mis-restaurantes-menu');
+          if(!target) return;
+          const links = Array.from(document.querySelectorAll('#created-restaurants-rapida .restaurante-link[href*="restaurante_detalle.html?r="], #created-restaurants-internacional .restaurante-link[href*="restaurante_detalle.html?r="], #created-restaurants-postres .restaurante-link[href*="restaurante_detalle.html?r="], #created-restaurants-under-pizza .restaurante-link[href*="restaurante_detalle.html?r="], #dynamic-created-categories .restaurante-link[href*="restaurante_detalle.html?r="]'));
+          if(!links.length) return;
+          const rows = [];
+          const seen = new Set();
+          links.forEach(function(link){
+            const href = String(link.getAttribute('href') || '');
+            const match = href.match(/[?&]r=([^&#]+)/i);
+            const slug = match ? decodeURIComponent(match[1]).trim() : '';
+            const nombre = String((link.querySelector('.nombre') && link.querySelector('.nombre').textContent) || '').trim();
+            const key = (slug || nombre).toLowerCase();
+            if(!key || seen.has(key)) return;
+            seen.add(key);
+            rows.push({ slug: slug || key.replace(/[^a-z0-9]+/g, '-'), nombre: nombre || 'Restaurante' });
+          });
+          if(!rows.length) return;
+          target.style.display = 'block';
+          target.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' +
+            rows.map(function(r){
+              return '<div data-restaurant-row="1" data-slug="' + r.slug + '" data-name="' + r.nombre + '" style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
+                '<a href="restaurante_detalle.html?r=' + encodeURIComponent(r.slug) + '" style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration:none;color:inherit;font-size:0.95em">' + r.nombre + '</a>' +
+                '<span style="background:#16a085;color:#fff;font-size:0.72em;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap">Activo</span>' +
+              '</div>';
+            }).join('');
+        }catch(_e){}
+      }, 600);
+    }
+  }
   function closeMenu(){ menu.classList.remove('open'); overlay.classList.remove('open'); toggleBtn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); }
 
   toggleBtn && toggleBtn.addEventListener('click', ()=>{ if(menu.classList.contains('open')) closeMenu(); else openMenu(); });
@@ -946,18 +1056,23 @@
         return;
       }
       localStorage.setItem('rt_token', data.token);
-      localStorage.setItem('rt_user', JSON.stringify({ user: data.user.username, id:data.user.id }));
+      localStorage.setItem('rt_user', JSON.stringify({ user: data.user.username, id:data.user.id, email: data.user.email || u }));
       loginError.style.display='none';
       loginError.textContent='';
       updateAuthUI();
       closeLogin();
-      closeMenu();
+      openMenu();
     }catch(_err){
-      localLoginFallback(u);
+      const ok = localLoginFallback(u, p);
+      if(!ok){
+        loginError.style.display='block';
+        loginError.textContent='Usuario o contraseña inválidos (modo local).';
+        return;
+      }
       loginError.style.display='none';
       loginError.textContent='';
       closeLogin();
-      closeMenu();
+      openMenu();
     }
   });
 
@@ -966,16 +1081,89 @@
   const menuUserEl = document.getElementById('menuUser');
   const menuPassEl = document.getElementById('menuPass');
   const menuLoginMsg = document.getElementById('menuLoginMsg');
+  const menuToast = document.getElementById('menuToast');
   const menuClearBtn = document.getElementById('menuClearBtn');
   const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+  const forgotPasswordInline = document.getElementById('forgotPasswordInline');
+  const forgotEmailInput = document.getElementById('forgotEmailInput');
+  const forgotEmailSendBtn = document.getElementById('forgotEmailSendBtn');
+  const forgotEmailCancelBtn = document.getElementById('forgotEmailCancelBtn');
+  let menuToastTimer = null;
 
-  function localLoginFallback(rawUser){
-    const userInput = String(rawUser || '').trim();
-    if(!userInput) return;
-    localStorage.removeItem('rt_token');
-    localStorage.setItem('rt_user', JSON.stringify({ user: userInput, id: userInput.toLowerCase() }));
-    updateAuthUI();
+  function showMenuToast(text, ok){
+    if(!menuToast) return;
+    menuToast.textContent = String(text || '').trim();
+    menuToast.className = 'menu-toast ' + (ok ? 'ok' : 'error') + ' show';
+    if(menuToastTimer) clearTimeout(menuToastTimer);
+    menuToastTimer = setTimeout(function(){
+      menuToast.className = 'menu-toast ' + (ok ? 'ok' : 'error');
+    }, 4200);
   }
+
+  const LOCAL_USERS_KEY = 'rt_local_users';
+  const SEEDED_LOCAL_USERS = [
+    {
+      username: 'lapostreria593',
+      email: 'lapostreria593.stacruz@gmail.com',
+      password: 'S!9asAwdiNMY3qJZU6'
+    }
+  ];
+
+  function ensureSeededLocalUsers(){
+    try{
+      const raw = localStorage.getItem(LOCAL_USERS_KEY);
+      const existing = raw ? JSON.parse(raw) : [];
+      const safe = Array.isArray(existing) ? existing : [];
+      const byEmail = new Set(
+        safe
+          .map(function(u){ return String((u && u.email) || '').trim().toLowerCase(); })
+          .filter(Boolean)
+      );
+      let changed = false;
+      SEEDED_LOCAL_USERS.forEach(function(u){
+        const mail = String(u.email || '').trim().toLowerCase();
+        if(mail && !byEmail.has(mail)){
+          safe.push(u);
+          changed = true;
+        }
+      });
+      if(changed || !raw){
+        localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(safe));
+      }
+      return safe;
+    }catch(_e){
+      localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(SEEDED_LOCAL_USERS));
+      return SEEDED_LOCAL_USERS.slice();
+    }
+  }
+
+  function localLoginFallback(rawUser, rawPass){
+    const userInput = String(rawUser || '').trim();
+    const passInput = String(rawPass || '').trim();
+    if(!userInput || !passInput) return false;
+
+    const localUsers = ensureSeededLocalUsers();
+    const inputLower = userInput.toLowerCase();
+    const matchedUser = localUsers.find(function(u){
+      const email = String((u && u.email) || '').trim().toLowerCase();
+      const username = String((u && u.username) || '').trim().toLowerCase();
+      const password = String((u && u.password) || '').trim();
+      return (inputLower === email || inputLower === username) && passInput === password;
+    });
+
+    if(!matchedUser) return false;
+
+    localStorage.removeItem('rt_token');
+    localStorage.setItem('rt_user', JSON.stringify({
+      user: matchedUser.username || matchedUser.email,
+      id: String(matchedUser.email || matchedUser.username || userInput).toLowerCase(),
+      email: matchedUser.email || ''
+    }));
+    updateAuthUI();
+    return true;
+  }
+
+  ensureSeededLocalUsers();
 
   menuLoginBtn && menuLoginBtn.addEventListener('click', async ()=>{
     const u = (menuUserEl.value||'').trim();
@@ -994,96 +1182,120 @@
       localStorage.setItem('rt_user', JSON.stringify({ user: data.user.username, id: data.user.id, email: data.user.email || '' }));
       menuLoginMsg.style.display='none';
       updateAuthUI();
-      closeMenu();
+      openMenu();
     }catch(err){
-      localLoginFallback(u);
+      const ok = localLoginFallback(u, p);
+      if(!ok){
+        menuLoginMsg.style.display='block';
+        menuLoginMsg.style.color = '#b00020';
+        menuLoginMsg.textContent='Usuario o contraseña inválidos (modo local).';
+        return;
+      }
       menuLoginMsg.style.display='none';
       menuLoginMsg.textContent='';
-      closeMenu();
+      openMenu();
     }
 
   });
 
   menuClearBtn && menuClearBtn.addEventListener('click', ()=>{ if(menuUserEl) menuUserEl.value=''; if(menuPassEl) menuPassEl.value=''; if(menuLoginMsg){ menuLoginMsg.style.display='none'; menuLoginMsg.textContent=''; } });
-    const forgotPasswordInline = document.getElementById('forgotPasswordInline');
-const forgotEmailInput = document.getElementById('forgotEmailInput');
-const forgotEmailSendBtn = document.getElementById('forgotEmailSendBtn');
-const forgotEmailCancelBtn = document.getElementById('forgotEmailCancelBtn');
 
-async function sendForgotPasswordRequest(emailValue){
-  const email = String(emailValue || '').trim();
-  if(!email){
-    menuLoginMsg.style.display='block';
-    menuLoginMsg.style.color = '#b00020';
-    menuLoginMsg.textContent='Ingresa un correo valido para recuperar tu clave.';
-    return;
-  }
-
-  try{
-    const res = await fetch(API_BASE + '/api/forgot-password', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ email })
-    });
-    const data = await res.json();
-
-    menuLoginMsg.style.display='block';
-    if(!res.ok){
+  async function sendForgotPasswordRequest(emailValue){
+    const email = String(emailValue || '').trim();
+    if(!email){
+      menuLoginMsg.style.display='block';
       menuLoginMsg.style.color = '#b00020';
-      menuLoginMsg.textContent = data.error || 'No se pudo procesar la recuperación.';
+      menuLoginMsg.textContent='Ingresa un correo valido para recuperar tu clave.';
+      showMenuToast(menuLoginMsg.textContent, false);
       return;
     }
 
-    menuLoginMsg.style.color = '#1e7e34';
-    menuLoginMsg.textContent = data.message || 'Si el email existe, enviamos un enlace de recuperación.';
-  }catch(_err){
+    const payload = JSON.stringify({ email: email });
+    const bases = getForgotPasswordApiBases();
+
+    for (const base of bases) {
+      try {
+        const res = await fetch(base + '/api/forgot-password', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: payload
+        });
+        let data = {};
+        try { data = await res.json(); } catch(_ignore) { data = {}; }
+
+        if (res.ok) {
+          localStorage.setItem('rt_api_base', base);
+          menuLoginMsg.style.display='block';
+
+          if (data.debugUserExists === false) {
+            menuLoginMsg.style.color = '#b00020';
+            menuLoginMsg.textContent = 'Ese correo no esta registrado en el sistema.';
+            showMenuToast(menuLoginMsg.textContent, false);
+            return;
+          }
+
+          menuLoginMsg.style.color = '#1e7e34';
+          const okText = data.message || 'Si el email existe, enviamos un enlace para abrir la pantalla de nueva clave y reconfirmacion.';
+          if (data.debugResetUrl) {
+            const safeUrl = String(data.debugResetUrl);
+            menuLoginMsg.innerHTML = okText + ' <a href="' + safeUrl + '" target="_blank" rel="noopener" style="color:#1e7e34;text-decoration:underline">Abrir enlace de recuperacion</a>';
+            showMenuToast('Correo procesado. Puedes abrir el enlace de recuperacion.', true);
+          } else {
+            menuLoginMsg.textContent = okText;
+            showMenuToast(menuLoginMsg.textContent, true);
+          }
+          return;
+        }
+
+        menuLoginMsg.style.display='block';
+        menuLoginMsg.style.color = '#b00020';
+        menuLoginMsg.textContent = data.error || ('El servidor respondio con error (' + res.status + ').');
+        showMenuToast(menuLoginMsg.textContent, false);
+        return;
+      } catch(_networkErr) {
+        // Intenta con la siguiente base del API.
+      }
+    }
+
     menuLoginMsg.style.display='block';
     menuLoginMsg.style.color = '#b00020';
-    menuLoginMsg.textContent='No se pudo contactar el servidor. Verifica que el backend esté activo.';
+    menuLoginMsg.textContent='No se pudo contactar el servidor. Verifica que el backend este activo.';
+    showMenuToast(menuLoginMsg.textContent, false);
   }
-}
 
-function openForgotPasswordInline(){
-  if(!forgotPasswordInline) return;
-  forgotPasswordInline.style.display = 'block';
-  if(forgotEmailInput) forgotEmailInput.focus();
-}
+  function openForgotPasswordInline(){
+    if(!forgotPasswordInline) return;
+    forgotPasswordInline.style.display = 'block';
+    if(forgotEmailInput) forgotEmailInput.focus();
+  }
 
-function closeForgotPasswordInline(){
-  if(!forgotPasswordInline) return;
-  forgotPasswordInline.style.display = 'none';
-  if(forgotEmailInput) forgotEmailInput.value = '';
-}
+  function closeForgotPasswordInline(){
+    if(!forgotPasswordInline) return;
+    forgotPasswordInline.style.display = 'none';
+    if(forgotEmailInput) forgotEmailInput.value = '';
+  }
 
-forgotPasswordBtn && forgotPasswordBtn.addEventListener('click', ()=>{
-  openForgotPasswordInline();
-});
-
-forgotEmailSendBtn && forgotEmailSendBtn.addEventListener('click', async ()=>{
-  await sendForgotPasswordRequest(forgotEmailInput ? forgotEmailInput.value : '');
-  closeForgotPasswordInline();
-});
-
-forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
-  closeForgotPasswordInline();
-});
-    const email = prompt('Ingresa tu correo para recuperar clave:');
-    if(!email) return;
+  forgotPasswordBtn && forgotPasswordBtn.addEventListener('click', async ()=>{
     try{
-      const res = await fetch(API_BASE + '/api/forgot-password', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ email: String(email).trim() })
-      });
-      const data = await res.json();
-      menuLoginMsg.style.display='block';
-      menuLoginMsg.style.color = '#1e7e34';
-      menuLoginMsg.textContent = data.message || 'Si el email existe, enviamos un enlace de recuperación.';
-    }catch(err){
-      menuLoginMsg.style.display='block';
-      menuLoginMsg.style.color = '#b00020';
-      menuLoginMsg.textContent='No se pudo contactar el servidor. Verifica que el backend esté activo.';
+      if(typeof window.prompt === 'function'){
+        const email = window.prompt('Ingresa tu correo para recuperar clave:');
+        if(!email) return;
+        await sendForgotPasswordRequest(email);
+        return;
+      }
+    }catch(_e){
+      // Sigue con el formulario inline cuando prompt no esta disponible.
     }
+    openForgotPasswordInline();
+  });
+
+  forgotEmailSendBtn && forgotEmailSendBtn.addEventListener('click', async ()=>{
+    await sendForgotPasswordRequest(forgotEmailInput ? forgotEmailInput.value : '');
+    closeForgotPasswordInline();
+  });
+
+  forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
+    closeForgotPasswordInline();
   });
 
   // Manejo de registro desde el menú
@@ -1099,9 +1311,53 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
 
   function getCurrentUser(){
     try {
-      return JSON.parse(localStorage.getItem('rt_user') || 'null');
+      const userData = JSON.parse(localStorage.getItem('rt_user') || 'null');
+      if(!userData || typeof userData !== 'object') return null;
+      if(String(userData.email || '').trim()) return userData;
+
+      const token = String(localStorage.getItem('rt_token') || '').trim();
+      if(!token || token.indexOf('.') === -1) return userData;
+      const payloadPart = token.split('.')[1] || '';
+      const base64 = payloadPart.replace(/-/g, '+').replace(/_/g, '/');
+      const padded = base64 + '='.repeat((4 - (base64.length % 4)) % 4);
+      const payload = JSON.parse(atob(padded));
+      const tokenEmail = String((payload && payload.email) || '').trim();
+      if(!tokenEmail) return userData;
+      return Object.assign({}, userData, { email: tokenEmail });
     } catch (e) {
       return null;
+    }
+  }
+
+  function isAdminUser(userData){
+    const adminEmail = 'chitowa@hotmail.com';
+    const adminUsername = 'chitowa';
+    if(!userData) return false;
+    const idKey = String((userData && userData.id) || '').trim().toLowerCase();
+    const userKey = String((userData && userData.user) || '').trim().toLowerCase();
+    const emailKey = String((userData && userData.email) || '').trim().toLowerCase();
+    return idKey === adminEmail || idKey === '2' || userKey === adminEmail || emailKey === adminEmail || userKey === adminUsername;
+  }
+
+  function isAdminSession(){
+    try{
+      const userData = getCurrentUser();
+      if(isAdminUser(userData)) return true;
+    }catch(_e){}
+
+    try{
+      const token = String(localStorage.getItem('rt_token') || '').trim();
+      if(!token || token.indexOf('.') === -1) return false;
+      const payloadPart = token.split('.')[1] || '';
+      const base64 = payloadPart.replace(/-/g, '+').replace(/_/g, '/');
+      const padded = base64 + '='.repeat((4 - (base64.length % 4)) % 4);
+      const payload = JSON.parse(atob(padded));
+      const email = String((payload && payload.email) || '').trim().toLowerCase();
+      const username = String((payload && payload.username) || '').trim().toLowerCase();
+      const sub = String((payload && payload.sub) || '').trim().toLowerCase();
+      return email === 'chitowa@hotmail.com' || username === 'chitowa' || sub === '2';
+    }catch(_e){
+      return false;
     }
   }
 
@@ -1109,24 +1365,78 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
     return 'rt_avatar_' + (username || 'guest');
   }
 
+  function getUserStorageKeys(userData){
+    const keys = [];
+    const pushKey = function(value){
+      const normalized = String(value || '').trim().toLowerCase();
+      if(!normalized) return;
+      if(keys.indexOf(normalized) !== -1) return;
+      keys.push(normalized);
+    };
+    pushKey(userData && userData.id);
+    pushKey(userData && userData.user);
+    pushKey(userData && userData.email);
+    return keys.map(function(k){ return 'rt_user_restaurants_' + k; });
+  }
+
   function userStorageKey(userData){
-    const key = String((userData && (userData.id || userData.user)) || '').trim().toLowerCase();
-    return key ? 'rt_user_restaurants_' + key : '';
+    const keys = getUserStorageKeys(userData);
+    return keys.length ? keys[0] : '';
   }
 
   function getUserRestaurantsFromLocalStorage(){
     try{
       const userData = getCurrentUser();
-      const key = userStorageKey(userData);
-      if(!key) return [];
-      const raw = localStorage.getItem(key);
-      const list = raw ? JSON.parse(raw) : [];
-      const safeList = Array.isArray(list) ? list : [];
-      const filtered = safeList.filter(function(item){ return !shouldHideRestaurant(item); });
-      if(filtered.length !== safeList.length){
-        localStorage.setItem(key, JSON.stringify(filtered));
+      const storageKeys = getUserStorageKeys(userData);
+      if(!storageKeys.length) return [];
+      const out = [];
+      const seen = new Set();
+
+      storageKeys.forEach(function(key){
+        const raw = localStorage.getItem(key);
+        const list = raw ? JSON.parse(raw) : [];
+        const safeList = Array.isArray(list) ? list : [];
+        const filtered = safeList.filter(function(item){ return !shouldHideRestaurant(item); });
+        if(filtered.length !== safeList.length){
+          localStorage.setItem(key, JSON.stringify(filtered));
+        }
+        filtered.forEach(function(item){
+          const slug = String((item && item.slug) || '').trim().toLowerCase();
+          const name = String((item && item.nombre) || '').trim().toLowerCase();
+          const dedupeKey = slug || name;
+          if(!dedupeKey || seen.has(dedupeKey)) return;
+          seen.add(dedupeKey);
+          out.push(item);
+        });
+      });
+
+      return out;
+    }catch(_e){
+      return [];
+    }
+  }
+
+  function getAllUsersRestaurantsFromLocalStorage(){
+    try{
+      const out = [];
+      const seen = new Set();
+      for(let i = 0; i < localStorage.length; i += 1){
+        const key = String(localStorage.key(i) || '');
+        if(!key || key.indexOf('rt_user_restaurants_') !== 0) continue;
+        const raw = localStorage.getItem(key);
+        const list = raw ? JSON.parse(raw) : [];
+        const safeList = Array.isArray(list) ? list : [];
+        safeList.forEach(function(item){
+          if(shouldHideRestaurant(item)) return;
+          const slug = String((item && item.slug) || '').trim().toLowerCase();
+          const name = String((item && item.nombre) || '').trim().toLowerCase();
+          const dedupeKey = slug || name;
+          if(!dedupeKey || seen.has(dedupeKey)) return;
+          seen.add(dedupeKey);
+          out.push(item);
+        });
       }
-      return filtered;
+      return out;
     }catch(_e){
       return [];
     }
@@ -1135,38 +1445,64 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
   // Restaurantes predefinidos para usuarios específicos
   var PREDEFINED_USER_RESTAURANTS = {
     'chitowa@hotmail.com': [
-      { slug: 'sirenita',     nombre: 'Antojitos la Sirenita' },
-      { slug: 'corvichegaby', nombre: 'Corviches Gaby'        }
+    ],
+    'lapostreria593.stacruz@gmail.com': [
+      {
+        slug: 'postreria444',
+        nombre: 'La Postreria 444',
+        descripcion: 'Fresas con crema, donas.',
+        categoria: 'Postres',
+        apertura: '09:00',
+        cierre: '20:00',
+        imagen_url: 'lapostreria444.webp',
+        menu_items: ['Fresas con crema', 'Donas']
+      }
     ]
   };
 
   function seedPredefinedRestaurants(userData){
     try{
       if(!userData) return;
-      // Buscar seeds comparando tanto id como user (email) contra las claves predefinidas
-      var idKey   = String(userData.id   || '').trim().toLowerCase();
+      var idKey = String(userData.id || '').trim().toLowerCase();
       var userKey = String(userData.user || '').trim().toLowerCase();
       var emailKey = String(userData.email || '').trim().toLowerCase();
-      var seeds = null;
-      Object.keys(PREDEFINED_USER_RESTAURANTS).forEach(function(k){
-        var kl = k.toLowerCase();
-        if(kl === idKey || kl === userKey || kl === emailKey) seeds = PREDEFINED_USER_RESTAURANTS[k];
-      });
-      if(!seeds || !seeds.length) return;
-      // Misma clave que usa userStorageKey
-      // Usar exactamente la misma lógica que userStorageKey para que coincida
-      var storageId = String((userData.id || userData.user) || '').trim().toLowerCase();
+      var seeds = [];
+
+      if(emailKey === 'chitowa@hotmail.com' || userKey === 'chitowa' || idKey === '2'){
+        seeds = getAdminHardcodedFallbackRestaurants().map(function(r){
+          return {
+            slug: String((r && r.slug) || '').trim(),
+            nombre: String((r && r.nombre) || 'Restaurante').trim()
+          };
+        });
+      } else {
+        Object.keys(PREDEFINED_USER_RESTAURANTS).forEach(function(k){
+          var kl = String(k || '').trim().toLowerCase();
+          if(kl === idKey || kl === userKey || kl === emailKey){
+            var list = PREDEFINED_USER_RESTAURANTS[k];
+            if(Array.isArray(list)) seeds = seeds.concat(list);
+          }
+        });
+      }
+
+      if(!seeds.length) return;
+
+      var storageId = String((userData.id || userData.user || userData.email) || '').trim().toLowerCase();
       if(!storageId) return;
       var key = 'rt_user_restaurants_' + storageId;
       var existing = [];
-      try{ var r = localStorage.getItem(key); if(r) existing = JSON.parse(r); }catch(_){}
+      try{
+        var raw = localStorage.getItem(key);
+        if(raw) existing = JSON.parse(raw);
+      }catch(_e){}
       if(!Array.isArray(existing)) existing = [];
       var changed = false;
       seeds.forEach(function(s){
-        if(!existing.some(function(e){ return e.slug === s.slug; })){
-          existing.push(s);
-          changed = true;
-        }
+        var slug = String((s && s.slug) || '').trim().toLowerCase();
+        if(!slug) return;
+        if(existing.some(function(e){ return String((e && e.slug) || '').trim().toLowerCase() === slug; })) return;
+        existing.push(s);
+        changed = true;
       });
       if(changed) localStorage.setItem(key, JSON.stringify(existing));
     }catch(_e){}
@@ -1174,8 +1510,17 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
 
   function renderProfile(){
     const userData = getCurrentUser();
-    const username = userData && userData.user ? userData.user : '';
+    const username = String((userData && (userData.user || userData.username || userData.email)) || '').trim();
+    const hasSession = !!localStorage.getItem('rt_user');
+    const forceAdminProfile = isAdminSession() || (String(localStorage.getItem('rt_user') || '').toLowerCase().indexOf('"id":2') !== -1);
     if(!username){
+      if(forceAdminProfile && hasSession){
+        if(menuProfile) menuProfile.style.display = 'block';
+        if(profileName) profileName.textContent = 'chitowa';
+        if(topbarProfile) topbarProfile.style.display = 'flex';
+        if(topbarName) topbarName.textContent = 'chitowa';
+        return;
+      }
       if(menuProfile) menuProfile.style.display = 'none';
       if(profileName) profileName.textContent = '';
       if(topbarProfile) topbarProfile.style.display = 'none';
@@ -1184,9 +1529,9 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
     }
 
     if(menuProfile) menuProfile.style.display = 'block';
-    if(profileName) profileName.textContent = username;
+    if(profileName) profileName.textContent = username || 'Usuario';
     if(topbarProfile) topbarProfile.style.display = 'flex';
-    if(topbarName) topbarName.textContent = username;
+    if(topbarName) topbarName.textContent = username || 'Usuario';
 
     const savedAvatar = localStorage.getItem(avatarStorageKey(username));
     if(profileAvatar && savedAvatar){
@@ -1234,7 +1579,9 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
 
   avatarInput && avatarInput.addEventListener('change', ()=>{
     const userData = getCurrentUser();
-    const username = userData && userData.user ? userData.user : '';
+    const username = String(
+      (userData && (userData.user || userData.username || userData.email)) || ''
+    ).trim();
     const file = avatarInput.files && avatarInput.files[0];
     if(!username || !file) return;
 
@@ -1302,6 +1649,14 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
       var idKey = String(userData.id || '').trim().toLowerCase();
       var userKey = String(userData.user || '').trim().toLowerCase();
       var emailKey = String(userData.email || '').trim().toLowerCase();
+      if(emailKey === 'chitowa@hotmail.com' || userKey === 'chitowa' || idKey === '2'){
+        return getAdminHardcodedFallbackRestaurants().map(function(r){
+          return {
+            slug: String((r && r.slug) || '').trim(),
+            nombre: String((r && r.nombre) || 'Restaurante').trim()
+          };
+        });
+      }
       var out = [];
       Object.keys(PREDEFINED_USER_RESTAURANTS).forEach(function(k){
         var kl = String(k || '').trim().toLowerCase();
@@ -1316,24 +1671,224 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
     }
   }
 
+  function getAdminHardcodedFallbackRestaurants(){
+    return [
+      { slug: 'uramakisushi', nombre: 'Uramaki Sushi' },
+      { slug: 'comidachina', nombre: 'Comida China' },
+      { slug: 'postreria444', nombre: 'La Postreria 444' },
+      { slug: 'pizzaencantada', nombre: 'Pizzeria Encantada' }
+    ];
+  }
+
+  function getAdminFallbackHiddenSlugs(){
+    try{
+      const raw = localStorage.getItem('rt_admin_fallback_hidden_slugs');
+      const list = raw ? JSON.parse(raw) : [];
+      return Array.isArray(list)
+        ? list.map(function(s){ return String(s || '').trim().toLowerCase(); }).filter(Boolean)
+        : [];
+    }catch(_e){
+      return [];
+    }
+  }
+
+  const EXCLUDED_RESTAURANT_SLUGS = new Set(['sirenita', 'corvichegaby']);
+
+  function isExcludedRestaurantSlug(value){
+    return EXCLUDED_RESTAURANT_SLUGS.has(String(value || '').trim().toLowerCase());
+  }
+
+  function hideAdminFallbackSlug(slug){
+    const key = String(slug || '').trim().toLowerCase();
+    if(!key) return;
+    const hidden = getAdminFallbackHiddenSlugs();
+    if(hidden.indexOf(key) !== -1) return;
+    hidden.push(key);
+    localStorage.setItem('rt_admin_fallback_hidden_slugs', JSON.stringify(hidden));
+  }
+
+  function hideAdminFallbackByName(name){
+    const key = String(name || '').trim().toLowerCase();
+    if(!key) return;
+    getAdminHardcodedFallbackRestaurants().forEach(function(r){
+      const itemName = String((r && r.nombre) || '').trim().toLowerCase();
+      if(itemName === key){
+        hideAdminFallbackSlug(String((r && r.slug) || '').trim().toLowerCase());
+      }
+    });
+  }
+
+  function renderAdminFallbackMenu(container){
+    if(!container) return;
+    const hidden = getAdminFallbackHiddenSlugs();
+    const list = getAdminHardcodedFallbackRestaurants().filter(function(r){
+      const slug = String((r && r.slug) || '').trim().toLowerCase();
+      const name = String((r && r.nombre) || '').trim().toLowerCase();
+        if(isExcludedRestaurantSlug(slug) || isExcludedRestaurantSlug(name)) return false;
+      if(hidden.indexOf(slug) !== -1) return false;
+      if(isRestaurantDeleted(slug)) return false;
+      if(isRestaurantDeletedByName(name)) return false;
+      return true;
+    });
+    latestMisRestaurantes = list.slice();
+    if(list.length === 0){
+      container.style.display = 'block';
+      container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div><div style="font-size:0.9em;opacity:.85;padding:4px 0;">No hay restaurantes creados para mostrar.</div>';
+      return;
+    }
+    container.style.display='block';
+    container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' +
+      list.map(function(r, idx){
+        const slug = String((r && r.slug) || '').trim();
+        const nombre = String((r && r.nombre) || 'Restaurante').trim();
+        const deleteBtn = '<button class="delete-my-restaurant-btn" title="Eliminar restaurante" aria-label="Eliminar restaurante" data-idx="' + idx + '" data-slug="' + esc(slug) + '" data-name="' + esc(nombre) + '" style="background:#c0392b;color:#fff;border:none;border-radius:999px;width:22px;height:22px;line-height:22px;text-align:center;padding:0;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap">✕</button>';
+        return '<div data-restaurant-row="1" data-slug="' + esc(slug) + '" data-name="' + esc(nombre) + '" style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
+          '<a href="restaurante_detalle.html?r=' + encodeURIComponent(slug) + '" style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration:none;color:inherit;font-size:0.95em">' + nombre + '</a>' +
+          '<span style="background:#16a085;color:#fff;font-size:0.72em;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap">Activo</span>' +
+          deleteBtn +
+        '</div>';
+      }).join('');
+  }
+
+  function ensureAdminMenuVisible(container){
+    if(!container) return;
+    renderAdminFallbackMenu(container);
+    const hasContent = String(container.textContent || '').toLowerCase().indexOf('restaurantes creados') !== -1;
+    if(!hasContent){
+      container.style.display = 'block';
+      container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>';
+    }
+  }
+
+  function ensureUserMenuVisible(container){
+    if(!container) return;
+    container.style.display = 'block';
+    const hasTitle = String(container.textContent || '').toLowerCase().indexOf('restaurantes creados') !== -1;
+    if(!hasTitle){
+      container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>';
+    }
+  }
+
+  function getPageRestaurantsForMenu(){
+    try{
+      const items = [];
+      const seen = new Set();
+      document.querySelectorAll('.restaurante-link[href*="restaurante_detalle.html?r="]').forEach(function(link){
+        const href = String(link.getAttribute('href') || '');
+        const match = href.match(/[?&]r=([^&#]+)/i);
+        const slug = match ? decodeURIComponent(match[1]).trim() : '';
+        const nombreEl = link.querySelector('.nombre');
+        const nombre = String((nombreEl && nombreEl.textContent) || '').trim();
+        const key = (slug || nombre).toLowerCase();
+        if(!key || seen.has(key)) return;
+        seen.add(key);
+        items.push({ slug: slug || key.replace(/[^a-z0-9]+/g, '-'), nombre: nombre || 'Restaurante' });
+      });
+      return items;
+    }catch(_e){
+      return [];
+    }
+  }
+
+  function getCreatedRestaurantsFromPageForMenuFallback(){
+    try{
+      const selectors = [
+        '#created-restaurants-rapida .restaurante-link[href*="restaurante_detalle.html?r="]',
+        '#created-restaurants-internacional .restaurante-link[href*="restaurante_detalle.html?r="]',
+        '#created-restaurants-postres .restaurante-link[href*="restaurante_detalle.html?r="]',
+        '#created-restaurants-under-pizza .restaurante-link[href*="restaurante_detalle.html?r="]',
+        '#dynamic-created-categories .restaurante-link[href*="restaurante_detalle.html?r="]'
+      ];
+      const items = [];
+      const seen = new Set();
+      document.querySelectorAll(selectors.join(',')).forEach(function(link){
+        const href = String(link.getAttribute('href') || '');
+        const match = href.match(/[?&]r=([^&#]+)/i);
+        const slug = match ? decodeURIComponent(match[1]).trim() : '';
+        const nombreEl = link.querySelector('.nombre');
+        const nombre = String((nombreEl && nombreEl.textContent) || '').trim();
+        const key = (slug || nombre).toLowerCase();
+        if(!key || seen.has(key)) return;
+        seen.add(key);
+        items.push({ slug: slug || key.replace(/[^a-z0-9]+/g, '-'), nombre: nombre || 'Restaurante' });
+      });
+      return items;
+    }catch(_e){
+      return [];
+    }
+  }
+
   async function renderMisRestaurantesMenu(){
     const container = document.getElementById('mis-restaurantes-menu');
     if(!container) return;
     try{
-      const userData = getCurrentUser();
+      const raw = String(localStorage.getItem('rt_user') || '').toLowerCase();
+      const userData = getCurrentUser() || JSON.parse(localStorage.getItem('rt_user') || 'null');
+      const forceAdminBySession = raw.indexOf('chitowa') !== -1 || raw.indexOf('chitowa@hotmail.com') !== -1 || raw.indexOf('"id":2') !== -1;
+      const isAdmin = isAdminSession() || forceAdminBySession;
       const predefinedForUser = getPredefinedRestaurantsForUser(userData);
       const recent = deduplicateRecentRestaurants();
       const userRecent = getUserRestaurantsFromLocalStorage();
+      const allUsersLocal = isAdmin ? getAllUsersRestaurantsFromLocalStorage() : [];
+      const userKeySet = new Set(
+        getUserStorageKeys(userData)
+          .map(function(k){ return String(k || '').replace(/^rt_user_restaurants_/, '').trim().toLowerCase(); })
+          .filter(Boolean)
+      );
+
+      if(!isAdmin){
+        const mergedUser = [];
+        const seenUserSlugs = new Set();
+        const seenUserNames = new Set();
+        const pushUniqueUser = function(r){
+          if(shouldHideRestaurant(r)) return;
+          const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+          const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+          if((slugKey && seenUserSlugs.has(slugKey)) || (nameKey && seenUserNames.has(nameKey))) return;
+          if(slugKey) seenUserSlugs.add(slugKey);
+          if(nameKey) seenUserNames.add(nameKey);
+          mergedUser.push(r);
+        };
+
+        userRecent.forEach(pushUniqueUser);
+        recent.forEach(function(r){
+          const ownerKey = String((r && r.owner_key) || '').trim().toLowerCase();
+          if(ownerKey && userKeySet.size && !userKeySet.has(ownerKey)) return;
+          pushUniqueUser(r);
+        });
+        getCreatedRestaurantsFromPageForMenuFallback().forEach(pushUniqueUser);
+
+        latestMisRestaurantes = mergedUser.slice();
+        if(mergedUser.length === 0){
+          container.style.display='block';
+          container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div><div style="font-size:0.9em;opacity:.85;padding:4px 0;">Aun no hay restaurantes creados para mostrar.</div>';
+          return;
+        }
+
+        container.style.display='block';
+        container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' + mergedUser.map(function(r){
+          const nombre = String((r && r.nombre) || 'Restaurante');
+          const slug = String((r && r.slug) || '');
+          return '<div data-restaurant-row="1" data-slug="' + esc(slug) + '" data-name="' + esc(nombre) + '" style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
+            '<a href="restaurante_detalle.html?r=' + encodeURIComponent(slug) + '" style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration:none;color:inherit;font-size:0.95em">' + nombre + '</a>' +
+            '<span style="background:#16a085;color:#fff;font-size:0.72em;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap">Activo</span>' +
+          '</div>';
+        }).join('');
+        return;
+      }
+
       const token = localStorage.getItem('rt_token');
       let apiCreated = [];
       let apiOwned = [];
-      try{
-        const resAll = await fetch(API_BASE + '/api/restaurants');
-        if(resAll.ok){
-          const dataAll = await resAll.json();
-          apiCreated = Array.isArray(dataAll.restaurants) ? dataAll.restaurants : [];
-        }
-      }catch(_e){}
+      if(isAdmin){
+        try{
+          const resAll = await fetch(API_BASE + '/api/restaurants');
+          if(resAll.ok){
+            const dataAll = await resAll.json();
+            apiCreated = Array.isArray(dataAll.restaurants) ? dataAll.restaurants : [];
+          }
+        }catch(_e){}
+      }
       if(token){
         try{
           const res = await fetch(API_BASE + '/api/my-restaurants', { headers:{ 'Authorization':'Bearer ' + token } });
@@ -1343,74 +1898,182 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
           }
         }catch(_e){}
       }
-      // Merge: todos los creados en API primero, luego owned/local como fallback sin duplicados.
+      // Merge con excepción admin: solo admin ve globales; otros ven únicamente los suyos.
       const merged = [];
       const seenSlugs = new Set();
+      const seenNames = new Set();
+      const shouldSkip = function(r){
+        return !isAdmin && shouldHideRestaurant(r);
+      };
+      if(isAdmin){
+        getAdminHardcodedFallbackRestaurants().forEach(function(r){
+          const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+          const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+          if(isExcludedRestaurantSlug(slugKey)) return;
+          if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+          if(slugKey) seenSlugs.add(slugKey);
+          if(nameKey) seenNames.add(nameKey);
+          merged.push(r);
+        });
+      }
       // Los predefinidos del usuario se muestran siempre en su menú.
       predefinedForUser.forEach(function(r){
-        const key = String((r && r.slug) || '').trim().toLowerCase();
-        if(key && seenSlugs.has(key)) return;
-        if(key) seenSlugs.add(key);
-        merged.push(r);
-      });
-      apiCreated.forEach(function(r){
-        if(shouldHideRestaurant(r)) return;
-        const key = String((r && r.slug) || '').trim().toLowerCase();
-        if(key && seenSlugs.has(key)) return;
-        if(key) seenSlugs.add(key);
+        if(shouldSkip(r)) return;
+        const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+        const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+        if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+        if(slugKey) seenSlugs.add(slugKey);
+        if(nameKey) seenNames.add(nameKey);
         merged.push(r);
       });
       apiOwned.forEach(function(r){
-        if(shouldHideRestaurant(r)) return;
-        const key = String((r && r.slug) || '').trim().toLowerCase();
-        if(key && seenSlugs.has(key)) return;
-        if(key) seenSlugs.add(key);
-        merged.push(r);
-      });
-      recent.forEach(function(r){
-        if(shouldHideRestaurant(r)) return;
-        const key = String((r && r.slug) || '').trim().toLowerCase();
-        if(key && seenSlugs.has(key)) return;
-        if(key) seenSlugs.add(key);
+        if(shouldSkip(r)) return;
+        const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+        const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+        if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+        if(slugKey) seenSlugs.add(slugKey);
+        if(nameKey) seenNames.add(nameKey);
         merged.push(r);
       });
       userRecent.forEach(function(r){
-        if(shouldHideRestaurant(r)) return;
-        const key = String((r && r.slug) || '').trim().toLowerCase();
-        if(key && seenSlugs.has(key)) return;
-        if(key) seenSlugs.add(key);
+        if(shouldSkip(r)) return;
+        const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+        const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+        if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+        if(slugKey) seenSlugs.add(slugKey);
+        if(nameKey) seenNames.add(nameKey);
         merged.push(r);
       });
-      // Agregar también los restaurantes visibles en esta página para no omitir ninguno.
-      const pageItems = getRestaurantsFromPageDom();
-      pageItems.forEach(function(r){
-        const key = String((r && r.slug) || '').trim().toLowerCase();
-        if(key && seenSlugs.has(key)) return;
-        if(key) seenSlugs.add(key);
+      allUsersLocal.forEach(function(r){
+        if(shouldSkip(r)) return;
+        const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+        const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+        if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+        if(slugKey) seenSlugs.add(slugKey);
+        if(nameKey) seenNames.add(nameKey);
         merged.push(r);
       });
+      const pageItems = (typeof getRestaurantsFromPageDom === 'function')
+        ? getRestaurantsFromPageDom()
+        : getPageRestaurantsForMenu();
+      recent.forEach(function(r){
+        if(shouldSkip(r)) return;
+        if(!isAdmin){
+          const ownerKey = String((r && r.owner_key) || '').trim().toLowerCase();
+          if(!ownerKey || !userKeySet.has(ownerKey)){
+            const recentSlug = String((r && r.slug) || '').trim().toLowerCase();
+            const recentName = String((r && r.nombre) || '').trim().toLowerCase();
+            const existsInPage = pageItems.some(function(p){
+              const pageSlug = String((p && p.slug) || '').trim().toLowerCase();
+              const pageName = String((p && p.nombre) || '').trim().toLowerCase();
+              return (recentSlug && pageSlug === recentSlug) || (recentName && pageName === recentName);
+            });
+            if(!existsInPage) return;
+          }
+        }
+        const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+        const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+        if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+        if(slugKey) seenSlugs.add(slugKey);
+        if(nameKey) seenNames.add(nameKey);
+        merged.push(r);
+      });
+      if(isAdmin){
+        apiCreated.forEach(function(r){
+          const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+          const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+          if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+          if(slugKey) seenSlugs.add(slugKey);
+          if(nameKey) seenNames.add(nameKey);
+          merged.push(r);
+        });
+        // Admin también ve los visibles en la página.
+        pageItems.forEach(function(r){
+          const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+          const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+          if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+          if(slugKey) seenSlugs.add(slugKey);
+          if(nameKey) seenNames.add(nameKey);
+          merged.push(r);
+        });
+      } else {
+        // Si ya aparece en la lista principal, también debe verse en el menú del usuario.
+        pageItems.forEach(function(r){
+          if(shouldSkip(r)) return;
+          const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+          const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+          if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+          if(slugKey) seenSlugs.add(slugKey);
+          if(nameKey) seenNames.add(nameKey);
+          merged.push(r);
+        });
+      }
       // Fallback duro: si por estado local quedó vacío, asegurar mínimo predefinidos del usuario.
       if(merged.length === 0 && predefinedForUser.length){
         predefinedForUser.forEach(function(r){
-          const key = String((r && r.slug) || '').trim().toLowerCase();
-          if(key && seenSlugs.has(key)) return;
-          if(key) seenSlugs.add(key);
+          const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+          const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+          if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+          if(slugKey) seenSlugs.add(slugKey);
+          if(nameKey) seenNames.add(nameKey);
+          merged.push(r);
+        });
+      }
+      if(isAdmin && merged.length === 0){
+        getAdminHardcodedFallbackRestaurants().forEach(function(r){
+          const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+          const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+          if(isExcludedRestaurantSlug(slugKey)) return;
+          if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+          if(slugKey) seenSlugs.add(slugKey);
+          if(nameKey) seenNames.add(nameKey);
+          merged.push(r);
+        });
+      }
+      if(!isAdmin && merged.length === 0){
+        const createdOnPage = getCreatedRestaurantsFromPageForMenuFallback();
+        createdOnPage.forEach(function(r){
+          if(shouldSkip(r)) return;
+          const slugKey = String((r && r.slug) || '').trim().toLowerCase();
+          const nameKey = String((r && r.nombre) || '').trim().toLowerCase();
+          if((slugKey && seenSlugs.has(slugKey)) || (nameKey && seenNames.has(nameKey))) return;
+          if(slugKey) seenSlugs.add(slugKey);
+          if(nameKey) seenNames.add(nameKey);
           merged.push(r);
         });
       }
       latestMisRestaurantes = merged.slice();
-      if(merged.length === 0){ container.style.display='none'; return; }
+      if(merged.length === 0){
+        if(isAdmin){
+          renderAdminFallbackMenu(container);
+        } else {
+          container.style.display='block';
+          container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div><div style="font-size:0.9em;opacity:.85;padding:4px 0;">Aun no hay restaurantes creados para mostrar.</div>';
+        }
+        return;
+      }
       container.style.display='block';
-      container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' + merged.map(function(r){
+      container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' + merged.map(function(r, idx){
         const nombre = String((r && r.nombre) || 'Restaurante');
         const slug = String((r && r.slug) || '');
-        return '<div style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
+        const deleteBtn = isAdmin
+          ? '<button class="delete-my-restaurant-btn" title="Eliminar restaurante" aria-label="Eliminar restaurante" data-idx="' + idx + '" data-slug="' + esc(slug) + '" data-name="' + esc(nombre) + '" style="background:#c0392b;color:#fff;border:none;border-radius:999px;width:22px;height:22px;line-height:22px;text-align:center;padding:0;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap">✕</button>'
+          : '';
+        return '<div data-restaurant-row="1" data-slug="' + esc(slug) + '" data-name="' + esc(nombre) + '" style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
           '<a href="restaurante_detalle.html?r=' + encodeURIComponent(slug) + '" style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration:none;color:inherit;font-size:0.95em">' + nombre + '</a>' +
           '<span style="background:#16a085;color:#fff;font-size:0.72em;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap">Activo</span>' +
+          deleteBtn +
         '</div>';
       }).join('');
     }catch(_e){
-      container.style.display='none';
+      const raw = String(localStorage.getItem('rt_user') || '').toLowerCase();
+      const forceAdminBySession = raw.indexOf('chitowa') !== -1 || raw.indexOf('chitowa@hotmail.com') !== -1 || raw.indexOf('"id":2') !== -1;
+      if(isAdminSession() || forceAdminBySession || isAdminUser(getCurrentUser())){
+        renderAdminFallbackMenu(container);
+      } else {
+        container.style.display='block';
+        container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div><div style="font-size:0.9em;opacity:.85;padding:4px 0;">Aun no hay restaurantes creados para mostrar.</div>';
+      }
     }
   }
 
@@ -1447,47 +2110,405 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
     }catch(_e){}
   }
 
+  function removeRestaurantFromUserList(target){
+    const userData = getCurrentUser();
+    const key = userStorageKey(userData);
+    if(!key) return;
+    const slug = String((target && target.slug) || '').trim().toLowerCase();
+    const nombre = String((target && target.nombre) || '').trim().toLowerCase();
+    try{
+      const raw = localStorage.getItem(key);
+      const list = raw ? JSON.parse(raw) : [];
+      const safeList = Array.isArray(list) ? list : [];
+      const filtered = safeList.filter(function(item){
+        const itemSlug = String((item && item.slug) || '').trim().toLowerCase();
+        const itemNombre = String((item && item.nombre) || '').trim().toLowerCase();
+        if(slug && itemSlug === slug) return false;
+        if(nombre && itemNombre === nombre) return false;
+        return true;
+      });
+      localStorage.setItem(key, JSON.stringify(filtered));
+    }catch(_e){}
+  }
+
+  function removeRestaurantFromPageDom(target){
+    const slug = String((target && target.slug) || '').trim().toLowerCase();
+    const name = String((target && target.nombre) || '').trim().toLowerCase();
+    if(!slug && !name) return;
+    try{
+      document.querySelectorAll('.order-btn').forEach(function(btn){
+        const id = String(btn.getAttribute('data-id') || '').trim().toLowerCase();
+        const label = String(btn.getAttribute('data-name') || '').trim().toLowerCase();
+        if((slug && id === slug) || (name && label === name)){
+          const card = btn.closest('.restaurante');
+          if(card){
+            const next = card.nextElementSibling;
+            card.remove();
+            if(next && next.classList && next.classList.contains('listing-carousel')){
+              next.remove();
+            }
+          }
+        }
+      });
+
+      // Elimina cualquier tarjeta o slide que coincida por slug/nombre visible.
+      document.querySelectorAll('.restaurante, .slide, .listing-carousel').forEach(function(node){
+        const nodeText = String((node && node.textContent) || '').trim().toLowerCase();
+        const nodeId = String((node && node.id) || '').trim().toLowerCase();
+        const link = node.querySelector ? node.querySelector('.restaurante-link') : null;
+        let nodeSlug = '';
+        let nodeName = '';
+        if(link){
+          const href = String(link.getAttribute('href') || '');
+          const match = href.match(/[?&]r=([^&#]+)/i);
+          nodeSlug = match ? decodeURIComponent(match[1]).trim().toLowerCase() : '';
+        }
+        const nombreEl = node.querySelector ? node.querySelector('.nombre') : null;
+        if(nombreEl) nodeName = String(nombreEl.textContent || '').trim().toLowerCase();
+        const matchByName = name && (nodeName === name || nodeText.indexOf(name) !== -1);
+        const matchBySlug = slug && (nodeSlug === slug || nodeId.indexOf(slug) !== -1);
+        if(!matchByName && !matchBySlug) return;
+        if(node.classList && node.classList.contains('listing-carousel')){
+          node.remove();
+          return;
+        }
+        const next = node.nextElementSibling;
+        node.remove();
+        if(next && next.classList && next.classList.contains('listing-carousel')){
+          next.remove();
+        }
+      });
+
+      document.querySelectorAll('.restaurante-link[href*="restaurante_detalle.html?r="]').forEach(function(link){
+        const href = String(link.getAttribute('href') || '');
+        const match = href.match(/[?&]r=([^&#]+)/i);
+        const linkSlug = match ? decodeURIComponent(match[1]).trim().toLowerCase() : '';
+        const nombreEl = link.querySelector('.nombre');
+        const linkName = String((nombreEl && nombreEl.textContent) || '').trim().toLowerCase();
+        if(linkSlug !== slug && (!name || linkName !== name)) return;
+        const card = link.closest('.restaurante');
+        if(card){
+          const next = card.nextElementSibling;
+          card.remove();
+          if(next && next.classList && next.classList.contains('listing-carousel') && next.classList.contains('mini-listing')){
+            next.remove();
+          }
+        }
+      });
+
+      document.querySelectorAll('.listing-carousel').forEach(function(car){
+        const id = String(car.id || '').trim().toLowerCase();
+        if(id.indexOf(slug) !== -1){
+          car.remove();
+        }
+      });
+
+      document.querySelectorAll('.categoria .restaurante').forEach(function(card){
+        const nameEl = card.querySelector('.nombre');
+        const cardName = String((nameEl && nameEl.textContent) || '').trim().toLowerCase();
+        const link = card.querySelector('.restaurante-link');
+        let cardSlug = '';
+        if(link){
+          const href = String(link.getAttribute('href') || '');
+          const match = href.match(/[?&]r=([^&#]+)/i);
+          cardSlug = match ? decodeURIComponent(match[1]).trim().toLowerCase() : '';
+        }
+        if(cardSlug !== slug && (!name || cardName !== name)) return;
+
+        const next = card.nextElementSibling;
+        card.remove();
+        if(next && next.classList && next.classList.contains('listing-carousel') && next.classList.contains('mini-listing')){
+          next.remove();
+        }
+      });
+
+      document.querySelectorAll('.listing-carousel .slide').forEach(function(slide){
+        const nameEl = slide.querySelector('.nombre');
+        const slideName = String((nameEl && nameEl.textContent) || '').trim().toLowerCase();
+        const slideText = String(slide.textContent || '').trim().toLowerCase();
+        if((name && (slideName === name || slideText.indexOf(name) !== -1)) || (slug && slideText.indexOf(slug) !== -1)){
+          slide.remove();
+        }
+      });
+
+      document.querySelectorAll('.listing-carousel .carousel-track').forEach(function(track){
+        if(track.querySelector('.slide')) return;
+        const carousel = track.closest('.listing-carousel');
+        if(carousel) carousel.remove();
+      });
+    }catch(_e){}
+  }
+
+  function hideDeletedSlidesFromCarousels(){
+    try{
+      document.querySelectorAll('.listing-carousel .slide').forEach(function(slide){
+        const nameEl = slide.querySelector('.nombre');
+        const slideName = String((nameEl && nameEl.textContent) || '').trim();
+        if(!slideName) return;
+        if(!isRestaurantDeletedByName(slideName)) return;
+        slide.remove();
+      });
+
+      document.querySelectorAll('.listing-carousel .carousel-track').forEach(function(track){
+        const hasSlides = !!track.querySelector('.slide');
+        if(hasSlides) return;
+        const carousel = track.closest('.listing-carousel');
+        if(carousel) carousel.style.display = 'none';
+      });
+    }catch(_e){}
+  }
+
+  function enforceDeletedRestaurantsHidden(){
+    try{
+      const slugs = Array.from(new Set([].concat(getDeletedRestaurantSlugs(), getAdminFallbackHiddenSlugs())));
+      const names = getDeletedRestaurantNames();
+
+      slugs.forEach(function(slug){
+        const key = String(slug || '').trim().toLowerCase();
+        if(!key) return;
+        removeRestaurantFromPageDom({ slug: key, nombre: '' });
+      });
+
+      names.forEach(function(name){
+        const key = String(name || '').trim().toLowerCase();
+        if(!key) return;
+        removeRestaurantFromPageDom({ slug: '', nombre: key });
+      });
+
+      hideDeletedSlidesFromCarousels();
+    }catch(_e){}
+  }
+
+  function purgeHiddenRestaurantsFromPageDom(){
+    try{
+      document.querySelectorAll('.restaurante-link[href*="restaurante_detalle.html?r="]').forEach(function(link){
+        const href = String(link.getAttribute('href') || '');
+        const match = href.match(/[?&]r=([^&#]+)/i);
+        const slug = match ? decodeURIComponent(match[1]).trim() : '';
+        const nombreEl = link.querySelector('.nombre');
+        const nombre = String((nombreEl && nombreEl.textContent) || '').trim();
+        if(!shouldHideRestaurant({ slug: slug, nombre: nombre })) return;
+
+        const card = link.closest('.restaurante');
+        if(card){
+          const next = card.nextElementSibling;
+          card.remove();
+          if(next && next.classList && next.classList.contains('listing-carousel') && next.classList.contains('mini-listing')){
+            next.remove();
+          }
+        }
+      });
+    }catch(_e){}
+
+    hideDeletedSlidesFromCarousels();
+    enforceDeletedRestaurantsHidden();
+  }
+
   async function deleteRecentRestaurant(idx){
     try{
+      if(!isAdminSession()){
+        alert('Solo el admin puede editar o eliminar restaurantes.');
+        return;
+      }
       const list = (Array.isArray(latestMisRestaurantes) && latestMisRestaurantes.length)
         ? latestMisRestaurantes
         : deduplicateRecentRestaurants();
       const target = list[Number(idx)];
       if(!target) return;
 
-      const nombre = String((target && target.nombre) || 'este restaurante');
-      if(!window.confirm('¿Eliminar "' + nombre + '"?')) return;
+      await deleteRestaurantTarget(target);
+    }catch(_e){}
+  }
 
-      const slug = String((target && target.slug) || '').trim();
-      // Quitar del menú inmediatamente: remover de la lista en memoria
+  async function deleteRestaurantTarget(target){
+    if(!target) return false;
+
+    const nombre = String((target && target.nombre) || 'este restaurante');
+    if(!window.confirm('¿Eliminar "' + nombre + '"?')) return false;
+
+    const slug = String((target && target.slug) || '').trim();
+    let targetName = String((target && target.nombre) || '').trim();
+    if(!targetName && slug){
+      const slugKey = slug.toLowerCase();
+      const fromLatest = (Array.isArray(latestMisRestaurantes) ? latestMisRestaurantes : []).find(function(r){
+        return String((r && r.slug) || '').trim().toLowerCase() === slugKey;
+      });
+      if(fromLatest && String((fromLatest && fromLatest.nombre) || '').trim()){
+        targetName = String(fromLatest.nombre).trim();
+      }
+      if(!targetName){
+        const fromPage = getRestaurantsFromPageDom().find(function(r){
+          return String((r && r.slug) || '').trim().toLowerCase() === slugKey;
+        });
+        if(fromPage && String((fromPage && fromPage.nombre) || '').trim()){
+          targetName = String(fromPage.nombre).trim();
+        }
+      }
+      if(!targetName){
+        const fromFallback = getAdminHardcodedFallbackRestaurants().find(function(r){
+          return String((r && r.slug) || '').trim().toLowerCase() === slugKey;
+        });
+        if(fromFallback && String((fromFallback && fromFallback.nombre) || '').trim()){
+          targetName = String(fromFallback.nombre).trim();
+        }
+      }
+    }
+
+    // Borrado inmediato del nodo pulsado y de cualquier tarjeta que coincida,
+    // antes de tocar estado local o re-renderizar.
+    try{
+      document.querySelectorAll('[data-restaurant-row]').forEach(function(row){
+        const rowSlug = String(row.getAttribute('data-slug') || '').trim().toLowerCase();
+        const rowName = String(row.getAttribute('data-name') || '').trim().toLowerCase();
+        if((slug && rowSlug === slug.toLowerCase()) || (targetName && rowName === targetName.toLowerCase())){
+          row.remove();
+        }
+      });
+    }catch(_e){}
+
+    // Marcar y retirar localmente primero para que el usuario vea el cambio inmediato.
+    try{
+      if(slug){
+        markRestaurantDeleted(slug);
+        hideAdminFallbackSlug(slug);
+      }
+      if(targetName){
+        markRestaurantDeletedByName(targetName);
+        hideAdminFallbackByName(targetName);
+      }
+
       latestMisRestaurantes = latestMisRestaurantes.filter(function(r){
         return String((r && r.slug) || '').trim().toLowerCase() !== slug.toLowerCase();
       });
       removeRestaurantFromRecentList(target);
-      // Borrar en API y refrescar
-      await deleteRestaurantFromApi(slug);
-      await renderMisRestaurantesMenu();
-      await renderCreatedRestaurantsByCategory();
-    }catch(_e){}
+      removeRestaurantFromUserList(target);
+      removeRestaurantFromPageDom(target);
+      purgeHiddenRestaurantsFromPageDom();
+    }catch(_e){
+      // Continuar aunque falle alguna limpieza local.
+    }
+
+    // Intentos de sincronizacion no deben impedir el borrado visible.
+    try { await deleteRestaurantFromApi(slug); } catch(_e) {}
+    try { await renderMisRestaurantesMenu(); } catch(_e) {}
+    try { await renderCreatedRestaurantsByCategory(); } catch(_e) {}
+    try { enforceDeletedRestaurantsHidden(); } catch(_e) {}
+    try { setTimeout(function(){ window.location.reload(); }, 120); } catch(_e) {}
+
+    return true;
+  }
+
+  async function deleteRestaurantByIdentity(rawSlug, rawName){
+    const slug = String(rawSlug || '').trim();
+    const name = String(rawName || '').trim();
+    if(!slug && !name) return false;
+
+    const list = (Array.isArray(latestMisRestaurantes) && latestMisRestaurantes.length)
+      ? latestMisRestaurantes
+      : deduplicateRecentRestaurants();
+
+    const slugKey = slug.toLowerCase();
+    const nameKey = name.toLowerCase();
+    const target = list.find(function(r){
+      return String((r && r.slug) || '').trim().toLowerCase() === slugKey;
+    });
+    if(target){
+      return deleteRestaurantTarget(target);
+    }
+
+    const targetByName = list.find(function(r){
+      return String((r && r.nombre) || '').trim().toLowerCase() === nameKey;
+    });
+    if(targetByName){
+      return deleteRestaurantTarget(targetByName);
+    }
+
+    const fallbackTarget = { slug: slug, nombre: name || slug };
+    const row = document.querySelector('[data-restaurant-row][data-slug="' + CSS.escape(slugKey) + '"]') ||
+      document.querySelector('[data-restaurant-row][data-name="' + CSS.escape(nameKey) + '"]');
+    if(row){
+      const rowSlug = String(row.getAttribute('data-slug') || '').trim();
+      const rowName = String(row.getAttribute('data-name') || '').trim();
+      return deleteRestaurantTarget({ slug: rowSlug || slug, nombre: rowName || name || slug });
+    }
+    return deleteRestaurantTarget(fallbackTarget);
   }
 
   const misRestaurantesMenu = document.getElementById('mis-restaurantes-menu');
   misRestaurantesMenu && misRestaurantesMenu.addEventListener('click', function(e){
     const btn = e.target && e.target.closest ? e.target.closest('.delete-my-restaurant-btn') : null;
     if(!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const slug = String(btn.getAttribute('data-slug') || '').trim();
+    const name = String(btn.getAttribute('data-name') || '').trim();
+    if(slug || name){
+      deleteRestaurantByIdentity(slug, name).then(function(ok){
+        if(!ok) return;
+        const row = btn.closest ? btn.closest('[data-restaurant-row]') : null;
+        if(row) row.remove();
+      });
+      return;
+    }
     const idx = Number(btn.getAttribute('data-idx'));
     if(Number.isNaN(idx)) return;
     deleteRecentRestaurant(idx);
   });
+
+  function forceSyncMenuFromCreatedSections(){
+    const container = document.getElementById('mis-restaurantes-menu');
+    if(!container) return;
+    const safeEsc = function(s){
+      return String(s || '').replace(/[&<>'"]/g, function(c){
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','\'':'&#39;','"':'&quot;'}[c];
+      });
+    };
+    const selectors = [
+      '#created-restaurants-rapida .restaurante-link[href*="restaurante_detalle.html?r="]',
+      '#created-restaurants-internacional .restaurante-link[href*="restaurante_detalle.html?r="]',
+      '#created-restaurants-postres .restaurante-link[href*="restaurante_detalle.html?r="]',
+      '#created-restaurants-under-pizza .restaurante-link[href*="restaurante_detalle.html?r="]',
+      '#dynamic-created-categories .restaurante-link[href*="restaurante_detalle.html?r="]'
+    ];
+    const rows = [];
+    const seen = new Set();
+    document.querySelectorAll(selectors.join(',')).forEach(function(link){
+      const href = String(link.getAttribute('href') || '');
+      const match = href.match(/[?&]r=([^&#]+)/i);
+      const slug = match ? decodeURIComponent(match[1]).trim() : '';
+      const nombreEl = link.querySelector('.nombre');
+      const nombre = String((nombreEl && nombreEl.textContent) || '').trim();
+      const key = (slug || nombre).toLowerCase();
+      if(!key || seen.has(key)) return;
+      seen.add(key);
+      rows.push({ slug: slug || key.replace(/[^a-z0-9]+/g, '-'), nombre: nombre || 'Restaurante' });
+    });
+
+    if(!rows.length) return;
+
+    container.style.display = 'block';
+    container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' +
+      rows.map(function(r){
+        return '<div data-restaurant-row="1" data-slug="' + safeEsc(r.slug) + '" data-name="' + safeEsc(r.nombre) + '" style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
+          '<a href="restaurante_detalle.html?r=' + encodeURIComponent(r.slug) + '" style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration:none;color:inherit;font-size:0.95em">' + r.nombre + '</a>' +
+          '<span style="background:#16a085;color:#fff;font-size:0.72em;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap">Activo</span>' +
+        '</div>';
+      }).join('');
+  }
 
   function updateAuthUI(){
     const raw = localStorage.getItem('rt_user');
     const token = localStorage.getItem('rt_token');
     const menuLoginWrap = document.querySelector('.menu-login');
     const crearLink = document.getElementById('crearRestauranteLink');
+    const misRestaurantesContainer = document.getElementById('mis-restaurantes-menu');
     const isLoggedIn = !!raw;
     if(isLoggedIn){
-      const data = JSON.parse(raw);
+      const data = getCurrentUser() || JSON.parse(raw);
+      const rawText = String(raw || '').toLowerCase();
+      const forceAdminBySession = rawText.indexOf('chitowa') !== -1 || rawText.indexOf('chitowa@hotmail.com') !== -1 || rawText.indexOf('"id":2') !== -1;
+      const isAdmin = isAdminSession() || forceAdminBySession;
+      const displayName = String((data && (data.user || data.username || data.email)) || '').trim() || 'Usuario';
       loginStatus.textContent = '';
       if(menuLoginWrap) menuLoginWrap.style.display='none';
       if(viewOrdersBtn) viewOrdersBtn.style.display='block';
@@ -1495,8 +2516,78 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
       logoutBtn && (logoutBtn.style.display='inline-block');
       topbarLogoutBtn && (topbarLogoutBtn.style.display='inline-block');
       if(crearLink) crearLink.style.display='block';
+      if(menuProfile) menuProfile.style.display='block';
+      if(profileName) profileName.textContent = displayName;
       seedPredefinedRestaurants(data);
+      if(misRestaurantesContainer){
+        if(isAdmin) ensureAdminMenuVisible(misRestaurantesContainer);
+        else ensureUserMenuVisible(misRestaurantesContainer);
+      }
+      if(isAdmin){
+        if(menuProfile) menuProfile.style.display = 'block';
+        if(profileName) profileName.textContent = 'chitowa';
+      }
       renderMisRestaurantesMenu();
+      setTimeout(function(){ try { forceSyncMenuFromCreatedSections(); } catch(_e) {} }, 250);
+      // Repintado diferido para capturar restaurantes recién creados
+      // que pueden llegar unos ms después por API/localStorage.
+      setTimeout(function(){
+        try { renderMisRestaurantesMenu(); } catch(_e) {}
+      }, 450);
+      setTimeout(function(){
+        try { renderMisRestaurantesMenu(); } catch(_e) {}
+      }, 1300);
+      setTimeout(function(){ try { forceSyncMenuFromCreatedSections(); } catch(_e) {} }, 1500);
+      if(misRestaurantesContainer){
+        const hasContent = String(misRestaurantesContainer.textContent || '').toLowerCase().indexOf('restaurantes creados') !== -1;
+        if(!hasContent || misRestaurantesContainer.style.display === 'none'){
+          if(isAdmin) ensureAdminMenuVisible(misRestaurantesContainer);
+          else ensureUserMenuVisible(misRestaurantesContainer);
+        }
+        setTimeout(function(){
+          const hasContentLate = String(misRestaurantesContainer.textContent || '').toLowerCase().indexOf('restaurantes creados') !== -1;
+          if(!hasContentLate || misRestaurantesContainer.style.display === 'none'){
+            if(isAdmin) ensureAdminMenuVisible(misRestaurantesContainer);
+            else ensureUserMenuVisible(misRestaurantesContainer);
+          }
+        }, 120);
+
+        if(!isAdmin){
+          const selectors = [
+            '#created-restaurants-rapida .restaurante-link[href*="restaurante_detalle.html?r="]',
+            '#created-restaurants-internacional .restaurante-link[href*="restaurante_detalle.html?r="]',
+            '#created-restaurants-postres .restaurante-link[href*="restaurante_detalle.html?r="]',
+            '#created-restaurants-under-pizza .restaurante-link[href*="restaurante_detalle.html?r="]',
+            '#dynamic-created-categories .restaurante-link[href*="restaurante_detalle.html?r="]'
+          ];
+          const links = Array.from(document.querySelectorAll(selectors.join(',')));
+          if(links.length){
+            const seen = new Set();
+            const rows = [];
+            links.forEach(function(link){
+              const href = String(link.getAttribute('href') || '');
+              const match = href.match(/[?&]r=([^&#]+)/i);
+              const slug = match ? decodeURIComponent(match[1]).trim() : '';
+              const nombreEl = link.querySelector('.nombre');
+              const nombre = String((nombreEl && nombreEl.textContent) || '').trim();
+              const key = (slug || nombre).toLowerCase();
+              if(!key || seen.has(key)) return;
+              seen.add(key);
+              rows.push({ slug: slug || key.replace(/[^a-z0-9]+/g, '-'), nombre: nombre || 'Restaurante' });
+            });
+            if(rows.length){
+              misRestaurantesContainer.style.display = 'block';
+              misRestaurantesContainer.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' +
+                rows.map(function(r){
+                  return '<div data-restaurant-row="1" data-slug="' + r.slug + '" data-name="' + r.nombre + '" style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
+                    '<a href="restaurante_detalle.html?r=' + encodeURIComponent(r.slug) + '" style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration:none;color:inherit;font-size:0.95em">' + r.nombre + '</a>' +
+                    '<span style="background:#16a085;color:#fff;font-size:0.72em;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap">Activo</span>' +
+                  '</div>';
+                }).join('');
+            }
+          }
+        }
+      }
     } else {
       loginStatus.textContent = '';
       if(menuLoginWrap) menuLoginWrap.style.display='block';
@@ -1505,14 +2596,18 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
       logoutBtn && (logoutBtn.style.display='none');
       topbarLogoutBtn && (topbarLogoutBtn.style.display='none');
       if(crearLink) crearLink.style.display='none';
-      const container = document.getElementById('mis-restaurantes-menu');
-      if(container) container.style.display='none';
+      if(misRestaurantesContainer) misRestaurantesContainer.style.display='none';
     }
     renderProfile();
   }
 
   // Cierre con Esc
   document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ if(loginModal.classList.contains('open')) closeLogin(); else if(menu.classList.contains('open')) closeMenu(); } });
+
+  window.addEventListener('rt:restaurants-rendered', function(){
+    if(!localStorage.getItem('rt_user')) return;
+    try { renderMisRestaurantesMenu(); } catch(_e) {}
+  });
 
   // Inicializar
   updateAuthUI();
@@ -1521,7 +2616,13 @@ forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
 
 <script>
 (function(){
-  const API_BASE = (window.location.protocol === 'file:') ? 'http://localhost:3000' : '';
+  const API_BASE = (
+    window.REDTIP_API_BASE ||
+    localStorage.getItem('rt_api_base') ||
+    ((window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:3000'
+      : 'https://redtip-galapagos.onrender.com')
+  ).replace(/\/$/, '');
   const orderModal = document.getElementById('orderModal');
   const orderRestaurantName = document.getElementById('orderRestaurantName');
   const orderRestaurant = document.getElementById('orderRestaurant');
