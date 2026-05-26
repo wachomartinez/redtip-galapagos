@@ -1279,13 +1279,15 @@
     try{
       if(typeof window.prompt === 'function'){
         const email = window.prompt('Ingresa tu correo para recuperar clave:');
-        if(!email) return;
-        await sendForgotPasswordRequest(email);
-        return;
+        if(email){
+          await sendForgotPasswordRequest(email);
+          return;
+        }
       }
     }catch(_e){
       // Sigue con el formulario inline cuando prompt no esta disponible.
     }
+    // Si prompt fue cancelado o bloqueado, usar formulario inline como respaldo.
     openForgotPasswordInline();
   });
 
