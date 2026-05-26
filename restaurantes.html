@@ -1005,8 +1005,68 @@
   });
 
   menuClearBtn && menuClearBtn.addEventListener('click', ()=>{ if(menuUserEl) menuUserEl.value=''; if(menuPassEl) menuPassEl.value=''; if(menuLoginMsg){ menuLoginMsg.style.display='none'; menuLoginMsg.textContent=''; } });
+    const forgotPasswordInline = document.getElementById('forgotPasswordInline');
+const forgotEmailInput = document.getElementById('forgotEmailInput');
+const forgotEmailSendBtn = document.getElementById('forgotEmailSendBtn');
+const forgotEmailCancelBtn = document.getElementById('forgotEmailCancelBtn');
 
-  forgotPasswordBtn && forgotPasswordBtn.addEventListener('click', async ()=>{
+async function sendForgotPasswordRequest(emailValue){
+  const email = String(emailValue || '').trim();
+  if(!email){
+    menuLoginMsg.style.display='block';
+    menuLoginMsg.style.color = '#b00020';
+    menuLoginMsg.textContent='Ingresa un correo valido para recuperar tu clave.';
+    return;
+  }
+
+  try{
+    const res = await fetch(API_BASE + '/api/forgot-password', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+
+    menuLoginMsg.style.display='block';
+    if(!res.ok){
+      menuLoginMsg.style.color = '#b00020';
+      menuLoginMsg.textContent = data.error || 'No se pudo procesar la recuperación.';
+      return;
+    }
+
+    menuLoginMsg.style.color = '#1e7e34';
+    menuLoginMsg.textContent = data.message || 'Si el email existe, enviamos un enlace de recuperación.';
+  }catch(_err){
+    menuLoginMsg.style.display='block';
+    menuLoginMsg.style.color = '#b00020';
+    menuLoginMsg.textContent='No se pudo contactar el servidor. Verifica que el backend esté activo.';
+  }
+}
+
+function openForgotPasswordInline(){
+  if(!forgotPasswordInline) return;
+  forgotPasswordInline.style.display = 'block';
+  if(forgotEmailInput) forgotEmailInput.focus();
+}
+
+function closeForgotPasswordInline(){
+  if(!forgotPasswordInline) return;
+  forgotPasswordInline.style.display = 'none';
+  if(forgotEmailInput) forgotEmailInput.value = '';
+}
+
+forgotPasswordBtn && forgotPasswordBtn.addEventListener('click', ()=>{
+  openForgotPasswordInline();
+});
+
+forgotEmailSendBtn && forgotEmailSendBtn.addEventListener('click', async ()=>{
+  await sendForgotPasswordRequest(forgotEmailInput ? forgotEmailInput.value : '');
+  closeForgotPasswordInline();
+});
+
+forgotEmailCancelBtn && forgotEmailCancelBtn.addEventListener('click', ()=>{
+  closeForgotPasswordInline();
+});
     const email = prompt('Ingresa tu correo para recuperar clave:');
     if(!email) return;
     try{
