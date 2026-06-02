@@ -354,9 +354,24 @@ if(SMTP_HOST && SMTP_USER){
   console.log('Warning: SMTP no configurado. Los emails no serán enviados.');
 }
 
+console.log('SMTP config', {
+  host: SMTP_HOST || null,
+  port: Number(SMTP_PORT || 587),
+  secure: Number(SMTP_PORT) === 465,
+  user: SMTP_USER || null,
+  from: FROM_EMAIL
+});
+
 async function sendMail(opts){
   if(!transporter){ console.log('SMTP no configurado. Saltando email a', opts && opts.to); return; }
-  return transporter.sendMail(opts);
+  const info = await transporter.sendMail(opts);
+  console.log('Email enviado', {
+    to: opts && opts.to,
+    subject: opts && opts.subject,
+    messageId: info && info.messageId ? info.messageId : null,
+    response: info && info.response ? String(info.response) : null
+  });
+  return info;
 }
 
 const fs = require('fs');
@@ -527,10 +542,15 @@ app.get('/api/verify', (req,res)=>{
   res.send('Correo verificado. Ya puedes iniciar sesión.');
 });
 
+app.get('/health', (_req, res) => {
+  res.json({ ok: true, service: 'redtipshark-backend' });
+});
+
 // Solicitar recuperación de contraseña
 app.post('/api/forgot-password', async (req, res) => {
   try {
     const email = (req.body && req.body.email ? String(req.body.email) : '').trim().toLowerCase();
+    console.log('Forgot password request', { email });
     if (!email) {
       return res.status(400).json({ error: 'Email requerido' });
     }
@@ -544,6 +564,7 @@ if (isProduction && !smtpReady) {
 
     const user = db.prepare('SELECT id, username, email FROM users WHERE lower(email) = ?').get(email);
     if (!user) {
+      console.log('Forgot password user not found', { email });
       return res.json({ ok: true, message: 'Si el email existe, enviamos un enlace de recuperación.' });
     }
 
@@ -552,9 +573,10 @@ if (isProduction && !smtpReady) {
     db.prepare('UPDATE users SET reset_password_token = ?, reset_password_expires_at = ? WHERE id = ?').run(token, expiresAt, user.id);
 
     await sendPasswordResetEmail(user, token);
+    console.log('Forgot password processed', { userId: user.id, email: user.email });
     return res.json({ ok: true, message: 'Si el email existe, enviamos un enlace de recuperación.' });
   } catch (err) {
-    console.error(err);
+    console.error('Forgot password error:', err);
     return res.status(500).json({ error: 'Error interno' });
   }
 });
