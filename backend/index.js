@@ -525,6 +525,7 @@ app.post('/api/register', async (req, res) => {
 
     const info = db.prepare('INSERT INTO users (username, email, password_hash, phone, verification_token) VALUES (?, ?, ?, ?, ?)').run(username, email, hash, phone || null, token);
     const user = db.prepare('SELECT id, username, email, phone, created_at FROM users WHERE id = ?').get(info.lastInsertRowid);
+    const authToken = generateToken({ id: user.id, username: user.username, email: user.email });
 
     // Para desarrollo devolvemos la url de verificación en la respuesta.
     const verificationUrl = `/api/verify?token=${token}`;
@@ -548,6 +549,7 @@ app.post('/api/register', async (req, res) => {
 
     return res.status(201).json({
       user,
+      token: authToken,
       verificationUrl: isProduction ? undefined : verificationUrl,
       verificationEmailSent,
       verificationEmailError,

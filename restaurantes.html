@@ -1588,6 +1588,7 @@
       if(!res.ok){ registerMsg.style.display='block'; registerMsg.textContent = data.error || 'Error al registrar'; return; }
       // Registro ok
       registerMsg.style.color = 'green'; registerMsg.style.display='block'; registerMsg.textContent = 'Registro exitoso. Ya puedes iniciar sesión.';
+      if(data && data.token) localStorage.setItem('rt_token', data.token);
       localStorage.setItem('rt_user', JSON.stringify({ user: u, id: data && data.user ? data.user.id : null }));
       updateAuthUI();
       // Limpiar formulario
