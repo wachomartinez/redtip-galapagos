@@ -651,6 +651,29 @@ app.get('/api/me', authMiddleware, (req, res) => {
   return res.json({ user });
 });
 
+// Eliminar cuenta del usuario autenticado y sus datos asociados.
+app.delete('/api/me', authMiddleware, (req, res) => {
+  try {
+    const userId = Number(req.user && req.user.id);
+    if (!userId) return res.status(400).json({ error: 'Usuario inválido' });
+
+    const existing = db.prepare('SELECT id FROM users WHERE id = ?').get(userId);
+    if (!existing) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    const tx = db.transaction((id) => {
+      db.prepare('DELETE FROM orders WHERE user_id = ?').run(id);
+      db.prepare('DELETE FROM restaurants WHERE owner_user_id = ?').run(id);
+      return db.prepare('DELETE FROM users WHERE id = ?').run(id);
+    });
+
+    const del = tx(userId);
+    return res.json({ ok: true, deleted_user: del.changes > 0 });
+  } catch (err) {
+    console.error('Error eliminando cuenta:', err);
+    return res.status(500).json({ error: 'Error interno' });
+  }
+});
+
 // Crear pedido (protegido)
 app.post('/api/orders', authMiddleware, (req,res)=>{
   try{

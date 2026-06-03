@@ -285,6 +285,7 @@
             <div id="profileName" class="profile-name"></div>
           </div>
         <button id="logoutBtn" style="display:none;padding:8px 10px;border-radius:6px;background:#e74c3c;color:#fff;border:none;cursor:pointer;margin-top:6px;">Cerrar sesión</button>
+        <button id="deleteAccountBtn" style="display:none;padding:8px 10px;border-radius:6px;background:#7f1d1d;color:#fff;border:none;cursor:pointer;margin-top:6px;">Eliminar cuenta</button>
         <a href="index.html">Inicio</a>
         <a id="crearRestauranteLink" href="crear-restaurante.html" style="display:none;margin-top:4px;">Crear restaurante</a>
         <div id="mis-restaurantes-menu" style="display:block;margin-top:6px;padding:6px 0;border-top:1px solid rgba(255,255,255,0.15)">
@@ -957,6 +958,7 @@
   const cancelLogin = document.getElementById('cancelLogin');
   const loginStatus = document.getElementById('loginStatus');
   const logoutBtn = document.getElementById('logoutBtn');
+  const deleteAccountBtn = document.getElementById('deleteAccountBtn');
   const topbarLogoutBtn = document.getElementById('topbarLogoutBtn');
   const loginUser = document.getElementById('loginUser');
   const loginPass = document.getElementById('loginPass');
@@ -1574,6 +1576,45 @@
   function logout(){ localStorage.removeItem('rt_user'); localStorage.removeItem('rt_token'); updateAuthUI(); }
   logoutBtn && logoutBtn.addEventListener('click', ()=>{ logout(); });
   topbarLogoutBtn && topbarLogoutBtn.addEventListener('click', ()=>{ logout(); });
+
+  let deletingAccount = false;
+  deleteAccountBtn && deleteAccountBtn.addEventListener('click', async ()=>{
+    if(deletingAccount) return;
+    const token = localStorage.getItem('rt_token');
+    if(!token){
+      showMenuToast('Tu sesión no tiene token válido. Inicia sesión nuevamente.', false);
+      return;
+    }
+    const ok = window.confirm('Esta acción eliminará tu cuenta y tus datos asociados. ¿Deseas continuar?');
+    if(!ok) return;
+
+    deletingAccount = true;
+    deleteAccountBtn.disabled = true;
+    try{
+      const res = await fetch(API_BASE + '/api/me', {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      });
+      let data = {};
+      try { data = await res.json(); } catch(_e) { data = {}; }
+
+      if(!res.ok){
+        showMenuToast(data.error || 'No se pudo eliminar la cuenta.', false);
+        return;
+      }
+
+      logout();
+      closeMenu();
+      showMenuToast('Cuenta eliminada correctamente.', true);
+    }catch(_err){
+      showMenuToast('No se pudo contactar el servidor para eliminar la cuenta.', false);
+    }finally{
+      deletingAccount = false;
+      deleteAccountBtn.disabled = false;
+    }
+  });
 
   changeAvatarBtn && changeAvatarBtn.addEventListener('click', ()=>{ avatarInput && avatarInput.click(); });
   topbarProfile && topbarProfile.addEventListener('click', ()=>{ avatarInput && avatarInput.click(); });
@@ -2521,6 +2562,7 @@
       if(viewOrdersBtn) viewOrdersBtn.style.display='block';
       openLoginBtn && (openLoginBtn.style.display='none');
       logoutBtn && (logoutBtn.style.display='inline-block');
+      deleteAccountBtn && (deleteAccountBtn.style.display='inline-block');
       topbarLogoutBtn && (topbarLogoutBtn.style.display='inline-block');
       if(crearLink) crearLink.style.display='block';
       if(menuProfile) menuProfile.style.display='block';
@@ -2601,6 +2643,7 @@
       if(viewOrdersBtn) viewOrdersBtn.style.display='none';
       openLoginBtn && (openLoginBtn.style.display='none');
       logoutBtn && (logoutBtn.style.display='none');
+      deleteAccountBtn && (deleteAccountBtn.style.display='none');
       topbarLogoutBtn && (topbarLogoutBtn.style.display='none');
       if(crearLink) crearLink.style.display='none';
       if(misRestaurantesContainer) misRestaurantesContainer.style.display='none';
