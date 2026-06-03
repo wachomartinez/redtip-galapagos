@@ -383,9 +383,9 @@ async function sendVerificationEmail(user, token){
   const verifyUrl = `${FRONTEND_URL}/api/verify?token=${token}`;
   const tplHtml = loadTemplate('verification.html');
   const tplText = loadTemplate('verification.txt');
-  const html = tplHtml ? renderTemplate(tplHtml, { username: user.username, verifyUrl }) : `<p>Hola ${user.username},</p><p>Verifica: <a href="${verifyUrl}">${verifyUrl}</a></p>`;
-  const text = tplText ? renderTemplate(tplText, { username: user.username, verifyUrl }) : `Verifica tu correo: ${verifyUrl}`;
-  try{ await sendMail({ from: FROM_EMAIL, to: user.email, subject: 'Verificación de correo - RedTip', text, html }); }catch(err){ console.error('Error enviando email de verificación:', err); }
+  const html = tplHtml ? renderTemplate(tplHtml, { username: user.username, verifyUrl }) : `<p>Hola ${user.username},</p><p>Tu cuenta en RedTip fue creada correctamente.</p><p>Para activar tu acceso, verifica tu correo aquí: <a href="${verifyUrl}">${verifyUrl}</a></p>`;
+  const text = tplText ? renderTemplate(tplText, { username: user.username, verifyUrl }) : `Hola ${user.username}, tu cuenta en RedTip fue creada correctamente. Verifica tu correo aquí: ${verifyUrl}`;
+  await sendMail({ from: FROM_EMAIL, to: user.email, subject: 'Tu cuenta fue creada en RedTip', text, html });
 }
 
 async function sendPasswordResetEmail(user, token){
@@ -506,7 +506,10 @@ app.delete('/api/restaurants/:slug', requireAuth, (req,res)=>{
 // Registro con token de verificación
 app.post('/api/register', async (req, res) => {
   try{
-    const { username, email, password, phone } = req.body;
+    const username = String((req.body && req.body.username) || '').trim();
+    const email = String((req.body && req.body.email) || '').trim().toLowerCase();
+    const password = String((req.body && req.body.password) || '');
+    const phone = String((req.body && req.body.phone) || '').trim();
     if(!username || !email || !password) return res.status(400).json({ error: 'Faltan campos obligatorios' });
 
     // Verificar usuario/email existente
@@ -520,12 +523,29 @@ app.post('/api/register', async (req, res) => {
     const info = db.prepare('INSERT INTO users (username, email, password_hash, phone, verification_token) VALUES (?, ?, ?, ?, ?)').run(username, email, hash, phone || null, token);
     const user = db.prepare('SELECT id, username, email, phone, created_at FROM users WHERE id = ?').get(info.lastInsertRowid);
 
-    // Para desarrollo devolvemos la url de verificación en la respuesta (en producción envía por email)
+    // Para desarrollo devolvemos la url de verificación en la respuesta.
     const verificationUrl = `/api/verify?token=${token}`;
-    // Enviar email de verificación (no bloquear la respuesta)
-    sendVerificationEmail(user, token).catch(err=>console.error('Error enviando verificación:', err));
+    const isProduction = String(process.env.NODE_ENV || '').trim().toLowerCase() === 'production';
 
-    return res.status(201).json({ user, verificationUrl });
+    let verificationEmailSent = false;
+    let verificationEmailError = null;
+    try{
+      await sendVerificationEmail(user, token);
+      verificationEmailSent = true;
+    }catch(err){
+      verificationEmailError = err && err.message ? String(err.message) : 'No se pudo enviar el correo de verificación';
+      console.error('Error enviando verificación:', err);
+    }
+
+    return res.status(201).json({
+      user,
+      verificationUrl: isProduction ? undefined : verificationUrl,
+      verificationEmailSent,
+      verificationEmailError,
+      message: verificationEmailSent
+        ? 'Cuenta creada. Te enviamos un correo de verificación.'
+        : 'Cuenta creada, pero no se pudo enviar el correo de verificación en este momento.'
+    });
   }catch(err){
     console.error(err);
     return res.status(500).json({ error: 'Error interno' });
