@@ -98,6 +98,7 @@ const SMTP_PASS = process.env.SMTP_PASS;
 const FROM_EMAIL = process.env.FROM_EMAIL || 'no-reply@example.com';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@example.com';
+const ADMIN_PURGE_TOKEN = process.env.ADMIN_PURGE_TOKEN || '';
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 const WHATSAPP_WEBHOOK_TOKEN = process.env.WHATSAPP_WEBHOOK_TOKEN || '';
@@ -544,6 +545,40 @@ app.get('/api/verify', (req,res)=>{
 
 app.get('/health', (_req, res) => {
   res.json({ ok: true, service: 'redtipshark-backend' });
+});
+
+// Endpoint administrativo temporal para eliminar usuarios sin Shell.
+// Requiere token en header x-admin-token o body.token.
+app.post('/api/admin/purge-users', (req, res) => {
+  try {
+    if (!ADMIN_PURGE_TOKEN) {
+      return res.status(503).json({ error: 'ADMIN_PURGE_TOKEN no configurado' });
+    }
+
+    const providedToken = String(
+      (req.headers && req.headers['x-admin-token']) ||
+      (req.body && req.body.token) ||
+      ''
+    ).trim();
+
+    if (!providedToken || providedToken !== ADMIN_PURGE_TOKEN) {
+      return res.status(401).json({ error: 'No autorizado' });
+    }
+
+    const confirm = String((req.body && req.body.confirm) || '').trim().toUpperCase();
+    if (confirm !== 'PURGE_USERS') {
+      return res.status(400).json({ error: 'Confirmacion invalida' });
+    }
+
+    const del = db.prepare('DELETE FROM users').run();
+    const remaining = db.prepare('SELECT COUNT(*) AS c FROM users').get();
+    console.log('Admin purge users executed', { deleted: del.changes, remaining: remaining.c });
+
+    return res.json({ ok: true, deleted_users: del.changes, remaining_users: remaining.c });
+  } catch (err) {
+    console.error('Admin purge users error:', err);
+    return res.status(500).json({ error: 'Error interno' });
+  }
 });
 
 // Solicitar recuperación de contraseña

@@ -1212,6 +1212,7 @@
 
     const payload = JSON.stringify({ email: email });
     const bases = getForgotPasswordApiBases();
+    let lastErrorMessage = '';
 
     for (const base of bases) {
       try {
@@ -1247,11 +1248,15 @@
           return;
         }
 
-        menuLoginMsg.style.display='block';
-        menuLoginMsg.style.color = '#b00020';
-        menuLoginMsg.textContent = data.error || ('El servidor respondio con error (' + res.status + ').');
-        showMenuToast(menuLoginMsg.textContent, false);
-        return;
+        const retryable = (res.status === 404 || res.status >= 500);
+        lastErrorMessage = data.error || ('El servidor respondio con error (' + res.status + ').');
+        if (!retryable) {
+          menuLoginMsg.style.display='block';
+          menuLoginMsg.style.color = '#b00020';
+          menuLoginMsg.textContent = lastErrorMessage;
+          showMenuToast(menuLoginMsg.textContent, false);
+          return;
+        }
       } catch(_networkErr) {
         // Intenta con la siguiente base del API.
       }
@@ -1259,7 +1264,7 @@
 
     menuLoginMsg.style.display='block';
     menuLoginMsg.style.color = '#b00020';
-    menuLoginMsg.textContent='No se pudo contactar el servidor. Verifica que el backend este activo.';
+    menuLoginMsg.textContent = lastErrorMessage || 'No se pudo contactar el servidor. Verifica que el backend este activo.';
     showMenuToast(menuLoginMsg.textContent, false);
   }
 
