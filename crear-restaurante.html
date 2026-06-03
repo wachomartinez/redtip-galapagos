@@ -133,12 +133,13 @@ body{font-family:Arial,Helvetica,sans-serif;background:#f6f7fb;margin:0;padding:
 
 <script>
 (function(){
+  const PROD_API_BASE = 'https://redtip-galapagos.onrender.com';
   const API_BASE = (
     window.REDTIP_API_BASE ||
     localStorage.getItem('rt_api_base') ||
     ((window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
       ? 'http://localhost:3000'
-      : '')
+      : PROD_API_BASE)
   ).replace(/\/$/, '');
 
   const raw   = localStorage.getItem('rt_user');

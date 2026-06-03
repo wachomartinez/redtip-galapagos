@@ -285,7 +285,6 @@
             <div id="profileName" class="profile-name"></div>
           </div>
         <button id="logoutBtn" style="display:none;padding:8px 10px;border-radius:6px;background:#e74c3c;color:#fff;border:none;cursor:pointer;margin-top:6px;">Cerrar sesión</button>
-        <button id="deleteAccountBtn" style="display:none;padding:8px 10px;border-radius:6px;background:#7f1d1d;color:#fff;border:none;cursor:pointer;margin-top:6px;">Eliminar cuenta</button>
         <a href="index.html">Inicio</a>
         <a id="crearRestauranteLink" href="crear-restaurante.html" style="display:none;margin-top:4px;">Crear restaurante</a>
         <div id="mis-restaurantes-menu" style="display:block;margin-top:6px;padding:6px 0;border-top:1px solid rgba(255,255,255,0.15)">
@@ -295,6 +294,7 @@
           <button id="viewOrdersBtn" type="button" style="display:none;padding:8px 10px;border-radius:6px;background:#8e44ad;color:#fff;border:none;cursor:pointer">Mis pedidos</button>
             <button id="openLoginBtn" class="btn-primary" style="display:none;padding:8px 10px;border-radius:6px;background:#16a085;color:#fff;border:none;cursor:pointer">Ingresar</button>
         </div>
+        <button id="deleteAccountBtn" style="display:none;padding:8px 10px;border-radius:6px;background:#7f1d1d;color:#fff;border:none;cursor:pointer;margin-top:10px;">Eliminar cuenta</button>
     </nav>
     <div id="hamburgerOverlay" class="hamburger-overlay" tabindex="-1" aria-hidden="true"></div>
 
@@ -552,6 +552,9 @@
     }
   }
 
+  const runtimeDeletedRestaurantNames = new Set();
+  const runtimeDeletedRestaurantSlugs = new Set();
+
   function setDeletedRestaurantNames(names){
     const unique = Array.from(new Set((Array.isArray(names) ? names : [])
       .map(function(s){ return String(s || '').trim().toLowerCase(); })
@@ -562,6 +565,7 @@
   function markRestaurantDeletedByName(name){
     const key = String(name || '').trim().toLowerCase();
     if(!key) return;
+    runtimeDeletedRestaurantNames.add(key);
     const deleted = getDeletedRestaurantNames();
     if(deleted.indexOf(key) !== -1) return;
     deleted.push(key);
@@ -571,6 +575,7 @@
   function isRestaurantDeletedByName(name){
     const key = String(name || '').trim().toLowerCase();
     if(!key) return false;
+    if(runtimeDeletedRestaurantNames.has(key)) return true;
     return getDeletedRestaurantNames().indexOf(key) !== -1;
   }
 
@@ -604,12 +609,14 @@
   function isRestaurantDeleted(slug){
     const key = String(slug || '').trim().toLowerCase();
     if(!key) return false;
+    if(runtimeDeletedRestaurantSlugs.has(key)) return true;
     return getDeletedRestaurantSlugs().indexOf(key) !== -1;
   }
 
   function markRestaurantDeleted(slug){
     const key = String(slug || '').trim().toLowerCase();
     if(!key) return;
+    runtimeDeletedRestaurantSlugs.add(key);
     const deleted = getDeletedRestaurantSlugs();
     if(deleted.indexOf(key) !== -1) return;
     deleted.push(key);
@@ -743,13 +750,21 @@
   }
 
   async function renderCreatedRestaurantsByCategory(){
-    function readAllUserRestaurantsFromLocalStorage(){
+    function readCurrentUserRestaurantsFromLocalStorage(){
       try{
+        const userRaw = localStorage.getItem('rt_user');
+        const user = userRaw ? JSON.parse(userRaw) : null;
+        const ids = [
+          String((user && user.id) || '').trim().toLowerCase(),
+          String((user && user.user) || '').trim().toLowerCase(),
+          String((user && user.email) || '').trim().toLowerCase()
+        ].filter(Boolean);
+        const keys = Array.from(new Set(ids.map(function(id){ return 'rt_user_restaurants_' + id; })));
+        if(!keys.length) return [];
+
         const out = [];
         const seen = new Set();
-        for(let i = 0; i < localStorage.length; i += 1){
-          const key = String(localStorage.key(i) || '');
-          if(!key || key.indexOf('rt_user_restaurants_') !== 0) continue;
+        keys.forEach(function(key){
           const raw = localStorage.getItem(key);
           const list = raw ? JSON.parse(raw) : [];
           const safeList = Array.isArray(list) ? list : [];
@@ -762,7 +777,7 @@
             seen.add(dedupeKey);
             out.push(item);
           });
-        }
+        });
         return out;
       }catch(_e){
         return [];
@@ -780,7 +795,7 @@
     if(dynamicWrapper) dynamicWrapper.innerHTML = '';
 
     const recent = getRecentCreatedRestaurants();
-  const userRecent = readAllUserRestaurantsFromLocalStorage();
+  const userRecent = readCurrentUserRestaurantsFromLocalStorage();
     const apiCreated = [];
     try{
       const res = await fetch(API_BASE + '/api/restaurants');
@@ -882,6 +897,8 @@
   window.shouldHideRestaurant = shouldHideRestaurant;
   window.isRestaurantDeletedByName = isRestaurantDeletedByName;
   window.isRestaurantDeleted = isRestaurantDeleted;
+  window.markRestaurantDeletedByName = markRestaurantDeletedByName;
+  window.markRestaurantDeleted = markRestaurantDeleted;
   window.getDeletedRestaurantSlugs = getDeletedRestaurantSlugs;
   window.getRecentCreatedRestaurants = getRecentCreatedRestaurants;
   window.renderCreatedRestaurantsByCategory = renderCreatedRestaurantsByCategory;
@@ -1010,6 +1027,9 @@
             const match = href.match(/[?&]r=([^&#]+)/i);
             const slug = match ? decodeURIComponent(match[1]).trim() : '';
             const nombre = String((link.querySelector('.nombre') && link.querySelector('.nombre').textContent) || '').trim();
+            const deletedBySlug = (typeof isRestaurantDeleted === 'function') ? isRestaurantDeleted(slug) : false;
+            const deletedByName = (typeof isRestaurantDeletedByName === 'function') ? isRestaurantDeletedByName(nombre) : false;
+            if(deletedBySlug || deletedByName) return;
             const key = (slug || nombre).toLowerCase();
             if(!key || seen.has(key)) return;
             seen.add(key);
@@ -1019,9 +1039,11 @@
           target.style.display = 'block';
           target.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' +
             rows.map(function(r){
+              const deleteBtn = '<button class="delete-my-restaurant-btn" title="Eliminar restaurante" aria-label="Eliminar restaurante" data-slug="' + r.slug + '" data-name="' + r.nombre + '" style="background:#c0392b;color:#fff;border:none;border-radius:999px;width:22px;height:22px;line-height:22px;text-align:center;padding:0;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap">✕</button>';
               return '<div data-restaurant-row="1" data-slug="' + r.slug + '" data-name="' + r.nombre + '" style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
                 '<a href="restaurante_detalle.html?r=' + encodeURIComponent(r.slug) + '" style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration:none;color:inherit;font-size:0.95em">' + r.nombre + '</a>' +
                 '<span style="background:#16a085;color:#fff;font-size:0.72em;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap">Activo</span>' +
+                deleteBtn +
               '</div>';
             }).join('');
         }catch(_e){}
@@ -1917,9 +1939,11 @@
         container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' + mergedUser.map(function(r){
           const nombre = String((r && r.nombre) || 'Restaurante');
           const slug = String((r && r.slug) || '');
+          const deleteBtn = '<button class="delete-my-restaurant-btn" title="Eliminar restaurante" aria-label="Eliminar restaurante" data-slug="' + esc(slug) + '" data-name="' + esc(nombre) + '" style="background:#c0392b;color:#fff;border:none;border-radius:999px;width:22px;height:22px;line-height:22px;text-align:center;padding:0;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap">✕</button>';
           return '<div data-restaurant-row="1" data-slug="' + esc(slug) + '" data-name="' + esc(nombre) + '" style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
             '<a href="restaurante_detalle.html?r=' + encodeURIComponent(slug) + '" style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration:none;color:inherit;font-size:0.95em">' + nombre + '</a>' +
             '<span style="background:#16a085;color:#fff;font-size:0.72em;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap">Activo</span>' +
+            deleteBtn +
           '</div>';
         }).join('');
         return;
@@ -2104,9 +2128,7 @@
       container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' + merged.map(function(r, idx){
         const nombre = String((r && r.nombre) || 'Restaurante');
         const slug = String((r && r.slug) || '');
-        const deleteBtn = isAdmin
-          ? '<button class="delete-my-restaurant-btn" title="Eliminar restaurante" aria-label="Eliminar restaurante" data-idx="' + idx + '" data-slug="' + esc(slug) + '" data-name="' + esc(nombre) + '" style="background:#c0392b;color:#fff;border:none;border-radius:999px;width:22px;height:22px;line-height:22px;text-align:center;padding:0;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap">✕</button>'
-          : '';
+        const deleteBtn = '<button class="delete-my-restaurant-btn" title="Eliminar restaurante" aria-label="Eliminar restaurante" data-idx="' + idx + '" data-slug="' + esc(slug) + '" data-name="' + esc(nombre) + '" style="background:#c0392b;color:#fff;border:none;border-radius:999px;width:22px;height:22px;line-height:22px;text-align:center;padding:0;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap">✕</button>';
         return '<div data-restaurant-row="1" data-slug="' + esc(slug) + '" data-name="' + esc(nombre) + '" style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
           '<a href="restaurante_detalle.html?r=' + encodeURIComponent(slug) + '" style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration:none;color:inherit;font-size:0.95em">' + nombre + '</a>' +
           '<span style="background:#16a085;color:#fff;font-size:0.72em;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap">Activo</span>' +
@@ -2176,6 +2198,30 @@
         return true;
       });
       localStorage.setItem(key, JSON.stringify(filtered));
+    }catch(_e){}
+  }
+
+  function removeRestaurantFromAllUserLists(target){
+    const slug = String((target && target.slug) || '').trim().toLowerCase();
+    const nombre = String((target && target.nombre) || '').trim().toLowerCase();
+    try{
+      for(let i = 0; i < localStorage.length; i += 1){
+        const key = String(localStorage.key(i) || '');
+        if(!key || key.indexOf('rt_user_restaurants_') !== 0) continue;
+        const raw = localStorage.getItem(key);
+        const list = raw ? JSON.parse(raw) : [];
+        const safeList = Array.isArray(list) ? list : [];
+        const filtered = safeList.filter(function(item){
+          const itemSlug = String((item && item.slug) || '').trim().toLowerCase();
+          const itemNombre = String((item && item.nombre) || '').trim().toLowerCase();
+          if(slug && itemSlug === slug) return false;
+          if(nombre && itemNombre === nombre) return false;
+          return true;
+        });
+        if(filtered.length !== safeList.length){
+          localStorage.setItem(key, JSON.stringify(filtered));
+        }
+      }
     }catch(_e){}
   }
 
@@ -2417,11 +2463,15 @@
     // Marcar y retirar localmente primero para que el usuario vea el cambio inmediato.
     try{
       if(slug){
-        markRestaurantDeleted(slug);
+        if(typeof window.markRestaurantDeleted === 'function'){
+          window.markRestaurantDeleted(slug);
+        }
         hideAdminFallbackSlug(slug);
       }
       if(targetName){
-        markRestaurantDeletedByName(targetName);
+        if(typeof window.markRestaurantDeletedByName === 'function'){
+          window.markRestaurantDeletedByName(targetName);
+        }
         hideAdminFallbackByName(targetName);
       }
 
@@ -2430,6 +2480,7 @@
       });
       removeRestaurantFromRecentList(target);
       removeRestaurantFromUserList(target);
+      removeRestaurantFromAllUserLists(target);
       removeRestaurantFromPageDom(target);
       purgeHiddenRestaurantsFromPageDom();
     }catch(_e){
@@ -2441,7 +2492,6 @@
     try { await renderMisRestaurantesMenu(); } catch(_e) {}
     try { await renderCreatedRestaurantsByCategory(); } catch(_e) {}
     try { enforceDeletedRestaurantsHidden(); } catch(_e) {}
-    try { setTimeout(function(){ window.location.reload(); }, 120); } catch(_e) {}
 
     return true;
   }
@@ -2491,7 +2541,7 @@
     const slug = String(btn.getAttribute('data-slug') || '').trim();
     const name = String(btn.getAttribute('data-name') || '').trim();
     if(slug || name){
-      deleteRestaurantByIdentity(slug, name).then(function(ok){
+      deleteRestaurantTarget({ slug: slug, nombre: name || slug }).then(function(ok){
         if(!ok) return;
         const row = btn.closest ? btn.closest('[data-restaurant-row]') : null;
         if(row) row.remove();
@@ -2526,6 +2576,9 @@
       const slug = match ? decodeURIComponent(match[1]).trim() : '';
       const nombreEl = link.querySelector('.nombre');
       const nombre = String((nombreEl && nombreEl.textContent) || '').trim();
+      const deletedBySlug = (typeof isRestaurantDeleted === 'function') ? isRestaurantDeleted(slug) : false;
+      const deletedByName = (typeof isRestaurantDeletedByName === 'function') ? isRestaurantDeletedByName(nombre) : false;
+      if(deletedBySlug || deletedByName) return;
       const key = (slug || nombre).toLowerCase();
       if(!key || seen.has(key)) return;
       seen.add(key);
@@ -2537,9 +2590,11 @@
     container.style.display = 'block';
     container.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' +
       rows.map(function(r){
+        const deleteBtn = '<button class="delete-my-restaurant-btn" title="Eliminar restaurante" aria-label="Eliminar restaurante" data-slug="' + safeEsc(r.slug) + '" data-name="' + safeEsc(r.nombre) + '" style="background:#c0392b;color:#fff;border:none;border-radius:999px;width:22px;height:22px;line-height:22px;text-align:center;padding:0;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap">✕</button>';
         return '<div data-restaurant-row="1" data-slug="' + safeEsc(r.slug) + '" data-name="' + safeEsc(r.nombre) + '" style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
           '<a href="restaurante_detalle.html?r=' + encodeURIComponent(r.slug) + '" style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration:none;color:inherit;font-size:0.95em">' + r.nombre + '</a>' +
           '<span style="background:#16a085;color:#fff;font-size:0.72em;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap">Activo</span>' +
+          deleteBtn +
         '</div>';
       }).join('');
   }
@@ -2619,6 +2674,9 @@
               const slug = match ? decodeURIComponent(match[1]).trim() : '';
               const nombreEl = link.querySelector('.nombre');
               const nombre = String((nombreEl && nombreEl.textContent) || '').trim();
+              const deletedBySlug = (typeof isRestaurantDeleted === 'function') ? isRestaurantDeleted(slug) : false;
+              const deletedByName = (typeof isRestaurantDeletedByName === 'function') ? isRestaurantDeletedByName(nombre) : false;
+              if(deletedBySlug || deletedByName) return;
               const key = (slug || nombre).toLowerCase();
               if(!key || seen.has(key)) return;
               seen.add(key);
@@ -2628,9 +2686,11 @@
               misRestaurantesContainer.style.display = 'block';
               misRestaurantesContainer.innerHTML = '<div style="font-size:0.78em;font-weight:700;letter-spacing:.02em;opacity:.85;margin:2px 0 6px;">Restaurantes creados</div>' +
                 rows.map(function(r){
+                  const deleteBtn = '<button class="delete-my-restaurant-btn" title="Eliminar restaurante" aria-label="Eliminar restaurante" data-slug="' + r.slug + '" data-name="' + r.nombre + '" style="background:#c0392b;color:#fff;border:none;border-radius:999px;width:22px;height:22px;line-height:22px;text-align:center;padding:0;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap">✕</button>';
                   return '<div data-restaurant-row="1" data-slug="' + r.slug + '" data-name="' + r.nombre + '" style="display:flex;align-items:center;gap:6px;padding:4px 0">' +
                     '<a href="restaurante_detalle.html?r=' + encodeURIComponent(r.slug) + '" style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration:none;color:inherit;font-size:0.95em">' + r.nombre + '</a>' +
                     '<span style="background:#16a085;color:#fff;font-size:0.72em;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap">Activo</span>' +
+                    deleteBtn +
                   '</div>';
                 }).join('');
             }

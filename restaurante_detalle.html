@@ -509,7 +509,9 @@ function loadFromRecentLocal(key){
 
 async function loadFromAPI(key){
   try{
-    const base = (window.location.protocol==='file:') ? 'http://localhost:3000' : '';
+    const base = ((window.location.protocol==='file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:3000'
+      : 'https://redtip-galapagos.onrender.com');
     const res = await fetch(`${base}/api/restaurants/${encodeURIComponent(key)}`);
     if(!res.ok) return null;
     const json = await res.json();
