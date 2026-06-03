@@ -363,7 +363,10 @@ console.log('SMTP config', {
 });
 
 async function sendMail(opts){
-  if(!transporter){ console.log('SMTP no configurado. Saltando email a', opts && opts.to); return; }
+  if(!transporter){
+    console.log('SMTP no configurado. Saltando email a', opts && opts.to);
+    return { skipped: true, reason: 'smtp_not_configured' };
+  }
   const info = await transporter.sendMail(opts);
   console.log('Email enviado', {
     to: opts && opts.to,
@@ -385,7 +388,7 @@ async function sendVerificationEmail(user, token){
   const tplText = loadTemplate('verification.txt');
   const html = tplHtml ? renderTemplate(tplHtml, { username: user.username, verifyUrl }) : `<p>Hola ${user.username},</p><p>Tu cuenta en RedTip fue creada correctamente.</p><p>Para activar tu acceso, verifica tu correo aquí: <a href="${verifyUrl}">${verifyUrl}</a></p>`;
   const text = tplText ? renderTemplate(tplText, { username: user.username, verifyUrl }) : `Hola ${user.username}, tu cuenta en RedTip fue creada correctamente. Verifica tu correo aquí: ${verifyUrl}`;
-  await sendMail({ from: FROM_EMAIL, to: user.email, subject: 'Tu cuenta fue creada en RedTip', text, html });
+  return await sendMail({ from: FROM_EMAIL, to: user.email, subject: 'Tu cuenta fue creada en RedTip', text, html });
 }
 
 async function sendPasswordResetEmail(user, token){
@@ -530,8 +533,11 @@ app.post('/api/register', async (req, res) => {
     let verificationEmailSent = false;
     let verificationEmailError = null;
     try{
-      await sendVerificationEmail(user, token);
-      verificationEmailSent = true;
+      const mailResult = await sendVerificationEmail(user, token);
+      verificationEmailSent = !(mailResult && mailResult.skipped);
+      if (!verificationEmailSent) {
+        verificationEmailError = 'SMTP no configurado';
+      }
     }catch(err){
       verificationEmailError = err && err.message ? String(err.message) : 'No se pudo enviar el correo de verificación';
       console.error('Error enviando verificación:', err);
