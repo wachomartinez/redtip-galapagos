@@ -533,7 +533,10 @@ app.post('/api/register', async (req, res) => {
     let verificationEmailSent = false;
     let verificationEmailError = null;
     try{
-      const mailResult = await sendVerificationEmail(user, token);
+      const mailResult = await Promise.race([
+        sendVerificationEmail(user, token),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout enviando correo de verificacion')), 8000))
+      ]);
       verificationEmailSent = !(mailResult && mailResult.skipped);
       if (!verificationEmailSent) {
         verificationEmailError = 'SMTP no configurado';
