@@ -392,19 +392,17 @@
 <script>
 (function(){
   const PROD_API_BASE = 'https://redtip-galapagos.onrender.com';
+  const IS_LOCAL_ENV = (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
   const API_BASE = (
-    window.REDTIP_API_BASE ||
-    localStorage.getItem('rt_api_base') ||
-    ((window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-      ? 'http://localhost:3000'
-      : PROD_API_BASE)
+    IS_LOCAL_ENV
+      ? (window.REDTIP_API_BASE || localStorage.getItem('rt_api_base') || 'http://localhost:3000')
+      : PROD_API_BASE
   ).replace(/\/$/, '');
 
   function getForgotPasswordApiBases() {
+    if(!IS_LOCAL_ENV) return [PROD_API_BASE];
     const configured = String(window.REDTIP_API_BASE || localStorage.getItem('rt_api_base') || '').trim().replace(/\/$/, '');
-    const defaults = (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-      ? ['http://localhost:3000', PROD_API_BASE]
-      : [PROD_API_BASE, 'http://localhost:3000'];
+    const defaults = ['http://localhost:3000', PROD_API_BASE];
     return Array.from(new Set([configured, API_BASE].concat(defaults).filter(Boolean)));
   }
 
@@ -990,19 +988,17 @@
   const topbarName = document.getElementById('topbarName');
   const viewOrdersBtn = document.getElementById('viewOrdersBtn');
   const PROD_API_BASE = 'https://redtip-galapagos.onrender.com';
+  const IS_LOCAL_ENV = (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
   const API_BASE = (
-    window.REDTIP_API_BASE ||
-    localStorage.getItem('rt_api_base') ||
-    ((window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-      ? 'http://localhost:3000'
-      : PROD_API_BASE)
+    IS_LOCAL_ENV
+      ? (window.REDTIP_API_BASE || localStorage.getItem('rt_api_base') || 'http://localhost:3000')
+      : PROD_API_BASE
   ).replace(/\/$/, '');
 
   function getForgotPasswordApiBases() {
+    if(!IS_LOCAL_ENV) return [PROD_API_BASE];
     const configured = String(window.REDTIP_API_BASE || localStorage.getItem('rt_api_base') || '').trim().replace(/\/$/, '');
-    const defaults = (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-      ? ['http://localhost:3000', PROD_API_BASE]
-      : [PROD_API_BASE, 'http://localhost:3000'];
+    const defaults = ['http://localhost:3000', PROD_API_BASE];
     return Array.from(new Set([configured, API_BASE].concat(defaults).filter(Boolean)));
   }
 
@@ -2727,12 +2723,12 @@
 
 <script>
 (function(){
+  const PROD_API_BASE = 'https://redtip-galapagos.onrender.com';
+  const IS_LOCAL_ENV = (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
   const API_BASE = (
-    window.REDTIP_API_BASE ||
-    localStorage.getItem('rt_api_base') ||
-    ((window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-      ? 'http://localhost:3000'
-      : 'https://redtip-galapagos.onrender.com')
+    IS_LOCAL_ENV
+      ? (window.REDTIP_API_BASE || localStorage.getItem('rt_api_base') || 'http://localhost:3000')
+      : PROD_API_BASE
   ).replace(/\/$/, '');
   const orderModal = document.getElementById('orderModal');
   const orderRestaurantName = document.getElementById('orderRestaurantName');
